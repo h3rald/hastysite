@@ -5,25 +5,75 @@ import
   pegs,
   os,
   securehash,
-  sequtils
+  sequtils,
+  tables
+
+import
+  minim,
+  vendor/moustachu,
+  hastyscribe
 
 import
   config
 
 type
-  HastySite* = object
+  HastyDirs = object
     assets*: string
     contents*: string
     layouts*: string
     output*: string
-    rules*: string
     temp*: string
+    tempContents: string
+  HastyFiles = object
+    rules*: string
     meta: string
     checksums: string
-    tempContents: string
     modified: seq[string]
+  HastySite* = object
+    settings*: JsonNode
+    dirs*: HastyDirs
+    files*: HastyFiles 
+    metadata*: JsonNode
   NoMetadataException* = ref Exception
+  DictionaryRequiredException* = ref Exception
 
+
+#### MiNiM Library
+
+proc hastysite_module*(i: In, hs: HastySite) =
+  i.define("hastysite")
+
+    .symbol("metadata") do (i: In):
+      i.push i.fromJson(hs.metadata)
+
+    .symbol("settings") do (i: In):
+      i.push i.fromJson(hs.settings)
+
+    .symbol("mustache") do (i: In):
+      var t, c: MinValue
+      i.reqQuotationAndString c, t
+      if not c.isDictionary:
+        raise DictionaryRequiredException(msg: "No dictionary provided as template context.")
+      let ctx = newContext(%c)
+      let tplname = t.getString & ".mustache"
+      let tpl = readFile(hs.dirs.layouts/tplname)
+      i.push tpl.render(ctx, hs.dirs.layouts).newval
+
+    .symbol("markdown") do (i: In):
+      var t, c: MinValue
+      i.reqQuotationAndString c, t
+      if not c.isDictionary:
+        raise DictionaryRequiredException(msg: "No dictionary provided for markdown processor fields.")
+      let options = HastyOptions(toc: false, output: nil, css: nil, watermark: nil, fragment: true)
+      var fields = initTable[string, proc():string]()
+      for items in c.qVal:
+        fields[c.qVal[0].getString] = proc(): string = return $$c.qVal[1]
+      var hastyscribe = newHastyScribe(options, fields)
+      i.push hastyscribe.compileFragment(t.getString).newVal
+
+    .finalize()
+      
+#### Helper Functions
 
 proc preprocessFile(file, dir: string, obj: var JsonNode): string =
   let fileid = file.replace(dir, "")
@@ -65,7 +115,7 @@ proc get(json: JsonNode, key, default: string): string =
     return default
 
 proc confirmClean(hs: HastySite): bool =
-  stdout.write("Delete directory '$1' and all its contents? [Y/n] " % hs.temp)
+  stdout.write("Delete directory '$1' and all its contents? [Y/n] " % hs.dirs.temp)
   let confirm = stdin.readChar
   return confirm == 'Y' or confirm == 'y'
 
@@ -73,36 +123,39 @@ proc quitIfNotExists(file: string) =
   if not file.fileExists:
     quit("Error: File '$1' not found." % file)
 
+#### Main Functions
+
 proc newHastySite*(file: string): HastySite = 
   let json = file.parseFile()
-  result.assets = json.get("assets", "assets")
-  result.contents = json.get("contents", "contents")
-  result.layouts = json.get("layouts", "layouts")
-  result.output = json.get("output", "output")
-  result.rules = json.get("rules", "rules.min")
-  result.temp = json.get("temp", "temp")
-  result.meta = result.temp / "metadata.json"
-  result.checksums = result.temp / "checksums.json"
-  result.tempContents = result.temp / result.contents
+  result.settings = json
+  result.dirs.assets = json.get("assets", "assets")
+  result.dirs.contents = json.get("contents", "contents")
+  result.dirs.layouts = json.get("layouts", "layouts")
+  result.dirs.output = json.get("output", "output")
+  result.files.rules = json.get("rules", "rules.min")
+  result.dirs.temp = json.get("temp", "temp")
+  result.files.meta = result.dirs.temp / "metadata.json"
+  result.files.checksums = result.dirs.temp / "checksums.json"
+  result.dirs.tempContents = result.dirs.temp / result.dirs.contents
 
 proc preprocess*(hs: HastySite) = 
   var meta = newJObject()
-  for f in hs.contents.walkDirRec():
-    let content = f.preprocessFile(hs.contents & DirSep, meta)
-    let dest = hs.temp/f
+  for f in hs.dirs.contents.walkDirRec():
+    let content = f.preprocessFile(hs.dirs.contents & DirSep, meta)
+    let dest = hs.dirs.temp/f
     dest.parentDir.createDir
     dest.writeFile(content)
-  hs.meta.writeFile(meta.pretty)
+  hs.files.meta.writeFile(meta.pretty)
 
 proc detectChanges*(hs: var HastySite) = 
-  hs.modified = newSeq[string](0)
-  if not hs.checksums.fileExists:
-    hs.checksums.writeFile("{}")
-  var cs = hs.checksums.parseFile()
-  let files = toSeq(hs.tempContents.walkDirRec())
-  let dir = hs.tempContents
-  hs.modified = filter(files) do (f: string) -> bool: f.checkFile(dir & DirSep, cs)
-  hs.checksums.writeFile(cs.pretty)
+  hs.files.modified = newSeq[string](0)
+  if not hs.files.checksums.fileExists:
+    hs.files.checksums.writeFile("{}")
+  var cs = hs.files.checksums.parseFile()
+  let files = toSeq(hs.dirs.tempContents.walkDirRec())
+  let dir = hs.dirs.tempContents
+  hs.files.modified = filter(files) do (f: string) -> bool: f.checkFile(dir & DirSep, cs)
+  hs.files.checksums.writeFile(cs.pretty)
 
 proc init*(dir: string) =
   var json = newJObject()
@@ -119,14 +172,15 @@ proc init*(dir: string) =
   writeFile(dir/"config.json", json.pretty)
 
 proc clean*(hs: HastySite) =
-  hs.temp.removeDir
+  hs.dirs.temp.removeDir
 
 proc build*(hs: var HastySite) = 
   echo "Preprocessing..."
   hs.preprocess()
   hs.detectChanges()
   # TODO
-  echo hs.modified
+  echo hs.files.modified
+
 
 when isMainModule:
 
