@@ -6,7 +6,8 @@ import
   os,
   securehash,
   sequtils,
-  tables
+  tables,
+  critbits
 
 import
   minim,
@@ -26,7 +27,7 @@ type
     tempContents: string
   HastyFiles = object
     rules*: string
-    meta: string
+    metadata: string
     checksums: string
     modified: seq[string]
   HastySite* = object
@@ -48,6 +49,35 @@ proc hastysite_module*(i: In, hs: HastySite) =
 
     .symbol("settings") do (i: In):
       i.push i.fromJson(hs.settings)
+
+    .symbol("modified") do (i: In):
+      var modified = newSeq[MinValue](0)
+      for s in hs.files.modified:
+        modified.add s.newVal
+      i.push modified.newVal(i.scope)
+
+    .symbol("init-context") do (i: In):
+      var d: MinValue
+      i.reqDictionary d
+      i.scope.symbols["context"] = MinOperator(val: d, kind: minValOp)
+
+    .symbol("output") do (i: In):
+      i.push hs.dirs.output.newVal
+
+    .symbol("cget") do (i: In):
+      var s, q: MinValue
+      i.reqStringLike(s)
+      i.apply(i.scope.getSymbol("context"))
+      i.reqDictionary q
+      i.push q.dget(s)
+
+    .symbol("cset") do (i: In):
+      var q, k: MinValue
+      let m = i.pop
+      i.reqStringLike k
+      i.apply(i.scope.getSymbol("context"))
+      i.reqDictionary q
+      i.push i.dset(q, k, m) 
 
     .symbol("mustache") do (i: In):
       var t, c: MinValue
@@ -132,11 +162,11 @@ proc newHastySite*(file: string): HastySite =
   result.dirs.contents = json.get("contents", "contents")
   result.dirs.layouts = json.get("layouts", "layouts")
   result.dirs.output = json.get("output", "output")
-  result.files.rules = json.get("rules", "rules.min")
   result.dirs.temp = json.get("temp", "temp")
-  result.files.meta = result.dirs.temp / "metadata.json"
-  result.files.checksums = result.dirs.temp / "checksums.json"
   result.dirs.tempContents = result.dirs.temp / result.dirs.contents
+  result.files.rules = json.get("rules", "rules.min")
+  result.files.metadata = result.dirs.temp / "metadata.json"
+  result.files.checksums = result.dirs.temp / "checksums.json"
 
 proc preprocess*(hs: HastySite) = 
   var meta = newJObject()
@@ -145,7 +175,7 @@ proc preprocess*(hs: HastySite) =
     let dest = hs.dirs.temp/f
     dest.parentDir.createDir
     dest.writeFile(content)
-  hs.files.meta.writeFile(meta.pretty)
+  hs.files.metadata.writeFile(meta.pretty)
 
 proc detectChanges*(hs: var HastySite) = 
   hs.files.modified = newSeq[string](0)
@@ -169,7 +199,7 @@ proc init*(dir: string) =
   json["title"]     = %"My Web Site"
   json["rules"]     = %"rules.min"
   writeFile(dir/json["rules"].getStr, "")
-  writeFile(dir/"config.json", json.pretty)
+  writeFile(dir/"settings.json", json.pretty)
 
 proc clean*(hs: HastySite) =
   hs.dirs.temp.removeDir
@@ -212,7 +242,7 @@ when isMainModule:
     errormsg usage()
 
   let pwd = getCurrentDir()
-  let cfg = pwd/"config.json"
+  let cfg = pwd/"settings.json"
   case command:
     of "init":
       pwd.init()
