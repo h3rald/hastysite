@@ -32,9 +32,9 @@ type
     modified: seq[string]
   HastySite* = object
     settings*: JsonNode
+    metadata*: JsonNode
     dirs*: HastyDirs
     files*: HastyFiles 
-    metadata*: JsonNode
   NoMetadataException* = ref Exception
   DictionaryRequiredException* = ref Exception
 
@@ -47,8 +47,30 @@ proc hastysite_module*(i: In, hs: HastySite) =
     .symbol("metadata") do (i: In):
       i.push i.fromJson(hs.metadata)
 
+    .symbol("mget") do (i: In):
+      var s: MinValue
+      i.reqStringLike s
+      i.push i.fromJson(hs.metadata[s.getString])
+
+    .symbol("mset") do (i: In):
+      var s: MinValue
+      i.reqStringLike s
+      let v = i.pop
+      hs.metadata[s.getString] = %v
+
     .symbol("settings") do (i: In):
       i.push i.fromJson(hs.settings)
+
+    .symbol("sget") do (i: In):
+      var s: MinValue
+      i.reqStringLike s
+      i.push i.fromJson(hs.settings[s.getString])
+
+    .symbol("sset") do (i: In):
+      var s: MinValue
+      i.reqStringLike s
+      let v = i.pop
+      hs.settings[s.getString] = %v
 
     .symbol("modified") do (i: In):
       var modified = newSeq[MinValue](0)
@@ -77,7 +99,7 @@ proc hastysite_module*(i: In, hs: HastySite) =
       i.reqStringLike k
       i.apply(i.scope.getSymbol("context"))
       i.reqDictionary q
-      i.push i.dset(q, k, m) 
+      i.dset(q, k, m) 
 
     .symbol("mustache") do (i: In):
       var t, c: MinValue
