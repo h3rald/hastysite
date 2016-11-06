@@ -191,8 +191,8 @@ proc get(json: JsonNode, key, default: string): string =
   else:
     return default
 
-proc confirmClean(hs: HastySite): bool =
-  stdout.write("Delete directory '$1' and all its contents? [Y/n] " % hs.dirs.temp)
+proc confirmDeleteDir(hs: HastySite, dir: string): bool =
+  stdout.write("Delete directory '$1' and all its contents? [Y/n] " % dir)
   let confirm = $stdin.readChar
   return confirm == "\n" or confirm == "Y" or confirm == "y"
 
@@ -344,14 +344,14 @@ when isMainModule:
     of "clean":
       quitIfNotExists(cfg)
       var hs = newHastySite(cfg)
-      if hs.confirmClean():
+      if hs.confirmDeleteDir(hs.dirs.temp) and hs.confirmDeleteDir(hs.dirs.output):
         hs.clean()
       else:
         quit("Aborted.")
     of "rebuild":
       quitIfNotExists(cfg)
       var hs = newHastySite(cfg)
-      if hs.confirmClean():
+      if hs.confirmDeleteDir(hs.dirs.temp) and hs.confirmDeleteDir(hs.dirs.output):
         hs.clean()
         hs.build()
       else:
