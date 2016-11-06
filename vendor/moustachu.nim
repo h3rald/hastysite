@@ -177,7 +177,6 @@ proc render(tmplate: string, contextStack: seq[Context], pwd="."): string =
         renderings.add(indentation)
 
     of TokenType.partial:
-      echo pwd
       var partialTemplate = pwd.joinPath(token.value & ".mustache").readFile
       partialTemplate = partialTemplate.replace("\n", "\n" & indentation)
       if indentation != "":
