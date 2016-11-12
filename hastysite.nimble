@@ -7,4 +7,4 @@ license       = "MIT"
 bin           = "hastysite"
 
 [Deps]
-requires: "nim >= 0.15.0, yaml >= 0.7.0, hastyscribe >= 1.4.0, minim >= 0.2.0"
+requires: "nim >= 0.15.0, yaml >= 0.7.0, hastyscribe >= 1.4.0, minim >= 0.3.0"

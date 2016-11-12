@@ -8,7 +8,8 @@ import
   sequtils,
   tables,
   critbits,
-  streams
+  streams,
+  logging
 
 import
   minim,
@@ -40,6 +41,8 @@ type
   NoMetadataException* = ref Exception
   DictionaryRequiredException* = ref Exception
   MetadataRequiredException* = ref Exception
+
+setLogFilter(lvlNotice)
 
 #### MiNiM Library
 
@@ -99,7 +102,7 @@ proc hastysite_module*(i: In, hs: HastySite) =
       else:
         infile = hs.dirs.assets/path
         outfile = hs.dirs.output/path
-      echo " - Copying: ", infile, " -> ", outfile
+      notice " - Copying: ", infile, " -> ", outfile
       outfile.parentDir.createDir
       copyFileWithPermissions(infile, outfile)
 
@@ -192,7 +195,7 @@ proc get(json: JsonNode, key, default: string): string =
     return default
 
 proc confirmDeleteDir(hs: HastySite, dir: string): bool =
-  stdout.write("Delete directory '$1' and all its contents? [Y/n] " % dir)
+  warn "Delete directory '$1' and all its contents? [Y/n] " % dir
   let confirm = $stdin.readChar
   return confirm == "\n" or confirm == "Y" or confirm == "y"
 
@@ -230,8 +233,8 @@ proc assetMetadata(f, dir: string): JsonNode =
   result["id"] = %path.changeFileExt("")
   result["ext"] = %fdata.ext
 
-proc interpret(hs: HastySite, file: string, debugging = false) =
-  var i = newMinInterpreter(debugging, file, file.parentDir)
+proc interpret(hs: HastySite, file: string) =
+  var i = newMinInterpreter(file, file.parentDir)
   i.hastysite_module(hs)
   i.interpret(newFileStream(file, fmRead))
 
@@ -295,13 +298,13 @@ proc clean*(hs: HastySite) =
   hs.dirs.temp.removeDir
 
 proc build*(hs: var HastySite) = 
-  echo "Preprocessing..."
+  notice "Preprocessing..."
   hs.preprocess()
-  echo "Detecting changes..."
+  notice "Detecting changes..."
   hs.detectChanges()
-  echo "Processing rules..."
+  notice "Processing rules..."
   hs.interpret(hs.files.rules)
-  echo "All done."
+  notice "All done."
 
 when isMainModule:
 
