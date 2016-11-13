@@ -354,10 +354,10 @@ when isMainModule:
     of "rebuild":
       quitIfNotExists(cfg)
       var hs = newHastySite(cfg)
-      if hs.confirmDeleteDir(hs.dirs.temp) and hs.confirmDeleteDir(hs.dirs.output):
-        hs.clean()
-        hs.build()
-      else:
-        quit("Aborted.")
+      #if hs.confirmDeleteDir(hs.dirs.temp) and hs.confirmDeleteDir(hs.dirs.output):
+      hs.clean()
+      hs.build()
+      #else:
+      #  quit("Aborted.")
     else:
       quit("Error: Command '$1' is not supported" % command)
