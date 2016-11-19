@@ -12,7 +12,7 @@ import
 
 when defined(nifty):
   import 
-    packages/NimYaml/yaml,
+    packages/NimYAML/yaml,
     packages/minim/minim,
     packages/hastyscribe/hastyscribe
 else:
