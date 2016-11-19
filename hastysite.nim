@@ -1,7 +1,6 @@
 import
   json,
   strutils,
-  yaml,
   pegs,
   os,
   securehash,
@@ -11,12 +10,19 @@ import
   streams,
   logging
 
-import
-  minim,
-  vendor/moustachu,
-  hastyscribe
+when defined(nifty):
+  import 
+    packages/NimYaml/yaml,
+    packages/minim/minim,
+    packages/hastyscribe/hastyscribe
+else:
+  import
+    yaml,
+    minim,
+    hastyscribe
 
 import
+  vendor/moustachu,
   config
 
 type
