@@ -171,7 +171,12 @@ proc preprocessContent(file, dir: string, obj: var JsonNode): string =
     raise NoMetadataException(msg: "No metadata found in file: " & file)
   if not obj.hasKey("contents"):
     obj["contents"] = newJObject()
-  obj["contents"][fileid] = yaml.loadToJson()[0]
+  var meta = yaml.loadToJson()[0]
+  meta["path"] = %fileid
+  meta["type"] = %"content"
+  meta["id"] = %fileid.changeFileExt("")
+  meta["ext"] = %fileid.splitFile.ext
+  obj["contents"][fileid] = meta
   f.close()
 
 proc checkContent(dir, file: string, obj: var JsonNode): bool =
