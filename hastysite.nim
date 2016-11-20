@@ -161,12 +161,12 @@ proc preprocessContent(file, dir: string, obj: var JsonNode): string =
   var delimiter = 0
   while f.readLine(s):
     if delimiter >= 2:
-      result &= s
+      result &= s&"\n"
     else:
       if s.match(peg"'-' '-' '-' '-'*"):
         delimiter.inc
       else:
-        yaml &= "\n" & s
+        yaml &= s&"\n"
   if yaml == "":
     raise NoMetadataException(msg: "No metadata found in file: " & file)
   if not obj.hasKey("contents"):
