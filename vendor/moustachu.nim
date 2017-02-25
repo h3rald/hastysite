@@ -115,8 +115,12 @@ proc render(tmplate: string, contextStack: seq[Context], pwd="."): string =
         continue
       elif ctx.kind == CObject:
         # enter a new section
-        contextStack.add(ctx)
-        sections.add(token.value)
+        if ctx.len == 0:
+          index = ignore(token.value, tokens, index)
+          continue
+        else:
+          contextStack.add(ctx)
+          sections.add(token.value)
       elif ctx.kind == CArray:
         # update the array loop stacks
         if ctx.len == 0:

@@ -42,6 +42,12 @@
       "name": "minim", 
       "git": true, 
       "src": "https://github.com/h3rald/minim.git"
+    }, 
+    "commandeer": 
+    {
+      "name": "commandeer", 
+      "src": "https://github.com/fenekku/commandeer.git", 
+      "git": true
     }
   }
 }

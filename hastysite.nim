@@ -10,16 +10,10 @@ import
   streams,
   logging
 
-when defined(nifty):
-  import 
+import 
     packages/NimYAML/yaml,
     packages/minim/minim,
     packages/hastyscribe/hastyscribe
-else:
-  import
-    yaml,
-    minim,
-    hastyscribe
 
 import
   vendor/moustachu,
@@ -199,6 +193,16 @@ proc checkAsset(dir, file: string, obj: var JsonNode): bool =
   obj["assets"][fileid] = %newChecksum
   return oldChecksum != newChecksum
 
+proc checkTemplate(dir, file: string, obj: var JsonNode): bool =
+  var dir = dir & DirSep
+  let fileid = file.replace(dir, "")
+  var oldChecksum = ""
+  if obj["templates"].hasKey(fileid):
+    oldChecksum = obj["templates"][fileid].getStr
+  var newChecksum = $secureHashFile(file) 
+  obj["templates"][fileid] = %newChecksum
+  return oldChecksum != newChecksum
+
 proc get(json: JsonNode, key, default: string): string =
   if json.hasKey(key):
     return json[key].getStr
@@ -222,6 +226,8 @@ proc initChecksums(hs: HastySite): JsonNode =
     result["contents"] = newJObject()
   if not result.hasKey("assets"):
     result["assets"] = newJObject()
+  if not result.hasKey("templates"):
+    result["templates"] = newJObject()
 
 proc contentMetadata(f, dir: string, meta: JsonNode): JsonNode = 
   result = newJObject()
@@ -279,12 +285,21 @@ proc detectChanges*(hs: var HastySite) =
   var cs = hs.initChecksums()
   let contents = toSeq(hs.dirs.tempContents.walkDirRec())
   let assets = toSeq(hs.dirs.assets.walkDirRec())
+  let templates = toSeq(hs.dirs.templates.walkDirRec())
   let assetDir = hs.dirs.assets
   let contentDir = hs.dirs.tempContents
+  let templateDir = hs.dirs.templates
   hs.metadata = hs.files.metadata.parseFile
   let meta = hs.metadata
-  let modContentFiles = filter(contents) do (f: string) -> bool: checkContent(contentDir, f, cs)
-  let modAssetFiles = filter(assets) do (f: string) -> bool: checkAsset(assetDir, f, cs)
+  let modTemplateFiles = filter(templates) do (f: string) -> bool: checkTemplate(templateDir, f, cs)
+  var modContentFiles, modAssetFiles: seq[string]
+  if modTemplateFiles.len > 0:
+    # Templates may affect all contents and assets
+    modContentFiles = contents
+    modAssetFiles = assets
+  else:
+    modContentFiles = filter(contents) do (f: string) -> bool: checkContent(contentDir, f, cs)
+    modAssetFiles = filter(assets) do (f: string) -> bool: checkAsset(assetDir, f, cs)
   let modContents = modContentFiles.map(proc (f: string): JsonNode = return contentMetadata(f, contentDir, meta))
   let modAssets = modAssetFiles.map(proc (f: string): JsonNode = return assetMetadata(f, assetDir))
   hs.files.modified = modContents & modAssets
@@ -320,11 +335,11 @@ proc build*(hs: var HastySite) =
 when isMainModule:
 
   import
-    vendor/commandeer
+    packages/commandeer/commandeer
 
   proc usage(): string =
     return """  $1 v$2 - a tiny static site generator
-  (c) 2016 Fabio Cevasco
+  (c) 2016-2017 Fabio Cevasco
   
   Usage:
     hastysite command

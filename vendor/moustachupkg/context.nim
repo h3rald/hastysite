@@ -164,7 +164,10 @@ proc toString*(c: Context): string =
     return ""
 
 proc len*(c: Context): int =
-  if c.kind == CArray: result = c.elems.len
+  if c.kind == CArray: 
+    result = c.elems.len
+  elif c.kind == CObject:
+    result = c.fields.len
   else: discard
 
 converter toBool*(c: Context): bool =
