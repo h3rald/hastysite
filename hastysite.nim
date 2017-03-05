@@ -12,7 +12,7 @@ import
 
 import 
     packages/NimYAML/yaml,
-    packages/minim/minim,
+    packages/min/min,
     packages/hastyscribe/hastyscribe
 
 import
@@ -44,7 +44,7 @@ type
 
 setLogFilter(lvlNotice)
 
-#### MiNiM Library
+#### min Library
 
 proc hastysite_module*(i: In, hs: HastySite) =
   i.define("hastysite")

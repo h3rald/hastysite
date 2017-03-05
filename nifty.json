@@ -37,11 +37,11 @@
       "git": true, 
       "src": "https://github.com/h3rald/hastyscribe.git"
     }, 
-    "minim": 
+    "min": 
     {
-      "name": "minim", 
+      "name": "min", 
       "git": true, 
-      "src": "https://github.com/h3rald/minim.git"
+      "src": "https://github.com/h3rald/min.git"
     }, 
     "commandeer": 
     {
