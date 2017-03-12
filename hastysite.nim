@@ -140,7 +140,8 @@ proc hastysite_module*(i: In, hs: HastySite) =
       for item in c.qVal:
         fields[item.qVal[0].getString] = proc(): string = return $$item.qVal[1]
       var hastyscribe = newHastyScribe(options, fields)
-      i.push hastyscribe.compileFragment(t.getString).newVal
+      let file = t.getString()
+      i.push hastyscribe.compileFragment(file, hs.dirs.contents).newVal
 
     .finalize()
       
@@ -153,21 +154,27 @@ proc preprocessContent(file, dir: string, obj: var JsonNode): string =
   var s, yaml = ""
   result = ""
   var delimiter = 0
-  while f.readLine(s):
-    if delimiter >= 2:
-      result &= s&"\n"
-    else:
-      if s.match(peg"'-' '-' '-' '-'*"):
-        delimiter.inc
+  try:
+    while f.readLine(s):
+      if delimiter >= 2:
+        result &= s&"\n"
       else:
-        yaml &= s&"\n"
-  if yaml == "":
-    raise NoMetadataException(msg: "No metadata found in file: " & file)
+        if s.match(peg"'-' '-' '-' '-'*"):
+          delimiter.inc
+        else:
+          yaml &= s&"\n"
+  except:
+    discard
   if not obj.hasKey("contents"):
     obj["contents"] = newJObject()
-  var meta = yaml.loadToJson()[0]
+  var meta = newJObject();
+  try:
+    let docs = yaml.loadToJson()
+    if docs.len > 0:
+      meta  = docs[0]
+  except:
+    meta = newJObject()
   meta["path"] = %fileid
-  meta["type"] = %"content"
   meta["id"] = %fileid.changeFileExt("")
   meta["ext"] = %fileid.splitFile.ext
   obj["contents"][fileid] = meta
@@ -274,6 +281,8 @@ proc newHastySite*(file: string): HastySite =
 proc preprocess*(hs: HastySite) = 
   var meta = newJObject()
   for f in hs.dirs.contents.walkDirRec():
+    if f.isHidden:
+      continue
     let content = f.preprocessContent(hs.dirs.contents & DirSep, meta)
     let dest = hs.dirs.temp/f
     dest.parentDir.createDir
