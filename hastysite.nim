@@ -156,7 +156,7 @@ proc preprocessContent(file, dir: string, obj: var JsonNode): string =
   var delimiter = 0
   try:
     while f.readLine(s):
-      if delimiter >= 2:
+      if delimiter  >= 2:
         result &= s&"\n"
       else:
         if s.match(peg"'-' '-' '-' '-'*"):
@@ -168,12 +168,15 @@ proc preprocessContent(file, dir: string, obj: var JsonNode): string =
   if not obj.hasKey("contents"):
     obj["contents"] = newJObject()
   var meta = newJObject();
-  try:
-    let docs = yaml.loadToJson()
-    if docs.len > 0:
-      meta  = docs[0]
-  except:
-    meta = newJObject()
+  if delimiter < 2:
+    result = yaml
+  else:
+    try:
+      let docs = yaml.loadToJson()
+      if docs.len > 0:
+        meta  = docs[0]
+    except:
+      meta = newJObject()
   meta["path"] = %fileid
   meta["id"] = %fileid.changeFileExt("")
   meta["ext"] = %fileid.splitFile.ext
@@ -389,10 +392,7 @@ when isMainModule:
     of "rebuild":
       quitIfNotExists(cfg)
       var hs = newHastySite(cfg)
-      #if hs.confirmDeleteDir(hs.dirs.temp) and hs.confirmDeleteDir(hs.dirs.output):
       hs.clean()
       hs.build()
-      #else:
-      #  quit("Aborted.")
     else:
       quit("Error: Command '$1' is not supported" % command)
