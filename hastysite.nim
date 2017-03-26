@@ -47,7 +47,7 @@ setLogFilter(lvlNotice)
 #### min Library
 
 proc hastysite_module*(i: In, hs: HastySite) =
-  i.define("hastysite")
+  i.define()
 
     .symbol("metadata") do (i: In):
       i.push i.fromJson(hs.metadata)
@@ -143,7 +143,7 @@ proc hastysite_module*(i: In, hs: HastySite) =
       let file = t.getString()
       i.push hastyscribe.compileFragment(file, hs.dirs.contents).newVal
 
-    .finalize()
+    .finalize("hastysite")
       
 #### Helper Functions
 
