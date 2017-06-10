@@ -2,7 +2,6 @@ import
   json,
   strutils,
   os,
-  securehash,
   sequtils,
   tables,
   critbits,
@@ -30,8 +29,8 @@ type
     rules*: string
     scripts*: string
     metadata: string
-    checksums: string
-    modified: seq[JsonNode]
+    contents: seq[JsonNode]
+    assets: seq[JsonNode]
   HastySite* = object
     settings*: JsonNode
     metadata*: JsonNode
@@ -54,11 +53,17 @@ proc hastysite_module*(i: In, hs: HastySite) =
   def.symbol("settings") do (i: In):
     i.push i.fromJson(hs.settings)
 
-  def.symbol("modified") do (i: In):
-    var modified = newSeq[MinValue](0)
-    for j in hs.files.modified:
-      modified.add i.fromJson(j)
-    i.push modified.newVal(i.scope)
+  def.symbol("contents") do (i: In):
+    var contents = newSeq[MinValue](0)
+    for j in hs.files.contents:
+      contents.add i.fromJson(j)
+    i.push contents.newVal(i.scope)
+
+  def.symbol("assets") do (i: In):
+    var assets = newSeq[MinValue](0)
+    for j in hs.files.assets:
+      assets.add i.fromJson(j)
+    i.push assets.newVal(i.scope)
 
   def.symbol("output") do (i: In):
     i.push hs.dirs.output.newVal
@@ -189,36 +194,6 @@ proc preprocessContent(file, dir: string, obj: var JsonNode): string =
   obj["contents"][fileid] = meta
   f.close()
 
-proc checkContent(dir, file: string, obj: var JsonNode): bool =
-  var dir = dir & DirSep
-  let fileid = file.replace(dir, "")
-  var oldChecksum = ""
-  if obj["contents"].hasKey(fileid):
-    oldChecksum = obj["contents"][fileid].getStr
-  var newChecksum = $secureHashFile(file) 
-  obj["contents"][fileid] = %newChecksum
-  return oldChecksum != newChecksum
-
-proc checkAsset(dir, file: string, obj: var JsonNode): bool =
-  var dir = dir & DirSep
-  let fileid = file.replace(dir, "")
-  var oldChecksum = ""
-  if obj["assets"].hasKey(fileid):
-    oldChecksum = obj["assets"][fileid].getStr
-  var newChecksum = $secureHashFile(file) 
-  obj["assets"][fileid] = %newChecksum
-  return oldChecksum != newChecksum
-
-proc checkTemplate(dir, file: string, obj: var JsonNode): bool =
-  var dir = dir & DirSep
-  let fileid = file.replace(dir, "")
-  var oldChecksum = ""
-  if obj["templates"].hasKey(fileid):
-    oldChecksum = obj["templates"][fileid].getStr
-  var newChecksum = $secureHashFile(file) 
-  obj["templates"][fileid] = %newChecksum
-  return oldChecksum != newChecksum
-
 proc get(json: JsonNode, key, default: string): string =
   if json.hasKey(key):
     return json[key].getStr
@@ -227,23 +202,13 @@ proc get(json: JsonNode, key, default: string): string =
 
 proc confirmDeleteDir(hs: HastySite, dir: string): bool =
   warn "Delete directory '$1' and all its contents? [Y/n] " % dir
-  let confirm = $stdin.readChar
+  var confirm = newString(1)
+  discard stdin.readChars(confirm, 0, 1)
   return confirm == "\n" or confirm == "Y" or confirm == "y"
 
 proc quitIfNotExists(file: string) = 
   if not file.fileExists:
     quit("Error: File '$1' not found." % file)
-
-proc initChecksums(hs: HastySite): JsonNode = 
-  if not hs.files.checksums.fileExists:
-    hs.files.checksums.writeFile("{}")
-  result = hs.files.checksums.parseFile()
-  if not result.hasKey("contents"):
-    result["contents"] = newJObject()
-  if not result.hasKey("assets"):
-    result["assets"] = newJObject()
-  if not result.hasKey("templates"):
-    result["templates"] = newJObject()
 
 proc contentMetadata(f, dir: string, meta: JsonNode): JsonNode = 
   result = newJObject()
@@ -285,9 +250,8 @@ proc newHastySite*(file: string): HastySite =
   result.files.rules = json.get("rules", "rules.min")
   result.files.scripts = json.get("scripts", "scripts.min")
   result.files.metadata = result.dirs.temp / "metadata.json"
-  result.files.checksums = result.dirs.temp / "checksums.json"
 
-proc preprocess*(hs: HastySite) = 
+proc preprocess*(hs: var HastySite) = 
   var meta = newJObject()
   for f in hs.dirs.contents.walkDirRec():
     if f.isHidden:
@@ -297,31 +261,13 @@ proc preprocess*(hs: HastySite) =
     dest.parentDir.createDir
     dest.writeFile(content)
   hs.files.metadata.writeFile(meta.pretty)
-
-proc detectChanges*(hs: var HastySite) = 
-  hs.files.modified = newSeq[JsonNode](0)
-  var cs = hs.initChecksums()
+  hs.metadata = hs.files.metadata.parseFile
   let contents = toSeq(hs.dirs.tempContents.walkDirRec())
   let assets = toSeq(hs.dirs.assets.walkDirRec())
-  let templates = toSeq(hs.dirs.templates.walkDirRec())
-  let assetDir = hs.dirs.assets
   let contentDir = hs.dirs.tempContents
-  let templateDir = hs.dirs.templates
-  hs.metadata = hs.files.metadata.parseFile
-  let meta = hs.metadata
-  let modTemplateFiles = filter(templates) do (f: string) -> bool: checkTemplate(templateDir, f, cs)
-  var modContentFiles, modAssetFiles: seq[string]
-  if modTemplateFiles.len > 0:
-    # Templates may affect all contents and assets
-    modContentFiles = contents
-    modAssetFiles = assets
-  else:
-    modContentFiles = filter(contents) do (f: string) -> bool: checkContent(contentDir, f, cs)
-    modAssetFiles = filter(assets) do (f: string) -> bool: checkAsset(assetDir, f, cs)
-  let modContents = modContentFiles.map(proc (f: string): JsonNode = return contentMetadata(f, contentDir, meta))
-  let modAssets = modAssetFiles.map(proc (f: string): JsonNode = return assetMetadata(f, assetDir))
-  hs.files.modified = modContents & modAssets
-  hs.files.checksums.writeFile(cs.pretty)
+  let assetDir = hs.dirs.assets
+  hs.files.contents = contents.map(proc (f: string): JsonNode = return contentMetadata(f, contentDir, meta))
+  hs.files.assets = assets.map(proc (f: string): JsonNode = return assetMetadata(f, assetDir))
 
 proc init*(dir: string) =
   var json = newJObject()
@@ -344,8 +290,6 @@ proc clean*(hs: HastySite) =
 proc build*(hs: var HastySite) = 
   notice "Preprocessing..."
   hs.preprocess()
-  notice "Detecting changes..."
-  hs.detectChanges()
   notice "Processing rules..."
   hs.interpret(hs.files.rules)
   notice "All done."
@@ -365,8 +309,7 @@ when isMainModule:
   Commands:
     init              Initializes a new site in the current directory.
     build             Builds the site.
-    clean             Cleans temporary file.
-    rebuild           Rebuilds the site, after cleaning temporary files.
+    clean             Cleans temporary files.
   Options:
     -h, --help        Print this help
     -v, --version     Print the program version""" % [appname, version]
@@ -384,10 +327,6 @@ when isMainModule:
   case command:
     of "init":
       pwd.init()
-    of "build":
-      quitIfNotExists(cfg)
-      var hs = newHastySite(cfg)
-      hs.build()
     of "clean":
       quitIfNotExists(cfg)
       var hs = newHastySite(cfg)
@@ -395,7 +334,7 @@ when isMainModule:
         hs.clean()
       else:
         quit("Aborted.")
-    of "rebuild":
+    of "build":
       quitIfNotExists(cfg)
       var hs = newHastySite(cfg)
       hs.clean()
