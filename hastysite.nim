@@ -1,22 +1,21 @@
 import
   json,
   strutils,
-  pegs,
   os,
   securehash,
   sequtils,
   tables,
   critbits,
   streams,
+  parsecfg,
   logging
 
-import 
-    packages/NimYAML/yaml,
+import
     packages/min/min,
-    packages/hastyscribe/hastyscribe
+    packages/hastyscribe/hastyscribe,
+    packages/moustachu/src/moustachu
 
 import
-  vendor/moustachu,
   config
 
 type
@@ -47,103 +46,103 @@ setLogFilter(lvlNotice)
 #### min Library
 
 proc hastysite_module*(i: In, hs: HastySite) =
-  i.define()
+  let def = i.define()
 
-    .symbol("metadata") do (i: In):
-      i.push i.fromJson(hs.metadata)
+  def.symbol("metadata") do (i: In):
+    i.push i.fromJson(hs.metadata)
 
-    .symbol("settings") do (i: In):
-      i.push i.fromJson(hs.settings)
+  def.symbol("settings") do (i: In):
+    i.push i.fromJson(hs.settings)
 
-    .symbol("modified") do (i: In):
-      var modified = newSeq[MinValue](0)
-      for j in hs.files.modified:
-        modified.add i.fromJson(j)
-      i.push modified.newVal(i.scope)
+  def.symbol("modified") do (i: In):
+    var modified = newSeq[MinValue](0)
+    for j in hs.files.modified:
+      modified.add i.fromJson(j)
+    i.push modified.newVal(i.scope)
 
-    .symbol("output") do (i: In):
-      i.push hs.dirs.output.newVal
+  def.symbol("output") do (i: In):
+    i.push hs.dirs.output.newVal
 
-    .symbol("input-fread") do (i: In):
-      var d: MinValue
-      i.reqDictionary d
-      let t = d.dget("type".newVal).getString 
-      let path = d.dget("path".newVal).getString
-      var contents = ""
-      if t == "content":
-        contents = readFile(hs.dirs.tempContents/path)
-      else:
-        contents = readFile(hs.dirs.assets/path)
-      i.push contents.newVal
+  def.symbol("input-fread") do (i: In):
+    var d: MinValue
+    i.reqDictionary d
+    let t = d.dget("type".newVal).getString 
+    let path = d.dget("path".newVal).getString
+    var contents = ""
+    if t == "content":
+      contents = readFile(hs.dirs.tempContents/path)
+    else:
+      contents = readFile(hs.dirs.assets/path)
+    i.push contents.newVal
 
-    .symbol("output-fwrite") do (i: In):
-      var d: MinValue
-      i.reqDictionary d
-      let id = d.dget("id".newVal).getString
-      let ext = d.dget("ext".newVal).getString
-      var contents = ""
-      try:
-        contents = d.dget("contents".newVal).getString
-      except:
-        raise MetadataRequiredException(msg: "Metadata key 'contents' not found in dictionary.")
-      let outfile = hs.dirs.output/id&ext
-      outfile.parentDir.createDir
-      writeFile(outfile, contents)
+  def.symbol("output-fwrite") do (i: In):
+    var d: MinValue
+    i.reqDictionary d
+    let id = d.dget("id".newVal).getString
+    let ext = d.dget("ext".newVal).getString
+    var contents = ""
+    try:
+      contents = d.dget("contents".newVal).getString
+    except:
+      raise MetadataRequiredException(msg: "Metadata key 'contents' not found in dictionary.")
+    let outfile = hs.dirs.output/id&ext
+    outfile.parentDir.createDir
+    writeFile(outfile, contents)
 
-    .symbol("copy2output") do (i: In):
-      var d: MinValue
-      i.reqDictionary d
-      let t = d.dget("type".newVal).getString 
-      let path = d.dget("path".newVal).getString
-      var infile, outfile: string
-      if t == "content":
-        infile = hs.dirs.tempContents/path
-        outfile = hs.dirs.output/path
-      else:
-        infile = hs.dirs.assets/path
-        outfile = hs.dirs.output/path
-      notice " - Copying: ", infile, " -> ", outfile
-      outfile.parentDir.createDir
-      copyFileWithPermissions(infile, outfile)
+  def.symbol("copy2output") do (i: In):
+    var d: MinValue
+    i.reqDictionary d
+    let t = d.dget("type".newVal).getString 
+    let path = d.dget("path".newVal).getString
+    var infile, outfile: string
+    if t == "content":
+      infile = hs.dirs.tempContents/path
+      outfile = hs.dirs.output/path
+    else:
+      infile = hs.dirs.assets/path
+      outfile = hs.dirs.output/path
+    notice " - Copying: ", infile, " -> ", outfile
+    outfile.parentDir.createDir
+    copyFileWithPermissions(infile, outfile)
 
-    .symbol("content?") do (i: In):
-      var d: MinValue
-      i.reqDictionary d
-      let t = d.dget("type".newVal).getString 
-      let r = t == "content"
-      i.push r.newVal
+  def.symbol("content?") do (i: In):
+    var d: MinValue
+    i.reqDictionary d
+    let t = d.dget("type".newVal).getString 
+    let r = t == "content"
+    i.push r.newVal
 
-    .symbol("asset?") do (i: In):
-      var d: MinValue
-      i.reqDictionary d
-      let t = d.dget("type".newVal).getString 
-      let r = t == "asset"
-      i.push r.newVal
+  def.symbol("asset?") do (i: In):
+    var d: MinValue
+    i.reqDictionary d
+    let t = d.dget("type".newVal).getString 
+    let r = t == "asset"
+    i.push r.newVal
 
-    .symbol("mustache") do (i: In):
-      var t, c: MinValue
-      i.reqQuotationAndString c, t
-      if not c.isDictionary:
-        raise DictionaryRequiredException(msg: "No dictionary provided as template context.")
-      let ctx = newContext(%c)
-      let tplname = t.getString & ".mustache"
-      let tpl = readFile(hs.dirs.templates/tplname)
-      i.push tpl.render(ctx, hs.dirs.templates).newval
+  def.symbol("mustache") do (i: In):
+    var t, c: MinValue
+    i.reqQuotationAndString c, t
+    if not c.isDictionary:
+      raise DictionaryRequiredException(msg: "No dictionary provided as template context.")
+    let ctx = newContext(%c)
+    let tplname = t.getString & ".mustache"
+    let tpl = readFile(hs.dirs.templates/tplname)
+    i.push tpl.render(ctx, hs.dirs.templates).newval
 
-    .symbol("markdown") do (i: In):
-      var t, c: MinValue
-      i.reqQuotationAndString c, t
-      if not c.isDictionary:
-        raise DictionaryRequiredException(msg: "No dictionary provided for markdown processor fields.")
-      let options = HastyOptions(toc: false, output: nil, css: nil, watermark: nil, fragment: true)
-      var fields = initTable[string, proc():string]()
-      for item in c.qVal:
-        fields[item.qVal[0].getString] = proc(): string = return $$item.qVal[1]
-      var hastyscribe = newHastyScribe(options, fields)
-      let file = t.getString()
-      i.push hastyscribe.compileFragment(file, hs.dirs.contents).newVal
+  def.symbol("markdown") do (i: In):
+    var t, c: MinValue
+    i.reqQuotationAndString c, t
+    if not c.isDictionary:
+      raise DictionaryRequiredException(msg: "No dictionary provided for markdown processor fields.")
+    let options = HastyOptions(toc: false, output: nil, css: nil, watermark: nil, fragment: true)
+    var fields = initTable[string, proc():string]()
+    for item in c.qVal:
+      fields[item.qVal[0].getString] = proc(): string = return $$item.qVal[1]
+    var hastyscribe = newHastyScribe(options, fields)
+    let file = t.getString()
+    i.push hastyscribe.compileFragment(file, hs.dirs.contents).newVal
 
-    .finalize("hastysite")
+  def.finalize("hastysite")
       
 #### Helper Functions
 
@@ -151,7 +150,7 @@ proc preprocessContent(file, dir: string, obj: var JsonNode): string =
   let fileid = file.replace(dir, "")
   var f: File
   discard f.open(file)
-  var s, yaml = ""
+  var s, cfg = ""
   result = ""
   var delimiter = 0
   try:
@@ -159,22 +158,29 @@ proc preprocessContent(file, dir: string, obj: var JsonNode): string =
       if delimiter  >= 2:
         result &= s&"\n"
       else:
-        if s.match(peg"'-' '-' '-' '-'*"):
+        if s.startsWith("----"):
           delimiter.inc
         else:
-          yaml &= s&"\n"
+          cfg &= s&"\n"
   except:
     discard
   if not obj.hasKey("contents"):
     obj["contents"] = newJObject()
   var meta = newJObject();
   if delimiter < 2:
-    result = yaml
+    result = cfg
   else:
     try:
-      let docs = yaml.loadToJson()
-      if docs.len > 0:
-        meta  = docs[0]
+      let ss = newStringStream(cfg)
+      var p: CfgParser
+      p.open(ss, file)
+      while true:
+        var e = next(p)
+        case e.kind
+        of cfgKeyValuePair:
+          meta[e.key] = newJString(e.value)
+        else:
+          discard
     except:
       meta = newJObject()
   meta["path"] = %fileid
