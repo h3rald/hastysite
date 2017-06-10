@@ -182,10 +182,15 @@ proc preprocessContent(file, dir: string, obj: var JsonNode): string =
       while true:
         var e = next(p)
         case e.kind
+        of cfgEof:
+          break
         of cfgKeyValuePair:
           meta[e.key] = newJString(e.value)
+        of cfgError:
+          warn e.msg
         else:
           discard
+      p.close()
     except:
       meta = newJObject()
   meta["path"] = %fileid
