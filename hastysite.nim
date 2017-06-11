@@ -40,8 +40,6 @@ type
   DictionaryRequiredException* = ref Exception
   MetadataRequiredException* = ref Exception
 
-setLogFilter(lvlNotice)
-
 #### min Library
 
 proc hastysite_module*(i: In, hs: HastySite) =
@@ -109,20 +107,6 @@ proc hastysite_module*(i: In, hs: HastySite) =
     notice " - Copying: ", infile, " -> ", outfile
     outfile.parentDir.createDir
     copyFileWithPermissions(infile, outfile)
-
-  def.symbol("content?") do (i: In):
-    var d: MinValue
-    i.reqDictionary d
-    let t = d.dget("type".newVal).getString 
-    let r = t == "content"
-    i.push r.newVal
-
-  def.symbol("asset?") do (i: In):
-    var d: MinValue
-    i.reqDictionary d
-    let t = d.dget("type".newVal).getString 
-    let r = t == "asset"
-    i.push r.newVal
 
   def.symbol("mustache") do (i: In):
     var t, c: MinValue
@@ -205,12 +189,6 @@ proc get(json: JsonNode, key, default: string): string =
   else:
     return default
 
-proc confirmDeleteDir(hs: HastySite, dir: string): bool =
-  warn "Delete directory '$1' and all its contents? [Y/n] " % dir
-  var confirm = newString(1)
-  discard stdin.readChars(confirm, 0, 1)
-  return confirm == "\n" or confirm == "Y" or confirm == "y"
-
 proc quitIfNotExists(file: string) = 
   if not file.fileExists:
     quit("Error: File '$1' not found." % file)
@@ -291,6 +269,7 @@ proc init*(dir: string) =
 
 proc clean*(hs: HastySite) =
   hs.dirs.temp.removeDir
+  hs.dirs.output.removeDir
 
 proc build*(hs: var HastySite) = 
   notice "Preprocessing..."
@@ -302,10 +281,11 @@ proc build*(hs: var HastySite) =
 when isMainModule:
 
   import
-    packages/commandeer/commandeer
+    parseopt2
 
-  proc usage(): string =
-    return """  $1 v$2 - a tiny static site generator
+  setLogFilter(lvlNotice)
+
+  let usage = """  $1 v$2 - a tiny static site generator
   (c) 2016-2017 Fabio Cevasco
   
   Usage:
@@ -319,30 +299,32 @@ when isMainModule:
     -h, --help        Print this help
     -v, --version     Print the program version""" % [appname, version]
 
-
-
-  commandline:
-    argument command, string
-    exitoption "help", "h", usage()
-    exitoption "version", "v", version
-    errormsg usage()
-
   let pwd = getCurrentDir()
   let cfg = pwd/"settings.json"
-  case command:
-    of "init":
-      pwd.init()
-    of "clean":
-      quitIfNotExists(cfg)
-      var hs = newHastySite(cfg)
-      if hs.confirmDeleteDir(hs.dirs.temp) and hs.confirmDeleteDir(hs.dirs.output):
-        hs.clean()
+  for kind, key, val in getopt():
+    case kind:
+      of cmdArgument:
+        case key:
+          of "init":
+            pwd.init()
+          of "clean":
+            quitIfNotExists(cfg)
+            var hs = newHastySite(cfg)
+            hs.clean()
+          of "build":
+            quitIfNotExists(cfg)
+            var hs = newHastySite(cfg)
+            hs.clean()
+            hs.build()
+      of cmdLongOption, cmdShortOption:
+        case key:
+          of "help", "h":
+            echo usage
+            quit(0)
+          of "version", "v":
+            echo version
+            quit(0)
+          else:
+            discard
       else:
-        quit("Aborted.")
-    of "build":
-      quitIfNotExists(cfg)
-      var hs = newHastySite(cfg)
-      hs.clean()
-      hs.build()
-    else:
-      quit("Error: Command '$1' is not supported" % command)
+        discard

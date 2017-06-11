@@ -7,12 +7,18 @@
       },
       "git+src+tag": {
         "cmd": "git clone --branch {{tag}} {{src}} --depth 1"
+      },
+      "curl+src+name": {
+        "cmd": "curl {{src}} -o {{name}}"
       }
     },
     "update": {
       "git+name": {
         "cmd": "git pull",
         "pwd": "{{name}}"
+      },
+      "curl+src+name": {
+        "cmd": "curl {{src}} -o {{name}}"
       }
     }
   },
@@ -26,11 +32,6 @@
       "name": "min",
       "git": true,
       "src": "https://github.com/h3rald/min.git"
-    },
-    "commandeer": {
-      "name": "commandeer",
-      "src": "https://github.com/fenekku/commandeer.git",
-      "git": true
     },
     "moustachu": {
       "name": "moustachu",
