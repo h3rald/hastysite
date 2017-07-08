@@ -226,8 +226,8 @@ proc hastysite_module*(i: In, hs1: HastySite) =
     i.push hs.dirs.output.newVal
 
   def.symbol("input-fread") do (i: In):
-    var d: MinValue
-    i.reqDictionary d
+    var vals = i.expect(["dict"])
+    var d = vals[0]
     let t = d.dget("type".newVal).getString 
     let path = d.dget("path".newVal).getString
     var contents = ""
@@ -238,8 +238,8 @@ proc hastysite_module*(i: In, hs1: HastySite) =
     i.push contents.newVal
 
   def.symbol("output-fwrite") do (i: In):
-    var d: MinValue
-    i.reqDictionary d
+    var vals = i.expect(["dict"])
+    var d = vals[0]
     let id = d.dget("id".newVal).getString
     let ext = d.dget("ext".newVal).getString
     var contents = ""
@@ -252,8 +252,8 @@ proc hastysite_module*(i: In, hs1: HastySite) =
     writeFile(outfile, contents)
 
   def.symbol("copy2output") do (i: In):
-    var d: MinValue
-    i.reqDictionary d
+    var vals = i.expect(["dict"])
+    var d = vals[0]
     let t = d.dget("type".newVal).getString 
     let path = d.dget("path".newVal).getString
     var infile, outfile: string
@@ -268,20 +268,18 @@ proc hastysite_module*(i: In, hs1: HastySite) =
     copyFileWithPermissions(infile, outfile)
 
   def.symbol("mustache") do (i: In):
-    var t, c: MinValue
-    i.reqQuotationAndString c, t
-    if not c.isDictionary:
-      raise DictionaryRequiredException(msg: "No dictionary provided as template context.")
+    var vals = i.expect(["dict", "str"])
+    let c = vals[0]
+    let t = vals[1]
     let ctx = newContext(%c)
     let tplname = t.getString & ".mustache"
     let tpl = readFile(hs.dirs.templates/tplname)
     i.push tpl.render(ctx, hs.dirs.templates).newval
 
   def.symbol("markdown") do (i: In):
-    var t, c: MinValue
-    i.reqQuotationAndString c, t
-    if not c.isDictionary:
-      raise DictionaryRequiredException(msg: "No dictionary provided for markdown processor fields.")
+    var vals = i.expect(["dict", "str"])
+    let c = vals[0]
+    let t = vals[1]
     let options = HastyOptions(toc: false, output: nil, css: nil, watermark: nil, fragment: true)
     var fields = initTable[string, proc():string]()
     for item in c.qVal:
