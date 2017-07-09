@@ -9,6 +9,8 @@ import
   parsecfg,
   logging
 
+{.passL: "-Lpackages/hastyscribe/vendor".}
+
 import
     packages/min/min,
     packages/hastyscribe/hastyscribe,
