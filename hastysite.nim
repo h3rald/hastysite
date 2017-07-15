@@ -270,7 +270,7 @@ proc hastysite_module*(i: In, hs1: HastySite) =
     copyFileWithPermissions(infile, outfile)
 
   def.symbol("mustache") do (i: In):
-    var vals = i.expect(["dict", "str"])
+    var vals = i.expect(["dict", "string"])
     let c = vals[0]
     let t = vals[1]
     let ctx = newContext(%c)
@@ -279,7 +279,7 @@ proc hastysite_module*(i: In, hs1: HastySite) =
     i.push tpl.render(ctx, hs.dirs.templates).newval
 
   def.symbol("markdown") do (i: In):
-    var vals = i.expect(["dict", "str"])
+    var vals = i.expect(["dict", "string"])
     let c = vals[0]
     let t = vals[1]
     let options = HastyOptions(toc: false, output: nil, css: nil, watermark: nil, fragment: true)
