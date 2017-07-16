@@ -7,7 +7,8 @@ import
   critbits,
   streams,
   parsecfg,
-  logging
+  logging,
+  pegs
 
 {.passL: "-Lpackages/hastyscribe/vendor".}
 
@@ -46,7 +47,36 @@ type
 const SCRIPT_BUILD = "./scripts/build.min".slurp
 const SCRIPT_CLEAN = "./scripts/clean.min".slurp
 
+let PEG_CSS_VAR_DEF = peg"""
+    definition <- '--' {id} ':' {@} ';'
+    id <- [a-zA-Z0-9_-]+
+  """
+let PEG_CSS_VAR_INSTANCE = peg"""
+    instance <- 'var(--' {id} ')'
+    id <- [a-zA-Z0-9_-]+
+  """
+
+var CSS_VARS = initTable[string, string]()
+
 #### Helper Functions
+
+proc processCssVariables(text: string): string =
+  result = text
+  for def in result.findAll(PEG_CSS_VAR_DEF):
+    var matches: array[0..1, string]
+    discard def.match(PEG_CSS_VAR_DEF, matches)
+    let id = matches[0].strip
+    let value = matches[1].strip
+    CSS_VARS[id] = value
+    result = result.replace(def, "")
+  for instance in result.findAll(PEG_CSS_VAR_INSTANCE):
+    var matches: array[0..1, string]
+    discard instance.match(PEG_CSS_VAR_INSTANCE, matches)
+    let id = matches[0].strip
+    if CSS_VARS.hasKey(id):
+      result = result.replace(instance, CSS_VARS[id])
+    else:
+      stderr.writeLine("CSS variables '$1' is not defined." % ["--" & id])
 
 proc preprocessContent(file, dir: string, obj: var JsonNode): string =
   let fileid = file.replace(dir, "")
@@ -268,6 +298,12 @@ proc hastysite_module*(i: In, hs1: HastySite) =
     notice " - Copying: ", infile, " -> ", outfile
     outfile.parentDir.createDir
     copyFileWithPermissions(infile, outfile)
+
+  def.symbol("preprocess-css") do (i: In):
+    var vals = i.expect("string")
+    let css = vals[0]
+    let res = css.getString.processCssVariables()
+    i.push res.newVal()
 
   def.symbol("mustache") do (i: In):
     var vals = i.expect(["dict", "string"])
