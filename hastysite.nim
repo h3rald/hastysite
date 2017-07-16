@@ -47,13 +47,10 @@ type
 const SCRIPT_BUILD = "./scripts/build.min".slurp
 const SCRIPT_CLEAN = "./scripts/clean.min".slurp
 
-let PEG_CSS_VAR_DEF = peg"""
-    definition <- '--' {id} ':' {@} ';'
-    id <- [a-zA-Z0-9_-]+
-  """
+let PEG_CSS_VAR_DEF = peg"""'--' {[a-zA-Z0-9_-]+} ':' {@} ';'"""
 let PEG_CSS_VAR_INSTANCE = peg"""
-    instance <- 'var(--' {id} ')'
-    id <- [a-zA-Z0-9_-]+
+  instance <- 'var(--' {id} ')'
+  id <- [a-zA-Z0-9_-]+
   """
 
 var CSS_VARS = initTable[string, string]()
@@ -68,7 +65,6 @@ proc processCssVariables(text: string): string =
     let id = matches[0].strip
     let value = matches[1].strip
     CSS_VARS[id] = value
-    result = result.replace(def, "")
   for instance in result.findAll(PEG_CSS_VAR_INSTANCE):
     var matches: array[0..1, string]
     discard instance.match(PEG_CSS_VAR_INSTANCE, matches)
@@ -76,7 +72,7 @@ proc processCssVariables(text: string): string =
     if CSS_VARS.hasKey(id):
       result = result.replace(instance, CSS_VARS[id])
     else:
-      stderr.writeLine("CSS variables '$1' is not defined." % ["--" & id])
+      stderr.writeLine("CSS variable '$1' is not defined." % ["--" & id])
 
 proc preprocessContent(file, dir: string, obj: var JsonNode): string =
   let fileid = file.replace(dir, "")
