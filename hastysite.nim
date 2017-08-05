@@ -14,6 +14,7 @@ import
 
 import
     packages/min/min,
+    packages/min/packages/sha1/sha1,
     packages/hastyscribe/hastyscribe,
     packages/moustachu/src/moustachu
 
@@ -31,12 +32,13 @@ type
     scripts*: string
   HastyFiles = object
     rules*: string
-    metadata: string
+    checksums: string
     contents: seq[JsonNode]
     assets: seq[JsonNode]
   HastySite* = object
     settings*: JsonNode
     metadata*: JsonNode
+    checksums*: JsonNode
     scripts*: JsonNode
     dirs*: HastyDirs
     files*: HastyFiles 
@@ -135,19 +137,25 @@ proc contentMetadata(f, dir: string, meta: JsonNode): JsonNode =
   if meta.hasKey("contents") and meta["contents"].hasKey(path):
     for key, value in meta["contents"][path].pairs:
       result[key] = value
-  result["path"] = %path
-  result["type"] = %"content"
-  result["id"] = %path.changeFileExt("")
-  result["ext"] = %fdata.ext
+  result["path"] = %path                    # source path relative to input
+  result["type"] = %"content"             
+  result["ext"] = %fdata.ext                # output extension
+  if fdata.ext == "":
+    result["id"] = %path
+  else:
+    result["id"] = %path.changeFileExt("")  # output path relative to output without extension
 
 proc assetMetadata(f, dir: string): JsonNode = 
   result = newJObject()
   let fdata = f.splitFile
   let path = f.replace(dir & DirSep, "")
-  result["path"] = %path
-  result["type"] = %"asset"
-  result["id"] = %path.changeFileExt("")
-  result["ext"] = %fdata.ext
+  result["path"] = %path                    # source path relative to input
+  result["type"] = %"asset"               
+  result["ext"] = %fdata.ext                # output extension
+  if fdata.ext == "":
+    result["id"] = %path
+  else:
+    result["id"] = %path.changeFileExt("")  # output path relative to output without extension
 
 proc hastysite_module*(i: In, hs1: HastySite)
 
@@ -169,7 +177,7 @@ proc newHastySite*(file: string): HastySite =
   result.dirs.tempContents = result.dirs.temp / result.dirs.contents
   result.dirs.scripts = json.get("scripts", "scripts")
   result.files.rules = json.get("rules", "rules.min")
-  result.files.metadata = result.dirs.temp / "metadata.json"
+  result.files.checksums = result.dirs.temp / "checksums.json"
   result.scripts = newJObject()
   for f in result.dirs.scripts.walkDir(true):
     let path = result.dirs.scripts/f.path
@@ -188,8 +196,10 @@ proc preprocess*(hs: var HastySite) =
     let dest = hs.dirs.temp/f
     dest.parentDir.createDir
     dest.writeFile(content)
-  hs.files.metadata.writeFile(meta.pretty)
-  hs.metadata = hs.files.metadata.parseFile
+  if not hs.files.checksums.fileExists:
+    let checksums = newJObject()
+    hs.files.checksums.writeFile(checksums.pretty)
+  hs.checksums = hs.files.checksums.parseFile
   let contents = toSeq(hs.dirs.tempContents.walkDirRec())
   let assets = toSeq(hs.dirs.assets.walkDirRec())
   let contentDir = hs.dirs.tempContents
@@ -214,6 +224,15 @@ proc init*(dir: string) =
   writeFile(dir/"scripts/build.min", SCRIPT_BUILD)
   writeFile(dir/"scripts/clean.min", SCRIPT_CLEAN)
 
+proc wasModified(hs: HastySite, sha1: string, outfile: string): bool =
+  return (not hs.checksums.hasKey(outfile) or hs.checksums[outfile] != %sha1)
+
+proc updateSHA1(hs: HastySite, sha1: string, outfile: string) =
+  hs.checksums[outfile] = %sha1
+
+proc postprocess(hs: HastySite) =
+  hs.files.checksums.writeFile(hs.checksums.pretty)
+
 #### min Library
 
 proc hastysite_module*(i: In, hs1: HastySite) =
@@ -222,6 +241,9 @@ proc hastysite_module*(i: In, hs1: HastySite) =
   
   def.symbol("preprocess") do (i: In):
     hs.preprocess()
+
+  def.symbol("postprocess") do (i: In):
+    hs.postprocess()
 
   def.symbol("process-rules") do (i: In):
     hs.interpret(hs.files.rules)
@@ -275,25 +297,36 @@ proc hastysite_module*(i: In, hs1: HastySite) =
       contents = d.dget("contents".newVal).getString
     except:
       raise MetadataRequiredException(msg: "Metadata key 'contents' not found in dictionary.")
-    let outfile = hs.dirs.output/id&ext
+    let outname = id&ext
+    let outfile = hs.dirs.output/outname
     outfile.parentDir.createDir
-    writeFile(outfile, contents)
+    let sha1 = compute(contents).toHex
+    if hs.wasModified(sha1, outname):
+      notice " - Writing file: ", outfile
+      hs.updateSHA1(sha1, outname)
+      writeFile(outfile, contents)
 
-  def.symbol("copy2output") do (i: In):
+  def.symbol("output-cp") do (i: In):
     var vals = i.expect(["dict"])
     var d = vals[0]
     let t = d.dget("type".newVal).getString 
     let path = d.dget("path".newVal).getString
+    let id = d.dget("id".newVal).getString
+    let ext = d.dget("ext".newVal).getString
     var infile, outfile: string
+    let outname = id&ext
     if t == "content":
       infile = hs.dirs.tempContents/path
-      outfile = hs.dirs.output/path
+      outfile = hs.dirs.output/outname
     else:
       infile = hs.dirs.assets/path
-      outfile = hs.dirs.output/path
-    notice " - Copying: ", infile, " -> ", outfile
-    outfile.parentDir.createDir
-    copyFileWithPermissions(infile, outfile)
+      outfile = hs.dirs.output/outname
+    let sha1 = compute(infile.readFile).toHex
+    if hs.wasModified(sha1, outname):
+      hs.updateSHA1(sha1, outname)
+      notice " - Copying: ", infile, " -> ", outfile
+      outfile.parentDir.createDir
+      copyFileWithPermissions(infile, outfile)
 
   def.symbol("preprocess-css") do (i: In):
     var vals = i.expect("string")

@@ -6,4 +6,6 @@ clean-temp
 preprocess
 "Processing rules.." notice
 process-rules
+"Postprocessing..." notice
+postprocess
 "All done." notice
