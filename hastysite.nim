@@ -188,6 +188,8 @@ proc newHastySite*(file: string): HastySite =
     result.scripts[key] = %desc
 
 proc preprocess*(hs: var HastySite) = 
+  if hs.dirs.tempContents.existsDir:
+    hs.dirs.tempContents.removeDir
   var meta = newJObject()
   for f in hs.dirs.contents.walkDirRec():
     if f.isHidden:
