@@ -15,7 +15,7 @@ import
 import
     packages/min/min,
     packages/min/packages/sha1/sha1,
-    packages/min/packages/niftylogger
+    packages/min/packages/niftylogger,
     packages/hastyscribe/hastyscribe,
     packages/moustachu/src/moustachu
 

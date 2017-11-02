@@ -1,0 +1,10 @@
+{
+  "contents": "contents",
+  "assets": "assets",
+  "templates": "templates",
+  "temp": "temp",
+  "output": "output",
+  "scripts": "scripts",
+  "title": "My Web Site",
+  "rules": "rules.min"
+}
