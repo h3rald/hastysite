@@ -15,6 +15,7 @@ import
 import
     packages/min/min,
     packages/min/packages/sha1/sha1,
+    packages/min/packages/niftylogger
     packages/hastyscribe/hastyscribe,
     packages/moustachu/src/moustachu
 
@@ -367,7 +368,9 @@ when isMainModule:
 
   import
     parseopt2
-
+    
+  if logging.getHandlers().len == 0:
+    newNiftyLogger().addHandler()
   setLogFilter(lvlNotice)
 
   proc usage(scripts: bool, hs: HastySite): string = 
