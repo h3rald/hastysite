@@ -199,6 +199,8 @@ proc preprocess*(hs: var HastySite) =
     let dest = hs.dirs.temp/f
     dest.parentDir.createDir
     dest.writeFile(content)
+  if not hs.dirs.temp.dirExists:
+    hs.dirs.temp.createDir
   if not hs.files.checksums.fileExists:
     let checksums = newJObject()
     hs.files.checksums.writeFile(checksums.pretty)
