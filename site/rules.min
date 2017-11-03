@@ -1,0 +1,67 @@
+'hastysite import
+
+;Routing
+(
+  (dict) expect -> =meta
+  meta /id :id
+  meta /ext :ext
+  (
+    ((id "home" ==) (
+      meta (
+        ("index" %id)
+        (".html" %ext)
+      ) tap
+    ))
+    ((ext ".md" ==) (
+      meta (
+        (".html" %ext)
+        ("$1/index" (id) => % %id)
+      ) tap
+    ))
+  ) case
+) :set-destination
+
+;Process Markdown content
+(
+  (dict) expect -> =meta
+  "" :page
+  "" :contents
+  meta /content-type :tpl
+  meta (
+    (input-fread @contents meta)
+    (settings /title %site-title)
+    (settings /description %site-description)
+    (=temp contents temp markdown @contents temp)
+    (contents %contents)
+    (=temp tpl temp mustache @page temp)
+    (page %contents)
+  ) tap
+) :process-content
+
+;Process CSS asset
+(
+  (dict) expect -> =meta
+  "" :contents
+  meta (
+    (input-fread @contents meta)
+    (=temp contents preprocess-css @contents temp)
+    (contents %contents)
+  ) tap
+  output-fwrite
+) :process-css-asset
+
+;Main
+contents (
+  (dict) expect -> 
+  process-content set-destination output-fwrite
+) foreach
+
+assets (
+  (dict) expect -> 
+  dup
+  (
+    ((/ext ".css" match) (process-css-asset))
+    ((/id "^\." match) ()) ;Ignore hidden files
+    ((true) (output-cp))
+  ) case
+) foreach
