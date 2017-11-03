@@ -5,6 +5,7 @@
   "temp": "temp",
   "output": "output",
   "scripts": "scripts",
-  "title": "My Web Site",
+  "title": "HastySite",
+  "descriotion": "A simple but powerful static site generator",
   "rules": "rules.min"
 }

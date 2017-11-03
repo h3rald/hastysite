@@ -1,4 +1,6 @@
 nimcache/
 hastysite
 packages/
+site/temp
+site/output
 hastysite.exe
