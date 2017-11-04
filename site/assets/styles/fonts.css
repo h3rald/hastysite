@@ -1,0 +1,46 @@
+@font-face {
+ font-family: "FontAwesome";
+ src: url("../fonts/FontAwesome-webfont.woff") format("woff");
+ -webkit-font-smoothing: antialiased;
+ -moz-osx-font-smoothing: grayscale;
+}
+
+@font-face {
+ font-family: "Source Sans Pro";
+ src: url("../fonts/SourceSansPro-Regular.woff") format("woff");
+ -webkit-font-smoothing: antialiased;
+ -moz-osx-font-smoothing: grayscale;
+}
+
+@font-face {
+ font-family: "Source Sans Pro";
+ src: url("../fonts/SourceSansPro-It.woff") format("woff");
+ -webkit-font-smoothing: antialiased;
+ -moz-osx-font-smoothing: grayscale;
+ font-style: italic;
+}
+
+@font-face {
+ font-family: "Source Sans Pro";
+ src: url("../fonts/SourceSansPro-Bold.woff") format("woff");
+ -webkit-font-smoothing: antialiased;
+ -moz-osx-font-smoothing: grayscale;
+ font-weight: bold;
+}
+
+@font-face {
+ font-family: "Source Sans Pro";
+ src: url("../fonts/SourceSansPro-BoldIt.woff") format("woff");
+ -webkit-font-smoothing: antialiased;
+ -moz-osx-font-smoothing: grayscale;
+ font-weight: bold;
+ font-style: italic;
+}
+
+@font-face {
+ font-family: "Source Code Pro";
+ src: url("../fonts/SourceCodePro-Regular.woff") format("woff");
+ -webkit-font-smoothing: antialiased;
+ -moz-osx-font-smoothing: grayscale;
+}
+

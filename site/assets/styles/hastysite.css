@@ -1,0 +1,21 @@
+.fa {
+  font-family: 'FontAwesome'; 
+}
+
+i.fa {
+  font-style: normal;
+  font-weight: normal;
+}
+
+main {
+  margin-top: 60px;
+}
+
+footer {
+  margin: auto;
+  text-align: center;
+}
+
+footer a::before {
+  content: none !important;  
+}
