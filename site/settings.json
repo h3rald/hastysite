@@ -6,6 +6,5 @@
   "output": "output",
   "scripts": "scripts",
   "title": "HastySite",
-  "description": "A simple but powerful static site generator",
   "rules": "rules.min"
 }

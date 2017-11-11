@@ -30,7 +30,6 @@
   meta (
     (input-fread @contents meta)
     (settings /title %site-title)
-    (settings /description %site-description)
     (=temp contents temp markdown @contents temp)
     (contents %contents)
     (=temp tpl temp mustache @page temp)
