@@ -30,6 +30,7 @@
   meta (
     (input-fread @contents meta)
     (settings /title %site-title)
+    (settings /base-url %site-base-url)
     (=temp contents temp markdown @contents temp)
     (contents %contents)
     (=temp tpl temp mustache @page temp)
