@@ -3,7 +3,7 @@
 
 "Preprocessing..." notice
 preprocess
-"Processing rules.." notice
+"Processing rules..." notice
 process-rules
 "Postprocessing..." notice
 postprocess

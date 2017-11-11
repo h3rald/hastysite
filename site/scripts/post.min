@@ -1,3 +1,4 @@
+;Creates a new empty post.
 ""                        :ident
 ""                        :title
 timestamp                 :ts

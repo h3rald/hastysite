@@ -1,0 +1,3 @@
+.unstyled li a::before {
+  content: none;  
+}

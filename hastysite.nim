@@ -67,6 +67,8 @@ const STYLE_FONTS = "./site/assets/styles/fonts.css".slurp
 const STYLE_HASTYSITE = "./site/assets/styles/hastysite.css".slurp
 const STYLE_HASTYSCRIBE = "./site/assets/styles/hastyscribe.css".slurp
 const STYLE_LUXBAR = "./site/assets/styles/luxbar.css".slurp
+const STYLE_SITE = "./site/assets/styles/site.css".slurp
+const RULES = "./site/rules.min".slurp
 
 let PEG_CSS_VAR_DEF = peg"""'--' {[a-zA-Z0-9_-]+} ':' {@} ';'"""
 let PEG_CSS_VAR_INSTANCE = peg"""
@@ -244,7 +246,7 @@ proc init*(dir: string) =
   createDir(dir/"assets/styles")
   json["title"]     = %"My Web Site"
   json["rules"]     = %"rules.min"
-  writeFile(dir/json["rules"].getStr, "")
+  writeFile(dir/"rules.min", RULES)
   writeFile(dir/"settings.json", json.pretty)
   writeFile(dir/"scripts/build.min", SCRIPT_BUILD)
   writeFile(dir/"scripts/clean.min", SCRIPT_CLEAN)
@@ -266,6 +268,7 @@ proc init*(dir: string) =
   writeFile(dir/"assets/styles/hastyscribe.css", STYLE_HASTYSCRIBE)
   writeFile(dir/"assets/styles/hastysite.css", STYLE_HASTYSITE)
   writeFile(dir/"assets/styles/luxbar.css", STYLE_LUXBAR)
+  writeFile(dir/"assets/styles/site.css", STYLE_SITE)
 
 proc wasModified(hs: HastySite, sha1: string, outfile: string): bool =
   return (not hs.checksums.hasKey(outfile) or hs.checksums[outfile] != %sha1)
@@ -422,7 +425,7 @@ when isMainModule:
 
   Commands:
     init - Initializes a new site in the current directory.
-"""
+""" % [appname, version]
     if scripts:
       for key, value in hs.scripts.pairs:
         text &= "    " & key & " - " & value.getStr & "\n"
@@ -430,7 +433,7 @@ when isMainModule:
     -h, --help        Print this help
     -l, --loglevel    Sets the log level (one of: debug, info, notice,
                       warn, error, fatal). Default: notice
-    -v, --version     Print the program version""" % [appname, version]
+    -v, --version     Print the program version""" 
     return text
 
   let pwd = getCurrentDir()
