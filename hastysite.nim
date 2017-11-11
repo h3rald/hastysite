@@ -47,8 +47,26 @@ type
   DictionaryRequiredException* = ref Exception
   MetadataRequiredException* = ref Exception
 
-const SCRIPT_BUILD = "./scripts/build.min".slurp
-const SCRIPT_CLEAN = "./scripts/clean.min".slurp
+const SCRIPT_BUILD = "./site/scripts/build.min".slurp
+const SCRIPT_CLEAN = "./site/scripts/clean.min".slurp
+const SCRIPT_POST = "./site/scripts/post.min".slurp
+const SCRIPT_PAGE = "./site/scripts/page.min".slurp
+const TEMPLATE_HEAD = "./site/templates/_head.mustache".slurp
+const TEMPLATE_HEADER = "./site/templates/_header.mustache".slurp
+const TEMPLATE_FOOTER = "./site/templates/_footer.mustache".slurp
+const TEMPLATE_NEWS = "./site/templates/news.mustache".slurp
+const TEMPLATE_PAGE = "./site/templates/page.mustache".slurp
+const TEMPLATE_post = "./site/templates/post.mustache".slurp
+const FONT_SCP_R = "./site/assets/fonts/SourceCodePro-Regular.woff".slurp
+const FONT_SSP_R = "./site/assets/fonts/SourceSansPro-Regular.woff".slurp
+const FONT_SSP_B = "./site/assets/fonts/SourceSansPro-Bold.woff".slurp
+const FONT_SSP_BI = "./site/assets/fonts/SourceSansPro-BoldIt.woff".slurp
+const FONT_SSP_I = "./site/assets/fonts/SourceSansPro-It.woff".slurp
+const FONT_FA = "./site/assets/fonts/fontawesome-webfont.woff".slurp
+const STYLE_FONTS = "./site/assets/styles/fonts.css".slurp
+const STYLE_HASTYSITE = "./site/assets/styles/hastysite.css".slurp
+const STYLE_HASTYSCRIBE = "./site/assets/styles/hastyscribe.css".slurp
+const STYLE_LUXBAR = "./site/assets/styles/luxbar.css".slurp
 
 let PEG_CSS_VAR_DEF = peg"""'--' {[a-zA-Z0-9_-]+} ':' {@} ';'"""
 let PEG_CSS_VAR_INSTANCE = peg"""
@@ -222,12 +240,32 @@ proc init*(dir: string) =
   json["scripts"]   = %"scripts"
   for key, value in json.pairs:
     createDir(dir/value.getStr)
+  createDir(dir/"assets/fonts")
+  createDir(dir/"assets/styles")
   json["title"]     = %"My Web Site"
   json["rules"]     = %"rules.min"
   writeFile(dir/json["rules"].getStr, "")
   writeFile(dir/"settings.json", json.pretty)
   writeFile(dir/"scripts/build.min", SCRIPT_BUILD)
   writeFile(dir/"scripts/clean.min", SCRIPT_CLEAN)
+  writeFile(dir/"scripts/page.min", SCRIPT_PAGE)
+  writeFile(dir/"scripts/clean.min", SCRIPT_POST)
+  writeFile(dir/"templates/_head.mustache", TEMPLATE_HEAD)
+  writeFile(dir/"templates/_header.mustache", TEMPLATE_HEADER)
+  writeFile(dir/"templates/_footer.mustache", TEMPLATE_FOOTER)
+  writeFile(dir/"templates/page.mustache", TEMPLATE_PAGE)
+  writeFile(dir/"templates/news.mustache", TEMPLATE_NEWS)
+  writeFile(dir/"templates/post.mustache", TEMPLATE_POST)
+  writeFile(dir/"assets/fonts/SourceCodePro-Regular.woff", FONT_SCP_R)
+  writeFile(dir/"assets/fonts/SourceSansPro-Regular.woff", FONT_SSP_R)
+  writeFile(dir/"assets/fonts/SourceSansPro-Bold.woff", FONT_SSP_B)
+  writeFile(dir/"assets/fonts/SourceSansPro-It.woff", FONT_SSP_I)
+  writeFile(dir/"assets/fonts/SourceSansPro-BoldIt.woff", FONT_SSP_BI)
+  writeFile(dir/"assets/fonts/fontawesome-webfont.woff", FONT_FA)
+  writeFile(dir/"assets/styles/fonts.css", STYLE_FONTS)
+  writeFile(dir/"assets/styles/hastyscribe.css", STYLE_HASTYSCRIBE)
+  writeFile(dir/"assets/styles/hastysite.css", STYLE_HASTYSITE)
+  writeFile(dir/"assets/styles/luxbar.css", STYLE_LUXBAR)
 
 proc wasModified(hs: HastySite, sha1: string, outfile: string): bool =
   return (not hs.checksums.hasKey(outfile) or hs.checksums[outfile] != %sha1)
