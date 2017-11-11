@@ -1,0 +1,42 @@
+""                        :ident
+""                        :title
+timestamp                 :ts
+ts "d MMMM yyyy" tformat  :date
+false     :valid-id
+
+(
+  (string) expect first :ident
+  ident "^[a-z0-9-]+$" match :valid-regexp
+  (. "contents" "posts") => "/" join ls =filelist
+  filelist (filename "(.+)\..+$" search 1 get) map ident in? not :valid-file
+  valid-regexp valid-file and
+) :validate
+
+
+(valid-id not) (
+  "ID" ask @ident
+  ident validate @valid-id
+  (valid-id not) ("ID must not be already used and it must contain only lowercase letters, numbers, or -" warn) when
+) while
+
+"Title" ask @title
+
+"-----
+id: $1
+title: \"$2\"
+content-type: post
+date: \"$3\"
+timestamp: $4
+-----
+
+" (ident title date ts) => % :metadata
+
+metadata puts
+("Create post?" confirm) 
+(
+  (ident ".md") => "" join :fn 
+  (. "contents" "posts") => "/" join :dirpath
+  (dirpath exists? not) (dirpath mkdir) when
+  (dirpath fn) => "/" join :path
+  metadata path fwrite
+) when

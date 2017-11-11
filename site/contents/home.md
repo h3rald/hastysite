@@ -1,4 +1,5 @@
 -----
+id: "news"
 content-type: "page"
 title: "Home"
 -----
