@@ -12,7 +12,7 @@
         (".html" %ext)
       ) tap
     ))
-    ((ext ".md" ==) (
+    ((true) (
       meta (
         (".html" %ext)
         ("$1/index" (id) => % %id)
@@ -50,12 +50,19 @@
   output-fwrite
 ) :process-css-asset
 
-;Main
+;;; Main ;;;
+
+;Filter and sort posts by timestamp
+contents (/content-type "post" ==) filter (=a =b a /timestamp  b /timestamp >) sort =posts
+
+;Process contents
 contents (
-  (dict) expect -> 
-  process-content set-destination output-fwrite
+  (dict) expect -> =content
+  content (/id "news" ==) (content posts %posts #content) when
+  content process-content set-destination output-fwrite
 ) foreach
 
+;Process assets
 assets (
   (dict) expect -> 
   dup

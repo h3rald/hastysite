@@ -1,0 +1,37 @@
+""      :ident
+""      :title
+false   :valid-id
+
+(
+  (string) expect first :ident
+  ident "^[a-z0-9-]+$" match :valid-regexp
+  (. "contents") => "/" join ls =filelist
+  filelist (filename "(.+)\..+$" search 1 get) map ident in? not :valid-file
+  valid-regexp valid-file and
+) :validate
+
+
+(valid-id not) (
+  "ID" ask @ident
+  ident validate @valid-id
+  (valid-id not) ("ID must not be already used and it must contain only lowercase letters, numbers, or -" warn) when
+) while
+
+"Title" ask @title
+
+"-----
+id: $1
+title: \"$2\"
+content-type: page
+-----
+
+" (ident title) => % :metadata
+
+metadata puts
+("Create page?" confirm) 
+(
+  (ident ".md") => "" join :fn 
+  (. "contents") => "/" join :dirpath
+  (dirpath fn) => "/" join :path
+  metadata path fwrite
+) when
