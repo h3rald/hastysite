@@ -38,7 +38,6 @@ type
     assets: seq[JsonNode]
   HastySite* = object
     settings*: JsonNode
-    metadata*: JsonNode
     checksums*: JsonNode
     scripts*: JsonNode
     dirs*: HastyDirs
@@ -299,9 +298,6 @@ proc hastysite_module*(i: In, hs1: HastySite) =
 
   def.symbol("clean-temp") do (i: In): 
     hs.dirs.temp.removeDir
-
-  def.symbol("metadata") do (i: In):
-    i.push i.fromJson(hs.metadata)
 
   def.symbol("settings") do (i: In):
     i.push i.fromJson(hs.settings)

@@ -16,5 +16,6 @@ HastySite is a minimalist but powerful static site generator written in [Nim](ht
 > * [](class:check) Custom script definition, using the [min](https://min-lang.org) programming language.
 > * [](class:check) Default stylesheet and fonts from [HastyScribe](https://h3rald.com/hastyscribe).
 > * [](class:check) Default scripts and rules to get started quickly.
+> * [](class:check) All packed in a single executable file, with no dependencies, available for the most common desktop platforms.
 
 
