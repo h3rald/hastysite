@@ -1,6 +1,8 @@
 nimcache/
-hastysite
 packages/
 site/temp
 site/output
+hastysite*.zip
+nakefile
+hastysite
 hastysite.exe
