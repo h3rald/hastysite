@@ -1,6 +1,6 @@
 @font-face {
  font-family: "FontAwesome";
- src: url("../fonts/FontAwesome-webfont.woff") format("woff");
+ src: url("../fonts/fontawesome-webfont.woff") format("woff");
  -webkit-font-smoothing: antialiased;
  -moz-osx-font-smoothing: grayscale;
 }
