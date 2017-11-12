@@ -30,3 +30,11 @@ Special thanks also to the creators and maintainers of the following projects, t
 
 * The [Nim](https://nim-lang.org) programming language, used to develop HastySite and all the above-mentioned projects.
 * The [Discount](https://www.pell.portland.or.us/~orc/Code/discount/) markdown compiler, used as the basis for HastyScribe.
+
+## Sites Using HastySite
+
+HastySite powers the following web sites:
+
+* <https://hastysite.h3rald.com>
+* <https://h3rald.com>
+* <https://min-lang.org>
