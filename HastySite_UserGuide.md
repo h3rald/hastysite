@@ -25,3 +25,13 @@
 ## Reference
 
 {@ site/contents/reference.md || 1 @}
+
+## Changelog
+
+### v1.0.0
+
+{@ site/contents/posts/v010-released.md || 1 @}
+
+### v0.1.0
+
+{@ site/contents/posts/v100-released.md || 1 @}
