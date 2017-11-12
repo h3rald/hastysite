@@ -1,8 +1,6 @@
 import 
-  nake
-
-import
-  core/consts
+  nake,
+  config
 
 const
   compile = "nim c -d:release"
@@ -17,24 +15,24 @@ const
   zip = "zip -X"
 
 proc filename_for(os: string, arch: string): string =
-  return "min" & "_v" & version & "_" & os & "_" & arch & ".zip"
+  return "hastysite" & "_v" & version & "_" & os & "_" & arch & ".zip"
 
-task "windows-x64-build", "Build min for Windows (x64)":
+task "windows-x64-build", "Build hastysite for Windows (x64)":
   direshell compile, windows_x64, hs_file
 
-task "linux-x86-build", "Build min for Linux (x86)":
+task "linux-x86-build", "Build hastysite for Linux (x86)":
   direshell compile, linux_x86,  hs_file
   
-task "linux-x64-build", "Build min for Linux (x64)":
+task "linux-x64-build", "Build hastysite for Linux (x64)":
   direshell compile, linux_x64,  hs_file
   
-task "linux-arm-build", "Build min for Linux (ARM)":
+task "linux-arm-build", "Build hastysite for Linux (ARM)":
   direshell compile, linux_arm,  hs_file
   
-task "macosx-x64-build", "Build min for Mac OS X (x64)":
+task "macosx-x64-build", "Build hastysite for Mac OS X (x64)":
   direshell compile, macosx_x64, hs_file
 
-task "release", "Release min":
+task "release", "Release hastysite":
   echo "\n\n\n WINDOWS - x64:\n\n"
   runTask "windows-x64-build"
   direshell zip, filename_for("windows", "x64"), hs & ".exe"
