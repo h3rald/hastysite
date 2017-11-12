@@ -6,6 +6,5 @@
   "output": "output",
   "scripts": "scripts",
   "title": "HastySite",
-  "base-url": "",
   "rules": "rules.min"
 }

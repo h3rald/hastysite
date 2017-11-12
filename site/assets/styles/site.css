@@ -1,3 +1,9 @@
 #page-getting-started .unstyled li a::before {
   content: none;  
 }
+
+footer p {
+  font-size: 0.8em;
+  line-height: 1em;
+  margin: 5px 0;
+}
