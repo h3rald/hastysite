@@ -7,3 +7,7 @@ footer p {
   line-height: 1em;
   margin: 5px 0;
 }
+
+main {
+  padding: 0 2em;
+}
