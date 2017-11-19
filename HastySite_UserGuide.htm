@@ -3262,9 +3262,9 @@ a[href="#document-top"]:before {
   color: #eee;
   background-color: #222;
   border: 1px solid #ccc;
-  white-space: pre-wrap;
   padding: 0 3px;
   border: 2px solid #999;
+  white-space: pre-wrap;
   border-top: 10px solid #999;
 }
 .terminal a {
@@ -3285,13 +3285,17 @@ a[href="#document-top"]:before {
 }
 .terminal p,
 .terminal p:first-child {
-  margin-top: 0;
+  margin-top: -40px;
   margin-bottom: 0;
   text-shadow: none;
   font-weight: normal;
   font-family: "Source Code Pro", "Monaco", "DejaVu Sans Mono", "Courier New", monospace;
   font-size: 85%;
   color: #eee;
+}
+.terminal p:first-child,
+.terminal p:first-child:first-child {
+  margin-top: 0px;
 }
 .terminal p:before,
 .terminal p:first-child:before {
@@ -3315,9 +3319,9 @@ a[href="#document-top"]:before {
   color: #eee;
   background-color: #222;
   border: 1px solid #ccc;
-  white-space: pre-wrap;
   padding: 0 3px;
   border: 2px solid #999;
+  white-space: pre-wrap;
   border-top: 10px solid #999;
 }
 .terminal-su a {
@@ -3338,13 +3342,17 @@ a[href="#document-top"]:before {
 }
 .terminal-su p,
 .terminal-su p:first-child {
-  margin-top: 0;
+  margin-top: -40px;
   margin-bottom: 0;
   text-shadow: none;
   font-weight: normal;
   font-family: "Source Code Pro", "Monaco", "DejaVu Sans Mono", "Courier New", monospace;
   font-size: 85%;
   color: #eee;
+}
+.terminal-su p:first-child,
+.terminal-su p:first-child:first-child {
+  margin-top: 0px;
 }
 .terminal-su p:before,
 .terminal-su p:first-child:before {
@@ -4516,11 +4524,11 @@ div .terminal {
 <p>You can download one of the following pre-built HastySite binaries:</p>
 
 <div class="unstyled"><ul>
-<li><span class="apple"></span><a href="https://github.com/h3rald/hastysite/releases/download/v1.0.0/hastysite_v1.0.0_macosx_x64.zip">hastysite v1.0.0 for macOS (x64)</a></li>
-<li><span class="windows"></span><a href="https://github.com/h3rald/hastysite/releases/download/v1.0.0/hastysite_v1.0.0_windows_x64.zip">hastysite v1.0.0 for Windows (x64)</a></li>
-<li><span class="linux"></span><a href="https://github.com/h3rald/hastysite/releases/download/v1.0.0/hastysite_v1.0.0_linux_x64.zip">hastysite v1.0.0 for Linux (x64)</a></li>
-<li><span class="linux"></span><a href="https://github.com/h3rald/hastysite/releases/download/v1.0.0/hastysite_v1.0.0_linux_x86.zip">hastysite v1.0.0 for Linux (x86)</a></li>
-<li><span class="linux"></span><a href="https://github.com/h3rald/hastysite/releases/download/v1.0.0/hastysite_v1.0.0_linux_arm.zip">hastysite v1.0.0 for Linux (arm)</a></li>
+<li><span class="apple"></span><a href="https://github.com/h3rald/hastysite/releases/download/v1.0.1/hastysite_v1.0.1_macosx_x64.zip">hastysite v1.0.1 for macOS (x64)</a></li>
+<li><span class="windows"></span><a href="https://github.com/h3rald/hastysite/releases/download/v1.0.1/hastysite_v1.0.1_windows_x64.zip">hastysite v1.0.1 for Windows (x64)</a></li>
+<li><span class="linux"></span><a href="https://github.com/h3rald/hastysite/releases/download/v1.0.1/hastysite_v1.0.1_linux_x64.zip">hastysite v1.0.1 for Linux (x64)</a></li>
+<li><span class="linux"></span><a href="https://github.com/h3rald/hastysite/releases/download/v1.0.1/hastysite_v1.0.1_linux_x86.zip">hastysite v1.0.1 for Linux (x86)</a></li>
+<li><span class="linux"></span><a href="https://github.com/h3rald/hastysite/releases/download/v1.0.1/hastysite_v1.0.1_linux_arm.zip">hastysite v1.0.1 for Linux (arm)</a></li>
 </ul>
 </div>
 
@@ -4555,6 +4563,28 @@ div .terminal {
 <div class="terminal"><p>hastysite init</p></div>
 
 <p>This will create the following default directory structure:</p>
+
+<ul>
+<li>assets/ &mdash; <em>Your site assets</em>
+
+<ul>
+<li>fonts/</li>
+<li>styles/</li>
+</ul>
+</li>
+<li>contents/ &mdash; <em>Your site contents.</em></li>
+<li>output/ &mdash; <em>Your static web site.</em></li>
+<li>rules.min &mdash; <em>Rules to process your contents and assets.</em></li>
+<li>scripts/ &mdash; <em>Scripts to manage your site.</em></li>
+<li>settings.json &mdash; <em>Your site configuration.</em></li>
+<li>temp/ &mdash; <em>Temporary files and folders will be placed here.</em></li>
+<li>templates/ &mdash; <em>Mustache templates.</em></li>
+</ul>
+
+
+<div class="tip"><p>Tip</p>
+
+<p>Default folder paths can be configured in your <span class="file">settings.json</span> file.</p></div>
 
 <p>Then, create your first page by running the following command and specifying the page ID and Title:</p>
 
@@ -4614,6 +4644,16 @@ Create page? [yes/no]: y</p></div>
 
 <p>The <span class="file">rules.min</span> file processed by this command:</p>
 
+<ul>
+<li>Ignores contents and assets starting with <span class="kwd">.</span> or <span class="kwd">_</span>.</li>
+<li>Pre-processes <a href="https://developer.mozilla.org/en-US/docs/Web/CSS/Using_CSS_variables">CSS variables</a> in all <span class="ext">.css</span> files.</li>
+<li>Processes text as <a href="https://h3rald.com/hastysite">HastyScribe</a>-compatible Markdown in all <span class="ext">.md</span> content files.</li>
+<li>Associates contents to <a href="https://mustache.github.io/">mustache</a> templates based on the value of the <span class="kwd">content-type</span> metadata property.</li>
+<li>Copies each asset file &ldquo;as-is&rdquo; to the <span class="dir">output</span> directory, respecting the source directory structure in the <span class="dir">asset</span> directory.</li>
+<li>Copies each content file to a directory within the <span class="dir">output</span> named after the source content ID, in an <span class="file">index.html</span> file (to easily obtain &ldquo;pretty URLs&rdquo; ending with no extension).</li>
+</ul>
+
+
 <div class="note"><p>Note</p>
 
 <p>This command can be customized by modifying the <span class="file">scripts/build.min</span> file within your site directory.</p></div>
@@ -4631,6 +4671,28 @@ Create page? [yes/no]: y</p></div>
 <h4>init<a href="#document-top" title="Go to top"></a></h4>
 
 <p>Initializes a new HastySite site directory, by creating the following directory structure:</p>
+
+<ul>
+<li>assets/ &mdash; <em>Your site assets</em>
+
+<ul>
+<li>fonts/</li>
+<li>styles/</li>
+</ul>
+</li>
+<li>contents/ &mdash; <em>Your site contents.</em></li>
+<li>output/ &mdash; <em>Your static web site.</em></li>
+<li>rules.min &mdash; <em>Rules to process your contents and assets.</em></li>
+<li>scripts/ &mdash; <em>Scripts to manage your site.</em></li>
+<li>settings.json &mdash; <em>Your site configuration.</em></li>
+<li>temp/ &mdash; <em>Temporary files and folders will be placed here.</em></li>
+<li>templates/ &mdash; <em>Mustache templates.</em></li>
+</ul>
+
+
+<div class="tip"><p>Tip</p>
+
+<p>Default folder paths can be configured in your <span class="file">settings.json</span> file.</p></div>
 
 <a name="page"></a>
 <h4>page<a href="#document-top" title="Go to top"></a></h4>
@@ -4794,6 +4856,16 @@ content-type: page
 <p>In this phase, the control of the build process is passed to the <span class="file">rules.min</span> script. It is important to point out that in case of an empty <span class="file">rules.min</span> file, <em>nothing</em> will be done and no output file will be generated.</p>
 
 <p>Luckily, a default <span class="file">rules.min</span> file is provided, which:</p>
+
+<ul>
+<li>Ignores contents and assets starting with <span class="kwd">.</span> or <span class="kwd">_</span>.</li>
+<li>Pre-processes <a href="https://developer.mozilla.org/en-US/docs/Web/CSS/Using_CSS_variables">CSS variables</a> in all <span class="ext">.css</span> files.</li>
+<li>Processes text as <a href="https://h3rald.com/hastysite">HastyScribe</a>-compatible Markdown in all <span class="ext">.md</span> content files.</li>
+<li>Associates contents to <a href="https://mustache.github.io/">mustache</a> templates based on the value of the <span class="kwd">content-type</span> metadata property.</li>
+<li>Copies each asset file &ldquo;as-is&rdquo; to the <span class="dir">output</span> directory, respecting the source directory structure in the <span class="dir">asset</span> directory.</li>
+<li>Copies each content file to a directory within the <span class="dir">output</span> named after the source content ID, in an <span class="file">index.html</span> file (to easily obtain &ldquo;pretty URLs&rdquo; ending with no extension).</li>
+</ul>
+
 
 <p>Typically, you only need to modify this file to change how HastySite builds your site.</p>
 
@@ -5145,7 +5217,7 @@ content-type: page
 <p>The contents of the site are also available in a standalone HTML document, <a href="https://h3rald.com/hastysite/HastySitee_UserGuide.htm">here</a>.</p>
     </div>
     <div id="footer">
-      <p><span class="copy"></span> Fabio Cevasco &ndash; November 12, 2017</p>
+      <p><span class="copy"></span> Fabio Cevasco &ndash; November 19, 2017</p>
       <p><span>Powered by</span> <a href="https://h3rald.com/hastyscribe"><span class="hastyscribe"></span></a></p>
     </div>
   </div>
