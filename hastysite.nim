@@ -61,7 +61,8 @@ const FONT_SSP_R = "./site/assets/fonts/SourceSansPro-Regular.woff".slurp
 const FONT_SSP_B = "./site/assets/fonts/SourceSansPro-Bold.woff".slurp
 const FONT_SSP_BI = "./site/assets/fonts/SourceSansPro-BoldIt.woff".slurp
 const FONT_SSP_I = "./site/assets/fonts/SourceSansPro-It.woff".slurp
-const FONT_FA = "./site/assets/fonts/fontawesome-webfont.woff".slurp
+const FONT_FAS = "./site/assets/fonts/fa-solid-900.woff".slurp
+const FONT_FAB = "./site/assets/fonts/fa-brands-400.woff".slurp
 const STYLE_FONTS = "./site/assets/styles/fonts.css".slurp
 const STYLE_HASTYSITE = "./site/assets/styles/hastysite.css".slurp
 const STYLE_HASTYSCRIBE = "./site/assets/styles/hastyscribe.css".slurp
@@ -262,7 +263,8 @@ proc init*(dir: string) =
   writeFile(dir/"assets/fonts/SourceSansPro-Bold.woff", FONT_SSP_B)
   writeFile(dir/"assets/fonts/SourceSansPro-It.woff", FONT_SSP_I)
   writeFile(dir/"assets/fonts/SourceSansPro-BoldIt.woff", FONT_SSP_BI)
-  writeFile(dir/"assets/fonts/fontawesome-webfont.woff", FONT_FA)
+  writeFile(dir/"assets/fonts/fa-solid-900.woff", FONT_FAS)
+  writeFile(dir/"assets/fonts/fa-brands-400.woff", FONT_FAB)
   writeFile(dir/"assets/styles/fonts.css", STYLE_FONTS)
   writeFile(dir/"assets/styles/hastyscribe.css", STYLE_HASTYSCRIBE)
   writeFile(dir/"assets/styles/hastysite.css", STYLE_HASTYSITE)
@@ -406,7 +408,7 @@ proc hastysite_module*(i: In, hs1: HastySite) =
 when isMainModule:
 
   import
-    parseopt2
+    parseopt
     
   if logging.getHandlers().len == 0:
     newNiftyLogger().addHandler()
@@ -414,7 +416,7 @@ when isMainModule:
 
   proc usage(scripts: bool, hs: HastySite): string = 
     var text = """  $1 v$2 - a tiny static site generator
-  (c) 2016-2017 Fabio Cevasco
+  (c) 2016-2018 Fabio Cevasco
   
   Usage:
     hastysite command
