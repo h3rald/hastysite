@@ -57,10 +57,13 @@ const TEMPLATE_NEWS = "./site/templates/news.mustache".slurp
 const TEMPLATE_PAGE = "./site/templates/page.mustache".slurp
 const TEMPLATE_post = "./site/templates/post.mustache".slurp
 const FONT_SCP_R = "./site/assets/fonts/SourceCodePro-Regular.woff".slurp
-const FONT_SSP_R = "./site/assets/fonts/SourceSansPro-Regular.woff".slurp
-const FONT_SSP_B = "./site/assets/fonts/SourceSansPro-Bold.woff".slurp
-const FONT_SSP_BI = "./site/assets/fonts/SourceSansPro-BoldIt.woff".slurp
-const FONT_SSP_I = "./site/assets/fonts/SourceSansPro-It.woff".slurp
+const FONT_SCP_I = "./site/assets/fonts/SourceCodePro-It.woff".slurp
+const FONT_SCP_B = "./site/assets/fonts/SourceCodePro-Bold.woff".slurp
+const FONT_SCP_BI = "./site/assets/fonts/SourceCodePro-BoldIt.woff".slurp
+const FONT_SSP_R = "./site/assets/fonts/SourceSansPro-Light.woff".slurp
+const FONT_SSP_I = "./site/assets/fonts/SourceSansPro-LightIt.woff".slurp
+const FONT_SSP_B = "./site/assets/fonts/SourceSansPro-Semibold.woff".slurp
+const FONT_SSP_BI = "./site/assets/fonts/SourceSansPro-SemiboldIt.woff".slurp
 const FONT_FAS = "./site/assets/fonts/fa-solid-900.woff".slurp
 const FONT_FAB = "./site/assets/fonts/fa-brands-400.woff".slurp
 const STYLE_FONTS = "./site/assets/styles/fonts.css".slurp
@@ -259,10 +262,13 @@ proc init*(dir: string) =
   writeFile(dir/"templates/news.mustache", TEMPLATE_NEWS)
   writeFile(dir/"templates/post.mustache", TEMPLATE_POST)
   writeFile(dir/"assets/fonts/SourceCodePro-Regular.woff", FONT_SCP_R)
-  writeFile(dir/"assets/fonts/SourceSansPro-Regular.woff", FONT_SSP_R)
-  writeFile(dir/"assets/fonts/SourceSansPro-Bold.woff", FONT_SSP_B)
-  writeFile(dir/"assets/fonts/SourceSansPro-It.woff", FONT_SSP_I)
-  writeFile(dir/"assets/fonts/SourceSansPro-BoldIt.woff", FONT_SSP_BI)
+  writeFile(dir/"assets/fonts/SourceCodePro-It.woff", FONT_SCP_I)
+  writeFile(dir/"assets/fonts/SourceCodePro-Bold.woff", FONT_SCP_B)
+  writeFile(dir/"assets/fonts/SourceCodePro-BoldIt.woff", FONT_SCP_BI)
+  writeFile(dir/"assets/fonts/SourceSansPro-Light.woff", FONT_SSP_R)
+  writeFile(dir/"assets/fonts/SourceSansPro-Semibold.woff", FONT_SSP_B)
+  writeFile(dir/"assets/fonts/SourceSansPro-LightIt.woff", FONT_SSP_I)
+  writeFile(dir/"assets/fonts/SourceSansPro-SemiboldIt.woff", FONT_SSP_BI)
   writeFile(dir/"assets/fonts/fa-solid-900.woff", FONT_FAS)
   writeFile(dir/"assets/fonts/fa-brands-400.woff", FONT_FAB)
   writeFile(dir/"assets/styles/fonts.css", STYLE_FONTS)
