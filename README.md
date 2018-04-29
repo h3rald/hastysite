@@ -1,3 +1,7 @@
+![nim](https://img.shields.io/badge/nim-powered-yellow.svg?link=https://nim-lang-org)
+![release](https://img.shields.io/github/release/h3rald/hastysite/all.svg)
+![license](https://img.shields.io/github/license/h3rald/hastysite.svg)
+
 # HastySite
 
 HastySite is a minimalist but powerful static site generator written in [Nim](https://nim-lang.org) which aims to be fast at processing content and highly configurable to suit your own needs.
