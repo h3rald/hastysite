@@ -10,9 +10,13 @@
       },
       "curl+src+name": {
         "cmd": "curl {{src}} -o {{name}}"
-      }
+      },
+      "_syntax": "install [<package>]",
+      "_description": "Installs the specified package (or all mapped packages) to the storage directory."
     },
-    "update": {
+    "upgrade": {
+      "_syntax": "upgrade [<package>]",
+      "_description": "Upgrades the specified previously-installed package (or all packages).",
       "git+name": {
         "cmd": "git pull",
         "pwd": "{{name}}"
