@@ -7,40 +7,42 @@
 
 @font-face {
  font-family: "Font Awesome 5 Brands";
- src: url("../fonts/fa-solid-400.woff") format("woff");
+ src: url("../fonts/fa-brands-400.woff") format("woff");
  -webkit-font-smoothing: antialiased;
  -moz-osx-font-smoothing: grayscale;
 }
 
 @font-face {
  font-family: "Source Sans Pro";
- src: url("../fonts/SourceSansPro-Regular.woff") format("woff");
+ src: url("../fonts/SourceSansPro-Light.woff") format("woff");
+ font-weight: 300;
  -webkit-font-smoothing: antialiased;
  -moz-osx-font-smoothing: grayscale;
 }
 
 @font-face {
  font-family: "Source Sans Pro";
- src: url("../fonts/SourceSansPro-It.woff") format("woff");
+ src: url("../fonts/SourceSansPro-LightIt.woff") format("woff");
  -webkit-font-smoothing: antialiased;
  -moz-osx-font-smoothing: grayscale;
+ font-weight: 300;
  font-style: italic;
 }
 
 @font-face {
  font-family: "Source Sans Pro";
- src: url("../fonts/SourceSansPro-Bold.woff") format("woff");
+ src: url("../fonts/SourceSansPro-Semibold.woff") format("woff");
  -webkit-font-smoothing: antialiased;
  -moz-osx-font-smoothing: grayscale;
- font-weight: bold;
+ font-weight: 600;
 }
 
 @font-face {
  font-family: "Source Sans Pro";
- src: url("../fonts/SourceSansPro-BoldIt.woff") format("woff");
+ src: url("../fonts/SourceSansPro-SemiboldIt.woff") format("woff");
  -webkit-font-smoothing: antialiased;
  -moz-osx-font-smoothing: grayscale;
- font-weight: bold;
+ font-weight: 600;
  font-style: italic;
 }
 
@@ -51,3 +53,27 @@
  -moz-osx-font-smoothing: grayscale;
 }
 
+@font-face {
+ font-family: "Source Code Pro";
+ src: url("../fonts/SourceCodePro-Bold.woff") format("woff");
+ -webkit-font-smoothing: antialiased;
+ -moz-osx-font-smoothing: grayscale;
+ font-weight: bold;
+}
+
+@font-face {
+ font-family: "Source Code Pro";
+ src: url("../fonts/SourceCodePro-It.woff") format("woff");
+ -webkit-font-smoothing: antialiased;
+ -moz-osx-font-smoothing: grayscale;
+ font-style: italic;
+}
+
+@font-face {
+ font-family: "Source Code Pro";
+ src: url("../fonts/SourceCodePro-BoldIt.woff") format("woff");
+ -webkit-font-smoothing: antialiased;
+ -moz-osx-font-smoothing: grayscale;
+ font-weight: bold;
+ font-style: italic;
+}
