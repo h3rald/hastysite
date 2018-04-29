@@ -341,7 +341,7 @@ table {
 /* Fonts */
 /* Colors */
 /*!
- * Font Awesome Free 5.0.8 by @fontawesome - https://fontawesome.com
+ * Font Awesome Free 5.0.10 by @fontawesome - https://fontawesome.com
  * License - https://fontawesome.com/license (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License)
  */
 .fa,
@@ -555,6 +555,9 @@ table {
 }
 .fa-align-right:before {
   content: "\f038";
+}
+.fa-allergies:before {
+  content: "\f461";
 }
 .fa-amazon:before {
   content: "\f270";
@@ -829,6 +832,9 @@ table {
 .fa-box:before {
   content: "\f466";
 }
+.fa-box-open:before {
+  content: "\f49e";
+}
 .fa-boxes:before {
   content: "\f468";
 }
@@ -837,6 +843,9 @@ table {
 }
 .fa-briefcase:before {
   content: "\f0b1";
+}
+.fa-briefcase-medical:before {
+  content: "\f469";
 }
 .fa-btc:before {
   content: "\f15a";
@@ -852,6 +861,9 @@ table {
 }
 .fa-bullseye:before {
   content: "\f140";
+}
+.fa-burn:before {
+  content: "\f46a";
 }
 .fa-buromobelexperte:before {
   content: "\f37f";
@@ -888,6 +900,9 @@ table {
 }
 .fa-camera-retro:before {
   content: "\f083";
+}
+.fa-capsules:before {
+  content: "\f46b";
 }
 .fa-car:before {
   content: "\f1b9";
@@ -1105,6 +1120,12 @@ table {
 .fa-comment-alt:before {
   content: "\f27a";
 }
+.fa-comment-dots:before {
+  content: "\f4ad";
+}
+.fa-comment-slash:before {
+  content: "\f4b3";
+}
 .fa-comments:before {
   content: "\f086";
 }
@@ -1125,6 +1146,9 @@ table {
 }
 .fa-copyright:before {
   content: "\f1f9";
+}
+.fa-couch:before {
+  content: "\f4b8";
 }
 .fa-cpanel:before {
   content: "\f388";
@@ -1186,6 +1210,9 @@ table {
 .fa-deviantart:before {
   content: "\f1bd";
 }
+.fa-diagnoses:before {
+  content: "\f470";
+}
 .fa-digg:before {
   content: "\f1a6";
 }
@@ -1216,8 +1243,14 @@ table {
 .fa-dolly-flatbed:before {
   content: "\f474";
 }
+.fa-donate:before {
+  content: "\f4b9";
+}
 .fa-dot-circle:before {
   content: "\f192";
+}
+.fa-dove:before {
+  content: "\f4ba";
 }
 .fa-download:before {
   content: "\f019";
@@ -1377,6 +1410,12 @@ table {
 }
 .fa-file-image:before {
   content: "\f1c5";
+}
+.fa-file-medical:before {
+  content: "\f477";
+}
+.fa-file-medical-alt:before {
+  content: "\f478";
 }
 .fa-file-pdf:before {
   content: "\f1c1";
@@ -1606,6 +1645,15 @@ table {
 .fa-hacker-news-square:before {
   content: "\f3af";
 }
+.fa-hand-holding:before {
+  content: "\f4bd";
+}
+.fa-hand-holding-heart:before {
+  content: "\f4be";
+}
+.fa-hand-holding-usd:before {
+  content: "\f4c0";
+}
 .fa-hand-lizard:before {
   content: "\f258";
 }
@@ -1638,6 +1686,12 @@ table {
 }
 .fa-hand-spock:before {
   content: "\f259";
+}
+.fa-hands:before {
+  content: "\f4c2";
+}
+.fa-hands-helping:before {
+  content: "\f4c4";
 }
 .fa-handshake:before {
   content: "\f2b5";
@@ -1681,6 +1735,9 @@ table {
 .fa-hospital:before {
   content: "\f0f8";
 }
+.fa-hospital-alt:before {
+  content: "\f47d";
+}
 .fa-hospital-symbol:before {
   content: "\f47e";
 }
@@ -1716,6 +1773,9 @@ table {
 }
 .fa-id-card:before {
   content: "\f2c2";
+}
+.fa-id-card-alt:before {
+  content: "\f47f";
 }
 .fa-image:before {
   content: "\f03e";
@@ -1758,6 +1818,9 @@ table {
 }
 .fa-itunes-note:before {
   content: "\f3b5";
+}
+.fa-java:before {
+  content: "\f4e4";
 }
 .fa-jenkins:before {
   content: "\f3b6";
@@ -2038,6 +2101,9 @@ table {
 .fa-node-js:before {
   content: "\f3d3";
 }
+.fa-notes-medical:before {
+  content: "\f481";
+}
 .fa-npm:before {
   content: "\f3d4";
 }
@@ -2098,6 +2164,9 @@ table {
 .fa-paperclip:before {
   content: "\f0c6";
 }
+.fa-parachute-box:before {
+  content: "\f4cd";
+}
 .fa-paragraph:before {
   content: "\f1dd";
 }
@@ -2125,6 +2194,9 @@ table {
 .fa-pencil-alt:before {
   content: "\f303";
 }
+.fa-people-carry:before {
+  content: "\f4ce";
+}
 .fa-percent:before {
   content: "\f295";
 }
@@ -2139,6 +2211,9 @@ table {
 }
 .fa-phone:before {
   content: "\f095";
+}
+.fa-phone-slash:before {
+  content: "\f3dd";
 }
 .fa-phone-square:before {
   content: "\f098";
@@ -2155,8 +2230,14 @@ table {
 .fa-pied-piper-alt:before {
   content: "\f1a8";
 }
+.fa-pied-piper-hat:before {
+  content: "\f4e5";
+}
 .fa-pied-piper-pp:before {
   content: "\f1a7";
+}
+.fa-piggy-bank:before {
+  content: "\f4d3";
 }
 .fa-pills:before {
   content: "\f484";
@@ -2197,14 +2278,26 @@ table {
 .fa-podcast:before {
   content: "\f2ce";
 }
+.fa-poo:before {
+  content: "\f2fe";
+}
 .fa-pound-sign:before {
   content: "\f154";
 }
 .fa-power-off:before {
   content: "\f011";
 }
+.fa-prescription-bottle:before {
+  content: "\f485";
+}
+.fa-prescription-bottle-alt:before {
+  content: "\f486";
+}
 .fa-print:before {
   content: "\f02f";
+}
+.fa-procedures:before {
+  content: "\f487";
 }
 .fa-product-hunt:before {
   content: "\f288";
@@ -2254,6 +2347,9 @@ table {
 .fa-react:before {
   content: "\f41b";
 }
+.fa-readme:before {
+  content: "\f4d5";
+}
 .fa-rebel:before {
   content: "\f1d0";
 }
@@ -2301,6 +2397,9 @@ table {
 }
 .fa-retweet:before {
   content: "\f079";
+}
+.fa-ribbon:before {
+  content: "\f4d6";
 }
 .fa-road:before {
   content: "\f018";
@@ -2353,6 +2452,9 @@ table {
 .fa-searchengin:before {
   content: "\f3eb";
 }
+.fa-seedling:before {
+  content: "\f4d8";
+}
 .fa-sellcast:before {
   content: "\f2da";
 }
@@ -2404,6 +2506,9 @@ table {
 .fa-shower:before {
   content: "\f2cc";
 }
+.fa-sign:before {
+  content: "\f4d9";
+}
 .fa-sign-in-alt:before {
   content: "\f2f6";
 }
@@ -2445,6 +2550,9 @@ table {
 }
 .fa-smile:before {
   content: "\f118";
+}
+.fa-smoking:before {
+  content: "\f48d";
 }
 .fa-snapchat:before {
   content: "\f2ab";
@@ -2620,6 +2728,9 @@ table {
 .fa-tablet-alt:before {
   content: "\f3fa";
 }
+.fa-tablets:before {
+  content: "\f490";
+}
 .fa-tachometer-alt:before {
   content: "\f3fd";
 }
@@ -2628,6 +2739,9 @@ table {
 }
 .fa-tags:before {
   content: "\f02c";
+}
+.fa-tape:before {
+  content: "\f4db";
 }
 .fa-tasks:before {
   content: "\f0ae";
@@ -2742,6 +2856,12 @@ table {
 }
 .fa-truck:before {
   content: "\f0d1";
+}
+.fa-truck-loading:before {
+  content: "\f4de";
+}
+.fa-truck-moving:before {
+  content: "\f4df";
 }
 .fa-tty:before {
   content: "\f1e4";
@@ -2863,11 +2983,20 @@ table {
 .fa-viadeo-square:before {
   content: "\f2aa";
 }
+.fa-vial:before {
+  content: "\f492";
+}
+.fa-vials:before {
+  content: "\f493";
+}
 .fa-viber:before {
   content: "\f409";
 }
 .fa-video:before {
   content: "\f03d";
+}
+.fa-video-slash:before {
+  content: "\f4e2";
 }
 .fa-vimeo:before {
   content: "\f40a";
@@ -2947,6 +3076,9 @@ table {
 .fa-windows:before {
   content: "\f17a";
 }
+.fa-wine-glass:before {
+  content: "\f4e3";
+}
 .fa-won-sign:before {
   content: "\f159";
 }
@@ -2967,6 +3099,9 @@ table {
 }
 .fa-wrench:before {
   content: "\f0ad";
+}
+.fa-x-ray:before {
+  content: "\f497";
 }
 .fa-xbox:before {
   content: "\f412";
@@ -3024,15 +3159,13 @@ table {
   width: auto;
 }
 /*!
- * Font Awesome Free 5.0.8 by @fontawesome - https://fontawesome.com
+ * Font Awesome Free 5.0.10 by @fontawesome - https://fontawesome.com
  * License - https://fontawesome.com/license (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License)
  */
 @font-face {
   font-family: 'Font Awesome 5 Free';
   font-style: normal;
   font-weight: 900;
-  src: url('../fonts/fa-solid-900.eot');
-  src: url('../fonts/fa-solid-900.eot?#iefix') format('embedded-opentype'), url('../fonts/fa-solid-900.woff2') format('woff2'), url('../fonts/fa-solid-900.woff') format('woff'), url('../fonts/fa-solid-900.ttf') format('truetype'), url('../fonts/fa-solid-900.svg#fontawesome') format('svg');
 }
 .fa,
 .fas {
@@ -3040,18 +3173,20 @@ table {
   font-weight: 900;
 }
 /*!
- * Font Awesome Free 5.0.8 by @fontawesome - https://fontawesome.com
+ * Font Awesome Free 5.0.10 by @fontawesome - https://fontawesome.com
  * License - https://fontawesome.com/license (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License)
  */
 @font-face {
   font-family: 'Font Awesome 5 Brands';
   font-style: normal;
   font-weight: normal;
-  src: url('../fonts/fa-brands-400.eot');
-  src: url('../fonts/fa-brands-400.eot?#iefix') format('embedded-opentype'), url('../fonts/fa-brands-400.woff2') format('woff2'), url('../fonts/fa-brands-400.woff') format('woff'), url('../fonts/fa-brands-400.ttf') format('truetype'), url('../fonts/fa-brands-400.svg#fontawesome') format('svg');
 }
 .fab {
   font-family: 'Font Awesome 5 Brands';
+}
+.mix-monospace {
+  font-family: "Source Code Pro", "Monaco", "DejaVu Sans Mono", "Courier New", monospace;
+  font-weight: 300;
 }
 .mix-no-border-radius {
   -webkit-border-radius: 0px;
@@ -3073,6 +3208,7 @@ body {
   margin: 0 auto;
   height: 100%;
   zoom: 1;
+  font-weight: 300;
   letter-spacing: normal;
   word-spacing: normal;
   color: #333;
@@ -3133,7 +3269,7 @@ li p {
   list-style-type: none;
 }
 dl dt {
-  font-weight: bold;
+  font-weight: 600;
 }
 dl dd {
   padding: 0 0 0.2em 0;
@@ -3145,6 +3281,7 @@ h3,
 h4,
 h5,
 h6 {
+  font-weight: 600;
   color: #111;
   border-bottom: 1px solid #ddd;
 }
@@ -3159,29 +3296,12 @@ blockquote {
   font-style: italic;
 }
 pre {
-  -moz-background-clip: padding;
-  -webkit-background-clip: padding-box;
-  background-clip: padding-box;
-  -webkit-border-radius: 3px;
-  -moz-border-radius: 3px;
-  border-radius: 3px;
-  margin: 10px auto;
-  padding: 2px 4px 0 4px;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
-  text-shadow: 0 1px 0 rgba(255, 255, 255, 0.8);
-  color: #333;
-  background-color: #f8f8f8;
-  border: 1px solid #ccc;
+  font-family: "Source Code Pro", "Monaco", "DejaVu Sans Mono", "Courier New", monospace;
+  font-weight: 300;
+  color: #222;
   white-space: pre-wrap;
   margin: auto;
-  font-family: "Source Code Pro", "Monaco", "DejaVu Sans Mono", "Courier New", monospace;
   padding: 0;
-}
-pre a {
-  color: #264c72;
-}
-pre p {
-  margin: 0 auto;
 }
 @media screen and (max-width: 639px) {
   pre {
@@ -3195,8 +3315,6 @@ pre p {
 }
 pre code {
   box-shadow: none;
-  background: #f8f8f8;
-  padding: 0px 2px 0 2px;
   border: none;
   line-height: 1.2em;
 }
@@ -3266,32 +3384,23 @@ hr {
 }
 code,
 span.code {
-  color: #333;
-  background-color: #f8f8f8;
-  padding: 0 3px 0;
-  display: inline-block;
-  width: auto;
-  margin: 1px;
-  -webkit-border-radius: 2px;
-  -moz-border-radius: 2px;
-  border-radius: 2px;
-  -moz-background-clip: padding;
-  -webkit-background-clip: padding-box;
-  background-clip: padding-box;
-  text-shadow: 0 1px 0 rgba(255, 255, 255, 0.8);
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
-  margin: 2px 0px;
   font-family: "Source Code Pro", "Monaco", "DejaVu Sans Mono", "Courier New", monospace;
-  font-size: 85%;
+  font-weight: 300;
   -webkit-hyphens: none;
   -moz-hyphens: none;
   -ms-hyphens: none;
   -o-hyphens: none;
   hyphens: none;
+  color: #B2361E;
+  font-size: 85%;
+}
+strong code,
+b code {
+  font-weight: 600;
 }
 kbd,
 span.kbd {
-  color: #333;
+  color: #222;
   background-color: #f8f8f8;
   padding: 0 3px 0;
   display: inline-block;
@@ -3306,7 +3415,7 @@ span.kbd {
   text-shadow: 0 1px 0 rgba(255, 255, 255, 0.8);
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
   font-family: "Source Code Pro", "Monaco", "DejaVu Sans Mono", "Courier New", monospace;
-  font-weight: bold;
+  font-weight: 800;
   border-right: 1px solid #bbb;
   border-bottom: 1px solid #bbb;
   line-height: 1em;
@@ -3325,7 +3434,7 @@ span.mark {
 abbr,
 span.abbr {
   font-variant: small-caps;
-  font-weight: bolder;
+  font-weight: 600;
   -webkit-hyphens: none;
   -moz-hyphens: none;
   -ms-hyphens: none;
@@ -3339,8 +3448,8 @@ span.abbr:hover {
 samp,
 span.samp {
   font-size: 90%;
-  color: #333;
-  background-color: #f8f8f8;
+  color: #222;
+  background-color: transparent;
   padding: 0 3px 0;
   display: inline-block;
   width: auto;
@@ -3363,7 +3472,7 @@ var,
 span.var {
   font-size: 90%;
   font-family: "Source Code Pro", "Monaco", "DejaVu Sans Mono", "Courier New", monospace;
-  font-weight: bold;
+  font-weight: 800;
   font-style: normal;
   -webkit-hyphens: none;
   -moz-hyphens: none;
@@ -3373,7 +3482,7 @@ span.var {
 }
 cite,
 span.cite {
-  font-weight: bold;
+  font-weight: 600;
   font-style: italic;
   -webkit-hyphens: none;
   -moz-hyphens: none;
@@ -3401,6 +3510,7 @@ span.file,
 span.dir {
   font-size: 90%;
   font-family: "Source Code Pro", "Monaco", "DejaVu Sans Mono", "Courier New", monospace;
+  font-weight: 300;
   -webkit-hyphens: none;
   -moz-hyphens: none;
   -ms-hyphens: none;
@@ -3409,7 +3519,7 @@ span.dir {
 }
 span.ext,
 span.kwd {
-  font-weight: bold;
+  font-weight: 600;
 }
 img {
   max-width: 100%;
@@ -3435,6 +3545,10 @@ a[href^="mailto:"]:before {
   content: "\f0e0" "\202F";
   font-family: "Font Awesome 5 Free";
 }
+a[href^="magnet://"]:before {
+  content: "\f076" "\202F";
+  font-family: "Font Awesome 5 Free";
+}
 a[href^="tel:"]:before {
   content: "\f095" "\202F";
   font-family: "Font Awesome 5 Free";
@@ -3444,16 +3558,36 @@ a[href*="skype.com"]:before {
   content: "\f17e" "\202F";
   font-family: "Font Awesome 5 Brands";
 }
-a[href*="twitter.com"]:before {
-  content: "\f099" "\202F";
+a[href^="git@"]:before {
+  content: "\f1d3" "\202F";
+  font-family: "Font Awesome 5 Brands";
+}
+a[href*="amazon.com"]:before {
+  content: "\f270" "\202F";
+  font-family: "Font Awesome 5 Brands";
+}
+a[href*="bitbucket.com"]:before {
+  content: "\f171" "\202F";
+  font-family: "Font Awesome 5 Brands";
+}
+a[href*="blogger.com"]:before {
+  content: "\f37c" "\202F";
+  font-family: "Font Awesome 5 Brands";
+}
+a[href*="deviantart.com"]:before {
+  content: "\f1bd" "\202F";
+  font-family: "Font Awesome 5 Brands";
+}
+a[href*="dropbox.com"]:before {
+  content: "\f16b" "\202F";
+  font-family: "Font Awesome 5 Brands";
+}
+a[href*="digg.com"]:before {
+  content: "\f1a6" "\202F";
   font-family: "Font Awesome 5 Brands";
 }
 a[href*="linkedin.com"]:before {
   content: "\f08c" "\202F";
-  font-family: "Font Awesome 5 Brands";
-}
-a[href*="foursquare.com"]:before {
-  content: "\f180" "\202F";
   font-family: "Font Awesome 5 Brands";
 }
 a[href*="facebook.com"]:before {
@@ -3464,48 +3598,16 @@ a[href*="flickr.com"]:before {
   content: "\f16e" "\202F";
   font-family: "Font Awesome 5 Brands";
 }
+a[href*="foursquare.com"]:before {
+  content: "\f180" "\202F";
+  font-family: "Font Awesome 5 Brands";
+}
 a[href*="github.com"]:before {
   content: "\f09b" "\202F";
   font-family: "Font Awesome 5 Brands";
 }
-a[href*="stackoverflow.com"]:before {
-  content: "\f16c" "\202F";
-  font-family: "Font Awesome 5 Brands";
-}
-a[href*="tripadvisor.com"]:before {
-  content: "\f262" "\202F";
-  font-family: "Font Awesome 5 Brands";
-}
-a[href*="trello.com"]:before {
-  content: "\f181" "\202F";
-  font-family: "Font Awesome 5 Brands";
-}
-a[href*="wordpress.com"]:before {
-  content: "\f19a" "\202F";
-  font-family: "Font Awesome 5 Brands";
-}
-a[href*="wordpress.org"]:before {
-  content: "\f19a" "\202F";
-  font-family: "Font Awesome 5 Brands";
-}
-a[href*="amazon.com"]:before {
-  content: "\f270" "\202F";
-  font-family: "Font Awesome 5 Brands";
-}
-a[href*="medium.com"]:before {
-  content: "\f23a" "\202F";
-  font-family: "Font Awesome 5 Brands";
-}
-a[href*="youtube.com"]:before {
-  content: "\f167" "\202F";
-  font-family: "Font Awesome 5 Brands";
-}
-a[href*="dropbox.com"]:before {
-  content: "\f16b" "\202F";
-  font-family: "Font Awesome 5 Brands";
-}
-a[href*="instagram.com"]:before {
-  content: "\f16d" "\202F";
+a[href*="gitlab.com"]:before {
+  content: "\f296" "\202F";
   font-family: "Font Awesome 5 Brands";
 }
 a[href*="google.com"]:before {
@@ -3516,52 +3618,88 @@ a[href*="plus.google.com"]:before {
   content: "\f0d4" "\202F";
   font-family: "Font Awesome 5 Brands";
 }
-a[href*="yahoo.com"]:before {
-  content: "\f19e" "\202F";
-  font-family: "Font Awesome 5 Brands";
-}
-a[href*="tumblr.com"]:before {
-  content: "\f174" "\202F";
-  font-family: "Font Awesome 5 Brands";
-}
-a[href*="vimeo.com"]:before {
-  content: "\f194" "\202F";
-  font-family: "Font Awesome 5 Brands";
-}
-a[href*="bitbucket.com"]:before {
-  content: "\f171" "\202F";
-  font-family: "Font Awesome 5 Brands";
-}
-a[href*="pinterest.com"]:before {
-  content: "\f0d2" "\202F";
-  font-family: "Font Awesome 5 Brands";
-}
-a[href*="reddit.com"]:before {
-  content: "\f1a1" "\202F";
-  font-family: "Font Awesome 5 Brands";
-}
-a[href*="digg.com"]:before {
-  content: "\f1a6" "\202F";
-  font-family: "Font Awesome 5 Brands";
-}
 a[href*="news.ycombinator.com"]:before {
   content: "\f1d4" "\202F";
+  font-family: "Font Awesome 5 Brands";
+}
+a[href*="imdb.com"]:before {
+  content: "\f2d8" "\202F";
+  font-family: "Font Awesome 5 Brands";
+}
+a[href*="instagram.com"]:before {
+  content: "\f16d" "\202F";
   font-family: "Font Awesome 5 Brands";
 }
 a[href*="jsfiddle.com"]:before {
   content: "\f1cc" "\202F";
   font-family: "Font Awesome 5 Brands";
 }
-a[href*="deviantart.com"]:before {
-  content: "\f1bd" "\202F";
+a[href*="kickstarter.com"]:before {
+  content: "\f3bb" "\202F";
   font-family: "Font Awesome 5 Brands";
 }
-a[href^="git@"]:before {
-  content: "\f1d3" "\202F";
+a[href*="medium.com"]:before {
+  content: "\f23a" "\202F";
+  font-family: "Font Awesome 5 Brands";
+}
+a[href*="npmjs.com"]:before {
+  content: "\f3d4" "\202F";
+  font-family: "Font Awesome 5 Brands";
+}
+a[href*="pinterest.com"]:before {
+  content: "\f0d2" "\202F";
+  font-family: "Font Awesome 5 Brands";
+}
+a[href*="quora.com"]:before {
+  content: "\f2c4" "\202F";
+  font-family: "Font Awesome 5 Brands";
+}
+a[href*="reddit.com"]:before {
+  content: "\f1a1" "\202F";
+  font-family: "Font Awesome 5 Brands";
+}
+a[href*="stackoverflow.com"]:before {
+  content: "\f16c" "\202F";
+  font-family: "Font Awesome 5 Brands";
+}
+a[href*="trello.com"]:before {
+  content: "\f181" "\202F";
+  font-family: "Font Awesome 5 Brands";
+}
+a[href*="tripadvisor.com"]:before {
+  content: "\f262" "\202F";
+  font-family: "Font Awesome 5 Brands";
+}
+a[href*="tumblr.com"]:before {
+  content: "\f174" "\202F";
+  font-family: "Font Awesome 5 Brands";
+}
+a[href*="twitter.com"]:before {
+  content: "\f099" "\202F";
+  font-family: "Font Awesome 5 Brands";
+}
+a[href*="vimeo.com"]:before {
+  content: "\f194" "\202F";
   font-family: "Font Awesome 5 Brands";
 }
 a[href*="wikipedia.com"]:before {
   content: "\f266" "\202F";
+  font-family: "Font Awesome 5 Brands";
+}
+a[href*="wordpress.com"]:before {
+  content: "\f19a" "\202F";
+  font-family: "Font Awesome 5 Brands";
+}
+a[href*="wordpress.org"]:before {
+  content: "\f19a" "\202F";
+  font-family: "Font Awesome 5 Brands";
+}
+a[href*="yahoo.com"]:before {
+  content: "\f19e" "\202F";
+  font-family: "Font Awesome 5 Brands";
+}
+a[href*="youtube.com"]:before {
+  content: "\f167" "\202F";
   font-family: "Font Awesome 5 Brands";
 }
 #footer a:before {
@@ -3597,7 +3735,12 @@ a[href="#document-top"]:before {
   color: #264c72;
   background-color: #d8ebf8;
   border: 1px solid #A4D1EF;
-  font-size: 90%;
+  font-size: 95%;
+}
+.note code,
+.note samp,
+.note pre {
+  color: #264c72;
 }
 .note a {
   color: #264c72;
@@ -3609,7 +3752,7 @@ a[href="#document-top"]:before {
   margin: 0 auto;
 }
 .note p:first-child {
-  font-weight: bold;
+  font-weight: 600;
   color: #264c72;
 }
 .note p:first-child:before {
@@ -3619,6 +3762,11 @@ a[href="#document-top"]:before {
   font-size: 100%;
   color: #264c72;
   content: "\f08d" " ";
+}
+.note pre,
+.note code {
+  font-size: 400;
+  color: #19324c;
 }
 .note a {
   color: #132639;
@@ -3637,7 +3785,12 @@ a[href="#document-top"]:before {
   color: #009926;
   background-color: #d8f5cd;
   border: 1px solid #B0EB99;
-  font-size: 90%;
+  font-size: 95%;
+}
+.tip code,
+.tip samp,
+.tip pre {
+  color: #009926;
 }
 .tip a {
   color: #264c72;
@@ -3649,7 +3802,7 @@ a[href="#document-top"]:before {
   margin: 0 auto;
 }
 .tip p:first-child {
-  font-weight: bold;
+  font-weight: 600;
   color: #009926;
 }
 .tip p:first-child:before {
@@ -3659,6 +3812,11 @@ a[href="#document-top"]:before {
   font-size: 100%;
   color: #009926;
   content: "\f058" " ";
+}
+.tip pre,
+.tip code {
+  font-size: 400;
+  color: #006619;
 }
 .tip a {
   color: #004d13;
@@ -3677,7 +3835,12 @@ a[href="#document-top"]:before {
   color: #705400;
   background-color: #FFEBAD;
   border: 1px solid #FFDB70;
-  font-size: 90%;
+  font-size: 95%;
+}
+.warning code,
+.warning samp,
+.warning pre {
+  color: #705400;
 }
 .warning a {
   color: #264c72;
@@ -3689,7 +3852,7 @@ a[href="#document-top"]:before {
   margin: 0 auto;
 }
 .warning p:first-child {
-  font-weight: bold;
+  font-weight: 600;
   color: #705400;
 }
 .warning p:first-child:before {
@@ -3699,6 +3862,11 @@ a[href="#document-top"]:before {
   font-size: 100%;
   color: #705400;
   content: "\f071" " ";
+}
+.warning pre,
+.warning code {
+  font-size: 400;
+  color: #3d2e00;
 }
 .warning a {
   color: #241b00;
@@ -3717,7 +3885,12 @@ a[href="#document-top"]:before {
   color: #555;
   background-color: #f8f8f8;
   border: 1px solid #f8f8f8;
-  font-size: 90%;
+  font-size: 95%;
+}
+.sidebar code,
+.sidebar samp,
+.sidebar pre {
+  color: #555;
 }
 .sidebar a {
   color: #264c72;
@@ -3729,7 +3902,7 @@ a[href="#document-top"]:before {
   margin: 0 auto;
 }
 .sidebar p:first-child {
-  font-weight: bold;
+  font-weight: 600;
   color: #555;
 }
 .sidebar p:first-child:before {
@@ -3739,6 +3912,11 @@ a[href="#document-top"]:before {
   font-size: 100%;
   color: #555;
   content: "\f05a" " ";
+}
+.sidebar pre,
+.sidebar code {
+  font-size: 400;
+  color: #3b3b3b;
 }
 .sidebar a {
   color: #2f2f2f;
@@ -3757,6 +3935,11 @@ a[href="#document-top"]:before {
   color: #555;
   background-color: #f8f8f8;
   border: 1px solid #f8f8f8;
+}
+.output code,
+.output samp,
+.output pre {
+  color: #555;
 }
 .output a {
   color: #264c72;
@@ -3778,10 +3961,20 @@ a[href="#document-top"]:before {
   color: #eee;
   background-color: #222;
   border: 1px solid #ccc;
+  -webkit-hyphens: none;
+  -moz-hyphens: none;
+  -ms-hyphens: none;
+  -o-hyphens: none;
+  hyphens: none;
   padding: 0 3px;
   border: 2px solid #999;
   white-space: pre-wrap;
   border-top: 10px solid #999;
+}
+.terminal code,
+.terminal samp,
+.terminal pre {
+  color: #eee;
 }
 .terminal a {
   color: #264c72;
@@ -3804,7 +3997,7 @@ a[href="#document-top"]:before {
   margin-top: -40px;
   margin-bottom: 0;
   text-shadow: none;
-  font-weight: normal;
+  font-weight: 400;
   font-family: "Source Code Pro", "Monaco", "DejaVu Sans Mono", "Courier New", monospace;
   font-size: 85%;
   color: #eee;
@@ -3817,7 +4010,7 @@ a[href="#document-top"]:before {
 .terminal p:first-child:before {
   font-family: "Source Code Pro", "Monaco", "DejaVu Sans Mono", "Courier New", monospace;
   font-style: normal;
-  font-weight: bold;
+  font-weight: 800;
   color: #009926;
   content: "$ ";
 }
@@ -3835,10 +4028,20 @@ a[href="#document-top"]:before {
   color: #eee;
   background-color: #222;
   border: 1px solid #ccc;
+  -webkit-hyphens: none;
+  -moz-hyphens: none;
+  -ms-hyphens: none;
+  -o-hyphens: none;
+  hyphens: none;
   padding: 0 3px;
   border: 2px solid #999;
   white-space: pre-wrap;
   border-top: 10px solid #999;
+}
+.terminal-su code,
+.terminal-su samp,
+.terminal-su pre {
+  color: #eee;
 }
 .terminal-su a {
   color: #264c72;
@@ -3861,7 +4064,7 @@ a[href="#document-top"]:before {
   margin-top: -40px;
   margin-bottom: 0;
   text-shadow: none;
-  font-weight: normal;
+  font-weight: 400;
   font-family: "Source Code Pro", "Monaco", "DejaVu Sans Mono", "Courier New", monospace;
   font-size: 85%;
   color: #eee;
@@ -3874,7 +4077,7 @@ a[href="#document-top"]:before {
 .terminal-su p:first-child:before {
   font-family: "Source Code Pro", "Monaco", "DejaVu Sans Mono", "Courier New", monospace;
   font-style: normal;
-  font-weight: bold;
+  font-weight: 800;
   color: #009926;
   content: "$ ";
 }
@@ -3915,7 +4118,7 @@ div .terminal {
   box-shadow: none;
   font-size: 90%;
   font-variant: small-caps;
-  font-weight: bold;
+  font-weight: 600;
   content: "todo";
 }
 .fixme {
@@ -3947,7 +4150,7 @@ div .terminal {
   box-shadow: none;
   font-size: 90%;
   font-variant: small-caps;
-  font-weight: bold;
+  font-weight: 600;
   content: "fixme";
 }
 .deadline {
@@ -3979,7 +4182,7 @@ div .terminal {
   box-shadow: none;
   font-size: 90%;
   font-variant: small-caps;
-  font-weight: bold;
+  font-weight: 600;
   content: "deadline";
 }
 .important {
@@ -4011,7 +4214,7 @@ div .terminal {
   box-shadow: none;
   font-size: 90%;
   font-variant: small-caps;
-  font-weight: bold;
+  font-weight: 600;
   content: "important";
 }
 .urgent {
@@ -4043,7 +4246,7 @@ div .terminal {
   box-shadow: none;
   font-size: 90%;
   font-variant: small-caps;
-  font-weight: bold;
+  font-weight: 600;
   content: "urgent";
 }
 .verify {
@@ -4075,7 +4278,7 @@ div .terminal {
   box-shadow: none;
   font-size: 90%;
   font-variant: small-caps;
-  font-weight: bold;
+  font-weight: 600;
   content: "verify";
 }
 .draftcomment {
@@ -4107,7 +4310,7 @@ div .terminal {
   box-shadow: none;
   font-size: 90%;
   font-variant: small-caps;
-  font-weight: bold;
+  font-weight: 600;
   content: "comment";
 }
 .red-circle:before {
@@ -4324,6 +4527,70 @@ div .terminal {
   margin-right: -2%;
   vertical-align: middle;
 }
+.desktop:before {
+  font-family: "Font Awesome 5 Free", "Font Awesome 5 Brands";
+  font-style: normal;
+  font-weight: normal;
+  font-size: 100%;
+  color: #333;
+  content: "\f108" " ";
+}
+.laptop:before {
+  font-family: "Font Awesome 5 Free", "Font Awesome 5 Brands";
+  font-style: normal;
+  font-weight: normal;
+  font-size: 100%;
+  color: #333;
+  content: "\f109" " ";
+}
+.mobile:before {
+  font-family: "Font Awesome 5 Free", "Font Awesome 5 Brands";
+  font-style: normal;
+  font-weight: normal;
+  font-size: 100%;
+  color: #333;
+  content: "\f3cd" " ";
+}
+.tablet:before {
+  font-family: "Font Awesome 5 Free", "Font Awesome 5 Brands";
+  font-style: normal;
+  font-weight: normal;
+  font-size: 100%;
+  color: #333;
+  content: "\f3fa" " ";
+}
+.rss:before {
+  font-family: "Font Awesome 5 Free", "Font Awesome 5 Brands";
+  font-style: normal;
+  font-weight: normal;
+  font-size: 100%;
+  color: #FF6600;
+  content: "\f143" " ";
+}
+.paperclip:before {
+  font-family: "Font Awesome 5 Free", "Font Awesome 5 Brands";
+  font-style: normal;
+  font-weight: normal;
+  font-size: 100%;
+  color: #333;
+  content: "\f0c6" " ";
+}
+.toggle-on:before {
+  font-family: "Font Awesome 5 Free", "Font Awesome 5 Brands";
+  font-style: normal;
+  font-weight: normal;
+  font-size: 100%;
+  color: #333;
+  content: "\f205" " ";
+}
+.toggle-off:before {
+  font-family: "Font Awesome 5 Free", "Font Awesome 5 Brands";
+  font-style: normal;
+  font-weight: normal;
+  font-size: 100%;
+  color: #333;
+  content: "\f204" " ";
+}
 .btc:before {
   font-family: "Font Awesome 5 Free", "Font Awesome 5 Brands";
   font-style: normal;
@@ -4395,6 +4662,86 @@ div .terminal {
   font-size: 90%;
   color: #333;
   content: "\f195" "";
+}
+.visa:before {
+  font-family: "Font Awesome 5 Free", "Font Awesome 5 Brands";
+  font-style: normal;
+  font-weight: normal;
+  font-size: 100%;
+  color: #333;
+  content: "\f1f0" " ";
+}
+.stripe:before {
+  font-family: "Font Awesome 5 Free", "Font Awesome 5 Brands";
+  font-style: normal;
+  font-weight: normal;
+  font-size: 100%;
+  color: #333;
+  content: "\f1f5" " ";
+}
+.paypal:before {
+  font-family: "Font Awesome 5 Free", "Font Awesome 5 Brands";
+  font-style: normal;
+  font-weight: normal;
+  font-size: 100%;
+  color: #333;
+  content: "\f1f4" " ";
+}
+.mastercard:before {
+  font-family: "Font Awesome 5 Free", "Font Awesome 5 Brands";
+  font-style: normal;
+  font-weight: normal;
+  font-size: 100%;
+  color: #333;
+  content: "\f1f1" " ";
+}
+.jcb:before {
+  font-family: "Font Awesome 5 Free", "Font Awesome 5 Brands";
+  font-style: normal;
+  font-weight: normal;
+  font-size: 100%;
+  color: #333;
+  content: "\f24b" " ";
+}
+.amex:before {
+  font-family: "Font Awesome 5 Free", "Font Awesome 5 Brands";
+  font-style: normal;
+  font-weight: normal;
+  font-size: 100%;
+  color: #333;
+  content: "\f1f3" " ";
+}
+.discover:before {
+  font-family: "Font Awesome 5 Free", "Font Awesome 5 Brands";
+  font-style: normal;
+  font-weight: normal;
+  font-size: 100%;
+  color: #333;
+  content: "\f1f2" " ";
+}
+.diners:before {
+  font-family: "Font Awesome 5 Free", "Font Awesome 5 Brands";
+  font-style: normal;
+  font-weight: normal;
+  font-size: 100%;
+  color: #333;
+  content: "\f24c" " ";
+}
+.apple-pay:before {
+  font-family: "Font Awesome 5 Free", "Font Awesome 5 Brands";
+  font-style: normal;
+  font-weight: normal;
+  font-size: 100%;
+  color: #333;
+  content: "\f416" " ";
+}
+.amazon-pay:before {
+  font-family: "Font Awesome 5 Free", "Font Awesome 5 Brands";
+  font-style: normal;
+  font-weight: normal;
+  font-size: 100%;
+  color: #333;
+  content: "\f42d" " ";
 }
 .copy:before {
   font-family: "Font Awesome 5 Free", "Font Awesome 5 Brands";
@@ -4506,7 +4853,7 @@ div .terminal {
   font-weight: normal;
   font-size: 100%;
   color: #0F4BFF;
-  content: "\f13c" " ";
+  content: "\f38b" " ";
 }
 .apple:before {
   font-family: "Font Awesome 5 Free", "Font Awesome 5 Brands";
@@ -4532,6 +4879,14 @@ div .terminal {
   color: #000;
   content: "\f17c" " ";
 }
+.freebsd:before {
+  font-family: "Font Awesome 5 Free", "Font Awesome 5 Brands";
+  font-style: normal;
+  font-weight: normal;
+  font-size: 100%;
+  color: #CC3300;
+  content: "\f3a4" " ";
+}
 .android:before {
   font-family: "Font Awesome 5 Free", "Font Awesome 5 Brands";
   font-style: normal;
@@ -4539,6 +4894,62 @@ div .terminal {
   font-size: 100%;
   color: #A4C739;
   content: "\f17b" " ";
+}
+.php:before {
+  font-family: "Font Awesome 5 Free", "Font Awesome 5 Brands";
+  font-style: normal;
+  font-weight: normal;
+  font-size: 100%;
+  color: #777bb3;
+  content: "\f457" " ";
+}
+.java:before {
+  font-family: "Font Awesome 5 Free", "Font Awesome 5 Brands";
+  font-style: normal;
+  font-weight: normal;
+  font-size: 100%;
+  color: #0074BD;
+  content: "\f4e4" " ";
+}
+.js:before {
+  font-family: "Font Awesome 5 Free", "Font Awesome 5 Brands";
+  font-style: normal;
+  font-weight: normal;
+  font-size: 100%;
+  color: #333;
+  content: "\f3b8" " ";
+}
+.aws:before {
+  font-family: "Font Awesome 5 Free", "Font Awesome 5 Brands";
+  font-style: normal;
+  font-weight: normal;
+  font-size: 100%;
+  color: #252F3E;
+  content: "\f375" " ";
+}
+.nodejs:before {
+  font-family: "Font Awesome 5 Free", "Font Awesome 5 Brands";
+  font-style: normal;
+  font-weight: normal;
+  font-size: 100%;
+  color: #689F63;
+  content: "\f3d3" " ";
+}
+.erlang:before {
+  font-family: "Font Awesome 5 Free", "Font Awesome 5 Brands";
+  font-style: normal;
+  font-weight: normal;
+  font-size: 100%;
+  color: #a90533;
+  content: "\f39d" " ";
+}
+.python:before {
+  font-family: "Font Awesome 5 Free", "Font Awesome 5 Brands";
+  font-style: normal;
+  font-weight: normal;
+  font-size: 100%;
+  color: #306998;
+  content: "\f3e2" " ";
 }
 .bluetooth:before {
   font-family: "Font Awesome 5 Free", "Font Awesome 5 Brands";
