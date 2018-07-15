@@ -314,13 +314,13 @@ proc hastysite_module*(i: In, hs1: HastySite) =
     var contents = newSeq[MinValue](0)
     for j in hs.files.contents:
       contents.add i.fromJson(j)
-    i.push contents.newVal(i.scope)
+    i.push contents.newVal()
 
   def.symbol("assets") do (i: In):
     var assets = newSeq[MinValue](0)
     for j in hs.files.assets:
       assets.add i.fromJson(j)
-    i.push assets.newVal(i.scope)
+    i.push assets.newVal()
 
   def.symbol("output") do (i: In):
     i.push hs.dirs.output.newVal
@@ -328,8 +328,8 @@ proc hastysite_module*(i: In, hs1: HastySite) =
   def.symbol("input-fread") do (i: In):
     var vals = i.expect(["dict"])
     var d = vals[0]
-    let t = d.dget("type".newVal).getString 
-    let path = d.dget("path".newVal).getString
+    let t = i.dget(d, "type").getString 
+    let path = i.dget(d, "path").getString
     var contents = ""
     if t == "content":
       contents = readFile(hs.dirs.tempContents/path)
@@ -340,11 +340,11 @@ proc hastysite_module*(i: In, hs1: HastySite) =
   def.symbol("output-fwrite") do (i: In):
     var vals = i.expect(["dict"])
     var d = vals[0]
-    let id = d.dget("id".newVal).getString
-    let ext = d.dget("ext".newVal).getString
+    let id = i.dget(d, "id").getString
+    let ext = i.dget(d, "ext").getString
     var contents = ""
     try:
-      contents = d.dget("contents".newVal).getString
+      contents = i.dget(d, "contents").getString
     except:
       raise MetadataRequiredException(msg: "Metadata key 'contents' not found in dictionary.")
     let outname = id&ext
@@ -359,10 +359,10 @@ proc hastysite_module*(i: In, hs1: HastySite) =
   def.symbol("output-cp") do (i: In):
     var vals = i.expect(["dict"])
     var d = vals[0]
-    let t = d.dget("type".newVal).getString 
-    let path = d.dget("path".newVal).getString
-    let id = d.dget("id".newVal).getString
-    let ext = d.dget("ext".newVal).getString
+    let t = i.dget(d, "type").getString 
+    let path = i.dget(d, "path").getString
+    let id = i.dget(d, "id").getString
+    let ext = i.dget(d, "ext").getString
     var infile, outfile: string
     let outname = id&ext
     if t == "content":
@@ -388,7 +388,7 @@ proc hastysite_module*(i: In, hs1: HastySite) =
     var vals = i.expect(["dict", "string"])
     let c = vals[0]
     let t = vals[1]
-    let ctx = newContext(%c)
+    let ctx = newContext(i%c)
     let tplname = t.getString & ".mustache"
     let tpl = readFile(hs.dirs.templates/tplname)
     i.push tpl.render(ctx, hs.dirs.templates).newval
