@@ -28,10 +28,26 @@
 
 ## Changelog
 
+### v1.2.1
+
+{@ site/contents/posts/v121-released.md || 1 @}
+
+### v1.2.0
+
+{@ site/contents/posts/v120-released.md || 1 @}
+
+### v1.1.0
+
+{@ site/contents/posts/v110-released.md || 1 @}
+
+### v1.0.1
+
+{@ site/contents/posts/v101-released.md || 1 @}
+
 ### v1.0.0
 
-{@ site/contents/posts/v010-released.md || 1 @}
+{@ site/contents/posts/v100-released.md || 1 @}
 
 ### v0.1.0
 
-{@ site/contents/posts/v100-released.md || 1 @}
+{@ site/contents/posts/v010-released.md || 1 @}
