@@ -427,7 +427,7 @@ when isMainModule:
 
   Commands:
     init - Initializes a new site in the current directory.
-""" % [appname, version]
+""" % [pkgName, pkgVersion]
     if scripts:
       for key, value in hs.scripts.pairs:
         text &= "    " & key & " - " & value.getStr & "\n"
@@ -470,7 +470,7 @@ when isMainModule:
             echo usage(scripts, hs)
             quit(0)
           of "version", "v":
-            echo version
+            echo pkgVersion
             quit(0)
           else:
             discard
