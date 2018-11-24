@@ -10,14 +10,14 @@ import
   logging,
   pegs
 
-{.passL: "-Lpackages/hastyscribe/vendor".}
+{.passL: "-Lpackages/hastyscribe/src/hastyscribepkg/vendor".}
 
 import
-    packages/min/min,
-    packages/min/packages/sha1/sha1,
-    packages/min/packages/niftylogger,
-    packages/hastyscribe/hastyscribe,
-    packages/moustachu/src/moustachu
+  packages/min/min,
+  packages/min/packages/sha1/sha1,
+  packages/min/packages/niftylogger,
+  packages/hastyscribe/src/hastyscribe,
+  packages/moustachu/src/moustachu
 
 import
   config
@@ -109,7 +109,7 @@ proc preprocessContent(file, dir: string, obj: var JsonNode): string =
   var delimiter = 0
   try:
     while f.readLine(s):
-      if delimiter  >= 2:
+      if delimiter >= 2:
         result &= s&"\n"
       else:
         if s.startsWith("----"):
@@ -397,7 +397,7 @@ proc hastysite_module*(i: In, hs1: HastySite) =
     var vals = i.expect(["dict", "string"])
     let c = vals[0]
     let t = vals[1]
-    let options = HastyOptions(toc: false, output: nil, css: nil, watermark: nil, fragment: true)
+    let options = HastyOptions(toc: false, output: "", css: "", watermark: "", fragment: true)
     var fields = initTable[string, proc():string]()
     for key, v in c.dVal:
       fields[key] = proc(): string = 
@@ -408,6 +408,7 @@ proc hastysite_module*(i: In, hs1: HastySite) =
 
   def.finalize("hastysite")
       
+
 when isMainModule:
 
   import

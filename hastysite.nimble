@@ -1,6 +1,6 @@
 [Package]
 name          = "hastysite"
-version       = "1.2.1"
+version       = "1.2.2"
 author        = "Fabio Cevasco"
 description   = "A small but powerful static site generator"
 license       = "MIT"
