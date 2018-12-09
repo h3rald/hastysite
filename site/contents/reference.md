@@ -131,21 +131,32 @@ Starts the preprocessing phase of the build.
  #}
 
 {#op||preprocess-css||{{s1}}||{{s2}}||
-Pre-process [CSS variable](https://developer.mozilla.org/en-US/docs/Web/CSS/Using_CSS_variables) declarations and usages within {{s1}}, returning the resulting CSS code {{s2}}.
+Pre-process CSS contents within {{s1}}, i.e.:
 
-For example, the following CSS code:
+1. Pseudo-SCSS partial imports. Partial CSS files must start with an underscore and be placed in the `css-partials` directory (set in your [settings.json](class:file), or [assets/styles](class:dir) if not specified).
+2. [CSS variable](https://developer.mozilla.org/en-US/docs/Web/CSS/Using_CSS_variables) declarations
 
-```
-:root {
-  --standard-gray: #cccccc;
-}
+Returns the resulting CSS code {{s2}}.
 
-.note {
-  background-color: var(--standard-gray);  
-}
-```
+For example, the following CSS code in two different files:
 
-Will be converted to the following:
+
+\_vars.css:
+: ```
+  :root {
+     --standard-gray: #cccccc;
+  }
+  ```
+
+style.css:
+: ```
+  @import 'vars';
+  .note {
+    background-color: var(--standard-gray);  
+  }
+  ```
+
+Will be converted into the following:
 
 ```
 :root {

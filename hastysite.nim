@@ -78,6 +78,10 @@ let PEG_CSS_VAR_INSTANCE = peg"""
   instance <- 'var(--' {id} ')'
   id <- [a-zA-Z0-9_-]+
   """
+let PEG_CSS_IMPORT = peg"""
+  import <- '@import' \s+ '\'' {partial} '\';'
+  partial <- [a-zA-Z0-9_-]+
+"""
 
 var CSS_VARS = initTable[string, string]()
 
@@ -99,6 +103,22 @@ proc processCssVariables(text: string): string =
       result = result.replace(instance, CSS_VARS[id])
     else:
       stderr.writeLine("CSS variable '$1' is not defined." % ["--" & id])
+
+proc processCssImportPartials(text: string, hs: HastySite): string = 
+  result = text
+  var folder = "assets/styles"
+  if hs.settings.hasKey("css-partials"):
+    folder = hs.settings["css-partials"].getStr
+  for def in result.findAll(PEG_CSS_IMPORT):
+    var matches: array[0..1, string]
+    discard def.match(PEG_CSS_IMPORT, matches)
+    let partial  = folder/"_" & matches[0].strip & ".css"
+    var contents = ""
+    if partial.existsFile:
+      contents = partial.readFile
+      result = result.replace(def, contents)
+    else:
+      stderr.writeLine("@import: partial '$1' does not exist" % [partial])
 
 proc preprocessContent(file, dir: string, obj: var JsonNode): string =
   let fileid = file.replace(dir, "")
@@ -243,6 +263,7 @@ proc init*(dir: string) =
   json["temp"]      = %"temp"
   json["output"]    = %"output"
   json["scripts"]   = %"scripts"
+  json["css-partials"] = %"assets/styles"
   for key, value in json.pairs:
     createDir(dir/value.getStr)
   createDir(dir/"assets/fonts")
@@ -381,7 +402,8 @@ proc hastysite_module*(i: In, hs1: HastySite) =
   def.symbol("preprocess-css") do (i: In):
     var vals = i.expect("string")
     let css = vals[0]
-    let res = css.getString.processCssVariables()
+    var res = css.getString.processCssImportPartials(hs)
+    res = res.processCssVariables()
     i.push res.newVal()
 
   def.symbol("mustache") do (i: In):
