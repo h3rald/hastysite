@@ -15,7 +15,7 @@ Because HastySite:
 * provides a simple but functional fully-working site template out-of-the-box, which is also the same template used for its [web site](https://hastysite.h3rald.com).
 * provides out-of-the-box Markdown support. But not just any markdown, [HastyScribe](https://h3rald.com/hastyscribe)-compatible markdown, which extends the alredy-amazing and powerful [Discount](https://www.pell.portland.or.us/~orc/Code/discount/) engine with more useful features such as snippets, macros, fields and transclusion.
 * provides a robust logic-less templating engine based on [mustache](https://mustache.github.io/).
-* provides support for [CSS variables](https://developer.mozilla.org/en-US/docs/Web/CSS/Using_CSS_variables), which doesn't substitute a full fledged CSS preprocessor like LESS or SASS, but it does help.
+* provides support for SCSS-like partials and [CSS variables](https://developer.mozilla.org/en-US/docs/Web/CSS/Using_CSS_variables), which don't substitute a full fledged CSS preprocessor like LESS or SASS, but they do help.
 
 
 ## Technology and Credits
