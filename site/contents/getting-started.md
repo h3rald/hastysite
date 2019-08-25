@@ -14,8 +14,6 @@ You can download one of the following pre-built HastySite binaries:
 > * {#release||{{version}}||macosx||macOS||x64||apple#}
 > * {#release||{{version}}||windows||Windows||x64||windows#}
 > * {#release||{{version}}||linux||Linux||x64||linux#}
-> * {#release||{{version}}||linux||Linux||x86||linux#}
-> * {#release||{{version}}||linux||Linux||arm||linux#}
 
 {#release -> [](class:$5)[hastysite v$1 for $3 ($4)](https://github.com/h3rald/hastysite/releases/download/v$1/hastysite\_v$1\_$2\_$4.zip) #}
 
