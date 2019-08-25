@@ -238,6 +238,7 @@ proc preprocess*(hs: var HastySite) =
   for f in hs.dirs.contents.walkDirRec():
     if f.isHidden:
       continue
+    info("Preprocessing: " & f);
     let content = f.preprocessContent(hs.dirs.contents & DirSep, meta)
     let dest = hs.dirs.temp/f
     dest.parentDir.createDir
@@ -253,7 +254,9 @@ proc preprocess*(hs: var HastySite) =
   let contentDir = hs.dirs.tempContents
   let assetDir = hs.dirs.assets
   hs.files.contents = contents.map(proc (f: string): JsonNode = return contentMetadata(f, contentDir, meta))
+  info("Total Contents: " & $hs.files.contents.len)
   hs.files.assets = assets.map(proc (f: string): JsonNode = return assetMetadata(f, assetDir))
+  info("Total Assets: " & $hs.files.assets.len)
 
 proc init*(dir: string) =
   var json = newJObject()
@@ -333,7 +336,9 @@ proc hastysite_module*(i: In, hs1: HastySite) =
 
   def.symbol("contents") do (i: In):
     var contents = newSeq[MinValue](0)
+    debug("JSON Contents requested")
     for j in hs.files.contents:
+      debug(j)
       contents.add i.fromJson(j)
     i.push contents.newVal()
 
