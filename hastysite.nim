@@ -427,8 +427,11 @@ proc hastysite_module*(i: In, hs1: HastySite) =
     let options = HastyOptions(toc: false, output: "", css: "", watermark: "", fragment: true)
     var fields = initTable[string, proc():string]()
     for key, v in c.dVal:
-      fields[key] = proc(): string = 
-        return $$v.val
+      closureScope:
+        let key_closure = key
+        let val_closure = $$v.val
+        fields[key_closure] = proc(): string = 
+          return val_closure
     var hastyscribe = newHastyScribe(options, fields)
     let file = t.getString()
     i.push hastyscribe.compileFragment(file, hs.dirs.contents).newVal
