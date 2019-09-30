@@ -8,14 +8,12 @@ license       = "MIT"
 bin           = @["hastysite"]
 
 # Deps
-requires: "nim >= 0.19.0"
+requires: "nim >= 1.0.0"
 
 # Tasks
 const
   compile = "nim c -d:release -d:nimOldCaseObjects"
-  linux_x86 = "--cpu:i386 --os:linux"
   linux_x64 = "--cpu:amd64 --os:linux"
-  linux_arm = "--cpu:arm --os:linux"
   windows_x64 = "--cpu:amd64 --os:windows"
   macosx_x64 = ""
   #parallel = "--parallelBuild:1 --verbosity:3"
@@ -32,14 +30,8 @@ proc filename_for(os: string, arch: string): string =
 task windows_x64_build, "Build hastysite for Windows (x64)":
   shell compile, windows_x64, hs_file
 
-task linux_x86_build, "Build hastysite for Linux (x86)":
-  shell compile, linux_x86,  hs_file
-  
 task linux_x64_build, "Build hastysite for Linux (x64)":
   shell compile, linux_x64,  hs_file
-  
-task linux_arm_build, "Build hastysite for Linux (ARM)":
-  shell compile, linux_arm,  hs_file
   
 task macosx_x64_build, "Build hastysite for Mac OS X (x64)":
   shell compile, macosx_x64, hs_file
@@ -52,14 +44,6 @@ task release, "Release hastysite":
   echo "\n\n\n LINUX - x64:\n\n"
   linux_x64_buildTask()
   shell zip, filename_for("linux", "x64"), hs 
-  shell "rm", hs 
-  echo "\n\n\n LINUX - x86:\n\n"
-  linux_x86_buildTask()
-  shell zip, filename_for("linux", "x86"), hs 
-  shell "rm", hs 
-  echo "\n\n\n LINUX - ARM:\n\n"
-  linux_arm_buildTask()
-  shell zip, filename_for("linux", "arm"), hs 
   shell "rm", hs 
   echo "\n\n\n MAC OS X - x64:\n\n"
   macosx_x64_buildTask()
