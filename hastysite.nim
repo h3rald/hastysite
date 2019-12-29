@@ -11,6 +11,8 @@ import
   pegs
 
 {.passL: "-Lpackages/hastyscribe/src/hastyscribepkg/vendor".}
+when defined(linux):
+  {.passL:"-static".}
 
 import
   packages/min/min,
