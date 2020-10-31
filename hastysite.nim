@@ -57,7 +57,7 @@ const TEMPLATE_HEADER = "./site/templates/_header.mustache".slurp
 const TEMPLATE_FOOTER = "./site/templates/_footer.mustache".slurp
 const TEMPLATE_NEWS = "./site/templates/news.mustache".slurp
 const TEMPLATE_PAGE = "./site/templates/page.mustache".slurp
-const TEMPLATE_post = "./site/templates/post.mustache".slurp
+const TEMPLATE_POST = "./site/templates/post.mustache".slurp
 const FONT_SCP_R = "./site/assets/fonts/SourceCodePro-Regular.woff".slurp
 const FONT_SCP_I = "./site/assets/fonts/SourceCodePro-It.woff".slurp
 const FONT_SCP_B = "./site/assets/fonts/SourceCodePro-Bold.woff".slurp
@@ -280,7 +280,7 @@ proc init*(dir: string) =
   writeFile(dir/"scripts/build.min", SCRIPT_BUILD)
   writeFile(dir/"scripts/clean.min", SCRIPT_CLEAN)
   writeFile(dir/"scripts/page.min", SCRIPT_PAGE)
-  writeFile(dir/"scripts/clean.min", SCRIPT_POST)
+  writeFile(dir/"scripts/post.min", SCRIPT_POST)
   writeFile(dir/"templates/_head.mustache", TEMPLATE_HEAD)
   writeFile(dir/"templates/_header.mustache", TEMPLATE_HEADER)
   writeFile(dir/"templates/_footer.mustache", TEMPLATE_FOOTER)
