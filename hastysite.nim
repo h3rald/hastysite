@@ -116,7 +116,7 @@ proc processCssImportPartials(text: string, hs: HastySite): string =
     discard def.match(PEG_CSS_IMPORT, matches)
     let partial  = folder/"_" & matches[0].strip & ".css"
     var contents = ""
-    if partial.existsFile:
+    if partial.fileExists:
       contents = partial.readFile
       result = result.replace(def, contents)
     else:
@@ -234,7 +234,7 @@ proc newHastySite*(file: string): HastySite =
     result.scripts[key] = %desc
 
 proc preprocess*(hs: var HastySite) = 
-  if hs.dirs.tempContents.existsDir:
+  if hs.dirs.tempContents.dirExists:
     hs.dirs.tempContents.removeDir
   var meta = newJObject()
   for f in hs.dirs.contents.walkDirRec():
