@@ -8,4 +8,5 @@ timestamp: 1604182470
 * Updated to min v0.21.1
 * Updated to hastyscribe v1.12.2
 * Fixed post/clean scripts
+* Compiled with Nim v.1.4.0
 
