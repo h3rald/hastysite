@@ -7,6 +7,6 @@ timestamp: 1599853513
 -----
 * Fixed Linux cross-compilation
 * Updated to min v0.20.1
-* Updated to hastyscribe v1.21.1
+* Updated to hastyscribe v1.12.1
 
 
