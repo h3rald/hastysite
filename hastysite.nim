@@ -7,6 +7,7 @@ import
   critbits,
   streams,
   parsecfg,
+  std/sha1,
   logging,
   pegs
 
@@ -16,7 +17,6 @@ when defined(linux):
 
 import
   packages/min/min,
-  packages/min/packages/sha1/sha1,
   packages/min/packages/niftylogger,
   packages/hastyscribe/src/hastyscribe,
   packages/moustachu/src/moustachu
@@ -324,7 +324,7 @@ proc hastysite_module*(i: In, hs1: HastySite) =
   def.symbol("postprocess") do (i: In):
     hs.postprocess()
 
-  def.symbol("process-rules") do (i: In):
+  def.symbol("process-rules") do (i: In) {.gcsafe.}:
     hs.interpret(hs.files.rules)
 
   def.symbol("clean-output") do (i: In): 
@@ -378,7 +378,7 @@ proc hastysite_module*(i: In, hs1: HastySite) =
     let outname = id&ext
     let outfile = hs.dirs.output/outname
     outfile.parentDir.createDir
-    let sha1 = compute(contents).toHex
+    let sha1 = $secureHash(contents)
     if hs.wasModified(sha1, outname):
       notice " - Writing file: ", outfile
       hs.updateSHA1(sha1, outname)
@@ -399,14 +399,14 @@ proc hastysite_module*(i: In, hs1: HastySite) =
     else:
       infile = hs.dirs.assets/path
       outfile = hs.dirs.output/outname
-    let sha1 = compute(infile.readFile).toHex
+    let sha1 = $secureHash(infile.readFile)
     if hs.wasModified(sha1, outname):
       hs.updateSHA1(sha1, outname)
       notice " - Copying: ", infile, " -> ", outfile
       outfile.parentDir.createDir
       copyFileWithPermissions(infile, outfile)
 
-  def.symbol("preprocess-css") do (i: In):
+  def.symbol("preprocess-css") do (i: In) {.gcsafe.}:
     var vals = i.expect("string")
     let css = vals[0]
     var res = css.getString.processCssImportPartials(hs)
@@ -422,7 +422,7 @@ proc hastysite_module*(i: In, hs1: HastySite) =
     let tpl = readFile(hs.dirs.templates/tplname)
     i.push tpl.render(ctx, hs.dirs.templates).newval
 
-  def.symbol("markdown") do (i: In):
+  def.symbol("markdown") do (i: In) {.gcsafe.}:
     var vals = i.expect(["dict", "string"])
     let c = vals[0]
     let t = vals[1]
