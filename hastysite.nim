@@ -75,17 +75,21 @@ const STYLE_LUXBAR = "./site/assets/styles/luxbar.css".slurp
 const STYLE_SITE = "./site/assets/styles/site.css".slurp
 const RULES = "./site/rules.min".slurp
 
-let PEG_CSS_VAR_DEF = peg"""'--' {[a-zA-Z0-9_-]+} ':' {@} ';'"""
-let PEG_CSS_VAR_INSTANCE = peg"""
+var PEG_CSS_VAR_DEF {.threadvar.} : Peg
+PEG_CSS_VAR_DEF = peg"""'--' {[a-zA-Z0-9_-]+} ':' {@} ';'"""
+var PEG_CSS_VAR_INSTANCE {.threadvar.} : Peg
+PEG_CSS_VAR_INSTANCE = peg"""
   instance <- 'var(--' {id} ')'
   id <- [a-zA-Z0-9_-]+
   """
-let PEG_CSS_IMPORT = peg"""
+var PEG_CSS_IMPORT {.threadvar.} : Peg
+PEG_CSS_IMPORT = peg"""
   import <- '@import' \s+ '\'' {partial} '\';'
   partial <- [a-zA-Z0-9_-]+
 """
 
-var CSS_VARS = initTable[string, string]()
+var CSS_VARS {.threadvar.} : Table[string, string]
+CSS_VARS = initTable[string, string]()
 
 #### Helper Functions
 
@@ -203,7 +207,7 @@ proc assetMetadata(f, dir: string): JsonNode =
   else:
     result["id"] = %path.changeFileExt("")  # output path relative to output without extension
 
-proc hastysite_module*(i: In, hs1: HastySite)
+proc hastysite_module*(i: In, hs1: HastySite) {.gcsafe.}
 
 proc interpret(hs: HastySite, file: string) =
   var i = newMinInterpreter(file, file.parentDir)

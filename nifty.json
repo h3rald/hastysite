@@ -34,7 +34,6 @@
     },
     "min": {
       "name": "min",
-      "tag": "next",
       "git": true,
       "src": "https://github.com/h3rald/min.git"
     },
