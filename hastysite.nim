@@ -17,7 +17,7 @@ when defined(linux):
 
 import
   packages/min/min,
-  packages/min/packages/niftylogger,
+  packages/min/minpkg/packages/niftylogger,
   packages/hastyscribe/src/hastyscribe,
   packages/moustachu/src/moustachu
 
@@ -77,7 +77,8 @@ const RULES = "./site/rules.min".slurp
 
 var PEG_CSS_VAR_DEF {.threadvar.} : Peg
 PEG_CSS_VAR_DEF = peg"""'--' {[a-zA-Z0-9_-]+} ':' {@} ';'"""
-var PEG_CSS_VAR_INSTANCE {.threadvar.} : Peg
+
+var PEG_CSS_VAR_INSTANCE {.threadvar.} : Peg 
 PEG_CSS_VAR_INSTANCE = peg"""
   instance <- 'var(--' {id} ')'
   id <- [a-zA-Z0-9_-]+
@@ -88,7 +89,7 @@ PEG_CSS_IMPORT = peg"""
   partial <- [a-zA-Z0-9_-]+
 """
 
-var CSS_VARS {.threadvar.} : Table[string, string]
+var CSS_VARS {.threadvar.} : Table[string, string] 
 CSS_VARS = initTable[string, string]()
 
 #### Helper Functions
@@ -209,7 +210,7 @@ proc assetMetadata(f, dir: string): JsonNode =
 
 proc hastysite_module*(i: In, hs1: HastySite) {.gcsafe.}
 
-proc interpret(hs: HastySite, file: string) =
+proc interpret(hs: HastySite, file: string) {.gcsafe.} =
   var i = newMinInterpreter(file, file.parentDir)
   i.hastysite_module(hs)
   i.interpret(newFileStream(file, fmRead))
@@ -411,14 +412,14 @@ proc hastysite_module*(i: In, hs1: HastySite) =
       copyFileWithPermissions(infile, outfile)
 
   def.symbol("preprocess-css") do (i: In) {.gcsafe.}:
-    var vals = i.expect("string")
+    var vals = i.expect("str")
     let css = vals[0]
     var res = css.getString.processCssImportPartials(hs)
     res = res.processCssVariables()
     i.push res.newVal()
 
   def.symbol("mustache") do (i: In):
-    var vals = i.expect(["dict", "string"])
+    var vals = i.expect(["dict", "str"])
     let c = vals[0]
     let t = vals[1]
     let ctx = newContext(i%c)
@@ -427,7 +428,7 @@ proc hastysite_module*(i: In, hs1: HastySite) =
     i.push tpl.render(ctx, hs.dirs.templates).newval
 
   def.symbol("markdown") do (i: In) {.gcsafe.}:
-    var vals = i.expect(["dict", "string"])
+    var vals = i.expect(["dict", "str"])
     let c = vals[0]
     let t = vals[1]
     let options = HastyOptions(toc: false, output: "", css: "", watermark: "", fragment: true)
@@ -456,7 +457,7 @@ when isMainModule:
 
   proc usage(scripts: bool, hs: HastySite): string = 
     var text = """  $1 v$2 - a tiny static site generator
-  (c) 2016-2018 Fabio Cevasco
+  (c) 2016-2021 Fabio Cevasco
   
   Usage:
     hastysite command
