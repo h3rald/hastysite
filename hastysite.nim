@@ -457,7 +457,7 @@ when isMainModule:
 
   proc usage(scripts: bool, hs: HastySite): string = 
     var text = """  $1 v$2 - a tiny static site generator
-  (c) 2016-2018 Fabio Cevasco
+  (c) 2016-2021 Fabio Cevasco
   
   Usage:
     hastysite command
