@@ -2,7 +2,7 @@
 
 ;Routing
 (
-  (dict) expect -> =meta
+  (dict) expect -> :meta
   meta /id :id
   meta /ext :ext
   (
@@ -19,50 +19,50 @@
       ) tap
     ))
   ) case
-) :set-destination
+) ^set-destination
 
 ;Process Markdown content
 (
-  (dict) expect -> =meta
+  (dict) expect -> :meta
   "" :page
   "" :contents
   meta /content-type :tpl
   meta (
     (input-fread @contents meta)
     (settings /title %site-title)
-    (=temp contents temp markdown @contents temp)
+    (:temp contents temp markdown @contents temp)
     (contents %contents)
-    (=temp tpl temp mustache @page temp)
+    (:temp tpl temp mustache @page temp)
     (page %contents)
   ) tap
-) :process-content
+) ^process-content
 
 ;Process CSS asset
 (
-  (dict) expect -> =meta
+  (dict) expect -> :meta
   "" :contents
   meta (
     (input-fread @contents meta)
-    (=temp contents preprocess-css @contents temp)
+    (:temp contents preprocess-css @contents temp)
     (contents %contents)
   ) tap
   output-fwrite
-) :process-css-asset
+) ^process-css-asset
 
 ;;; Main ;;;
 
 ;Filter and sort posts by timestamp
 contents 
-  (?content-type) filter
+  ('content-type dhas?) filter
   (/content-type "post" ==) filter 
-  (=a =b a /timestamp  b /timestamp >) sort =posts
+  (:a :b a /timestamp  b /timestamp >) sort :posts
 
 ;Process contents
 contents (
-  (dict) expect -> =content
-  content (/id "news" ==) (content posts %posts #content) when
+  (dict) expect -> :content
+  content (/id "news" ==) (content posts %posts @content) when
   (
-    ((content /id "/" split last "^[._]" match) ()) ;Ignore files starting with a dot or underscore
+    ((content /id "/" split last "^[._]" match?) ()) ;Ignore files starting with a dot or underscore
     ((true) (content process-content set-destination output-fwrite))
   ) case
 ) foreach
@@ -72,8 +72,8 @@ assets (
   (dict) expect -> 
   dup
   (
-    ((/ext ".css" match) (process-css-asset))
-    ((/id "/" split last "^[._]" match) ()) ;Ignore files starting with a dot or underscore
+    ((/ext ".css" match?) (process-css-asset))
+    ((/id "/" split last "^[._]" match?) ()) ;Ignore files starting with a dot or underscore
     ((true) (output-cp))
   ) case
 ) foreach
