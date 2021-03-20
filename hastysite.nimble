@@ -12,7 +12,7 @@ requires: "nim >= 1.4.0"
 
 # Tasks
 const
-  compile = "nim c -d:release -d:nimOldCaseObjects"
+  compile = "nim c -d:release"
   linux_x64 = "--cpu:amd64 --os:linux"
   windows_x64 = "--cpu:amd64 --os:windows"
   macosx_x64 = ""
