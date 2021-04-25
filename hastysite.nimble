@@ -8,7 +8,12 @@ license       = "MIT"
 bin           = @["hastysite"]
 
 # Deps
-requires: "nim >= 1.4.0"
+requires: "nim >= 1.4.4, zippy >= 0.5.6"
+
+before install:
+  exec "nimble install -y nifty"
+  exec "nifty remove -f"
+  exec "nifty install"
 
 # Tasks
 const
