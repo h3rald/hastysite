@@ -51,7 +51,7 @@ jobs:
       - name: Build
         run: nimble build -d:release --opt:size --gcc.exe:musl-gcc --gcc.linkerexe:musl-gcc --cpu:amd64 --os:linux
       
-      - name: Test
+      - name: Build Site
         run: |
           cd site
           ../hastysite build
