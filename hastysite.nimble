@@ -1,4 +1,4 @@
-import config
+import hastysitepkg/config
 
 # Package
 version       = pkgVersion
@@ -6,6 +6,7 @@ author        = pkgAuthor
 description   = pkgDescription
 license       = "MIT"
 bin           = @["hastysite"]
+installDirs   = @["minpkg", "hastysitepkg"]
 
 # Deps
 requires: "nim >= 1.4.4, zippy >= 0.5.6"
