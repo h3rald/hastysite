@@ -132,7 +132,7 @@
         line-height: 29px;
         padding: 0; }
 
-@media screen and (min-width: 768px) {
+@media screen and (min-width: 800px) {
   .luxbar-navigation {
     flex-flow: row;
     justify-content: flex-end; }
