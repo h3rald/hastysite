@@ -22,7 +22,7 @@ import
   packages/moustachu/src/moustachu
 
 import
-  config
+  hastysitepkg/config
 
 type
   HastyDirs = object
