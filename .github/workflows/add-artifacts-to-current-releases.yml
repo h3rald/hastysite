@@ -58,6 +58,7 @@ jobs:
           nimble install -y zippy
           nimble install -y nifty
           nifty install
+          nifty build discount
       # Build for Linux
       - name: Build (Linux)
         run: nimble build -d:release --gcc.exe:musl-gcc --gcc.linkerexe:musl-gcc --gc:orc --opt:size --deepcopy:on
