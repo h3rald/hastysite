@@ -1,5 +1,6 @@
-![nim](https://img.shields.io/badge/nim-powered-yellow.svg?link=https://nim-lang-org)
-![release](https://img.shields.io/github/release/h3rald/hastysite/all.svg)
+[![Nimble](https://raw.githubusercontent.com/yglukhov/nimble-tag/master/nimble.png)](https://nimble.directory/pkg/hastysite)
+
+![release](https://img.shields.io/github/release/h3rald/hastysite.svg)
 ![license](https://img.shields.io/github/license/h3rald/hastysite.svg)
 
 # HastySite
