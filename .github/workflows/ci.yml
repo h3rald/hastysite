@@ -1,14 +1,14 @@
 name: CI
 
-# Controls when the action will run. 
+# Controls when the action will run.
 on:
   # Triggers the workflow on push or pull request events but only for the master branch
   push:
-    branches: [ master ]
-    tags-ignore: [ '**' ]
+    branches: [master]
+    tags-ignore: ["**"]
   pull_request:
-    branches: [ master ]
-    tags-ignore: [ '**' ]
+    branches: [master]
+    tags-ignore: ["**"]
 
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
@@ -27,10 +27,10 @@ jobs:
     steps:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - uses: actions/checkout@v2
-      
+
       - name: install musl-gcc
-        run: sudo apt-get install -y musl-tools 
-      
+        run: sudo apt-get install -y musl-tools
+
       - name: Update $PATH
         run: echo "$HOME/.nimble/bin" >> $GITHUB_PATH
 
@@ -41,16 +41,19 @@ jobs:
 
       - name: Install nifty
         run: nimble install -y nifty
-        
+
       - name: Install zippy
         run: nimble install zippy
-        
+
       - name: Install deps
         run: nifty install
-      
+
+      - name: Build discount
+        run: nifty build discount
+
       - name: Build
         run: nimble build -d:release --opt:size --gcc.exe:musl-gcc --gcc.linkerexe:musl-gcc --cpu:amd64 --os:linux
-      
+
       - name: Build Site
         run: |
           cd site

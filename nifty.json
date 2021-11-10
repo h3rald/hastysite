@@ -14,6 +14,12 @@
       "_syntax": "install [<package>]",
       "_description": "Installs the specified package (or all mapped packages) to the storage directory."
     },
+    "build": {
+      "name+configure.sh": {
+        "pwd": "{{name}}",
+        "cmd": "sh configure.sh --github-checkbox=input && make"
+      }
+    },
     "upgrade": {
       "_syntax": "upgrade [<package>]",
       "_description": "Upgrades the specified previously-installed package (or all packages).",
@@ -27,6 +33,13 @@
     }
   },
   "packages": {
+    "discount": {
+      "configure.sh": true,
+      "name": "discount",
+      "src": "https://github.com/Orc/discount.git",
+      "tag": "v2.2.7",
+      "git": true
+    },
     "hastyscribe": {
       "name": "hastyscribe",
       "git": true,

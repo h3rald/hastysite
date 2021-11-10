@@ -11,7 +11,6 @@ import
   logging,
   pegs
 
-{.passL: "-Lpackages/hastyscribe/src/hastyscribepkg/vendor".}
 when defined(linux):
   {.passL:"-static".}
 
