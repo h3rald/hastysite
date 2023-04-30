@@ -19,6 +19,8 @@ if findExe("musl-gcc") != "":
 
 when defined(windows):
   switch("dynlibOverride", "pcre64")
+when defined(freebsd):
+  switch("dynlibOverride", "pcre2")
 else:
   switch("dynlibOverride", "pcre")
 
