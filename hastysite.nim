@@ -142,7 +142,7 @@ proc preprocessContent(file, dir: string, obj: var JsonNode): string =
           delimiter.inc
         else:
           cfg &= s&"\n"
-  except:
+  except CatchableError:
     discard
   if not obj.hasKey("contents"):
     obj["contents"] = newJObject()
@@ -166,7 +166,7 @@ proc preprocessContent(file, dir: string, obj: var JsonNode): string =
         else:
           discard
       p.close()
-    except:
+    except CatchableError:
       meta = newJObject()
   meta["path"] = %fileid
   meta["id"] = %fileid.changeFileExt("")
@@ -377,7 +377,7 @@ proc hastysite_module*(i: In, hs1: HastySite) =
     var contents = ""
     try:
       contents = i.dget(d, "contents").getString
-    except:
+    except CatchableError:
       raise MetadataRequiredException(msg: "Metadata key 'contents' not found in dictionary.")
     let outname = id&ext
     let outfile = hs.dirs.output/outname
