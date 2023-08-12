@@ -9,6 +9,8 @@ HastySite is a minimalist but powerful static site generator written in [Nim](ht
 
 ## Key Features
 
+HastySite provides the following features:
+
 * Built-in rich markdown support via [HastyScribe](https://h3rald.com/hastyscribe).
 * Built-in [mustache](https://mustache.github.io/) support for page templates.
 * Limited support for standard [CSS variables](https://developer.mozilla.org/en-US/docs/Web/CSS/Using_CSS_variables).
