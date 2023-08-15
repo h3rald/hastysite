@@ -9,7 +9,7 @@ bin           = @["hastysite"]
 installDirs   = @["minpkg", "hastysitepkg"]
 
 # Deps
-requires: "nim >= 2.0.0, min >= 0.39.1, checksums"
+requires: "nim >= 2.0.0, min >= 0.39.2, checksums"
 
 before install:
   exec "nimble install -y nifty"
