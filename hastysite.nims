@@ -9,6 +9,8 @@ switch("amd64.linux.gcc.exe", "x86_64-linux-musl-gcc")
 switch("amd64.linux.gcc.linkerexe", "x86_64-linux-musl-gcc")
 
 switch("opt", "size")
+switch("mm", "refc")
+switch("threadAnalysis", "off")
 
 when not defined(dev):
   switch("define", "release")

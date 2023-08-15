@@ -9,12 +9,13 @@ bin           = @["hastysite"]
 installDirs   = @["minpkg", "hastysitepkg"]
 
 # Deps
-requires: "nim >= 1.6.12, zippy >= 0.5.6"
+requires: "nim >= 2.0.0, min >= 0.39.1, checksums"
 
 before install:
   exec "nimble install -y nifty"
   exec "nifty remove -f"
   exec "nifty install"
+  exex "nifty build discount"
 
 # Tasks
 const

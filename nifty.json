@@ -45,11 +45,6 @@
       "git": true,
       "src": "https://github.com/h3rald/hastyscribe.git"
     },
-    "min": {
-      "name": "min",
-      "git": true,
-      "src": "https://github.com/h3rald/min.git"
-    },
     "moustachu": {
       "name": "moustachu",
       "src": "https://github.com/fenekku/moustachu",

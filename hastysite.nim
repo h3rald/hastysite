@@ -7,7 +7,7 @@ import
   critbits,
   streams,
   parsecfg,
-  std/sha1,
+  checksums/sha1,
   logging,
   pegs
 
@@ -15,8 +15,7 @@ when defined(linux):
   {.passL:"-static".}
 
 import
-  packages/min/min,
-  packages/min/minpkg/packages/niftylogger,
+  min,
   packages/hastyscribe/src/hastyscribe,
   packages/moustachu/src/moustachu
 
@@ -207,9 +206,9 @@ proc assetMetadata(f, dir: string): JsonNode =
   else:
     result["id"] = %path.changeFileExt("")  # output path relative to output without extension
 
-proc hastysite_module*(i: In, hs1: HastySite) {.gcsafe.}
+proc hastysite_module*(i: In, hs1: HastySite)
 
-proc interpret(hs: HastySite, file: string) {.gcsafe.} =
+proc interpret(hs: HastySite, file: string) =
   var i = newMinInterpreter(file, file.parentDir)
   i.hastysite_module(hs)
   i.interpret(newFileStream(file, fmRead))
