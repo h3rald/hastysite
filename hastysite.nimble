@@ -15,7 +15,7 @@ before install:
   exec "nimble install -y nifty"
   exec "nifty remove -f"
   exec "nifty install"
-  exex "nifty build discount"
+  exec "nifty build discount"
 
 # Tasks
 const
