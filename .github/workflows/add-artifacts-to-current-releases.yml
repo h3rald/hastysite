@@ -50,6 +50,13 @@ jobs:
         run: echo "${HOME}/.nimble/bin" | Out-File -FilePath $env:GITHUB_PATH -Encoding utf8 -Append
         if: matrix.os == 'windows-latest'
 
+      # Setup MinGW
+      - name: Set up MinGW
+        uses: egor-tensin/setup-mingw@v2
+        with:
+          platform: x64
+        if: matrix.os == 'windows-latest'
+
       # Install the Nim compiler and dependencies
       - name: Install Nim and deps
         run: |
@@ -61,12 +68,12 @@ jobs:
           nifty build discount
       # Build for Linux
       - name: Build (Linux)
-        run: nimble build -d:release --gcc.exe:musl-gcc --gcc.linkerexe:musl-gcc --gc:orc --opt:size --deepcopy:on
+        run: nimble build -d:release --gcc.exe:musl-gcc --gcc.linkerexe:musl-gcc --mm:refc --opt:size
         if: matrix.os == 'ubuntu-latest'
 
       # Build for macOS/Windows
       - name: Build (macOS, Windows)
-        run: nimble build -d:release --opt:size --gc:orc --deepcopy:on
+        run: nimble build -d:release --opt:size --mm:refc
         if: matrix.os == 'macos-latest' || matrix.os == 'windows-latest'
 
       # Retrieve ID and Name of the current (draft) release
