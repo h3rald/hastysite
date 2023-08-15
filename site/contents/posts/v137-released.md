@@ -1,6 +1,6 @@
 -----
 id: v137-release
-title: "Version 1.3.7 Released"
+title: "Version 1.3.7 released"
 content-type: post
 date: "25 April 2021"
 timestamp: 1619352320
