@@ -63,6 +63,7 @@ jobs:
           curl https://nim-lang.org/choosenim/init.sh -sSf > init.sh
           sh init.sh -y
           nimble install -y zippy
+          nimble install -y min
           nimble install -y nifty
           nifty install
           nifty build discount
