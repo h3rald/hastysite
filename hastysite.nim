@@ -1,23 +1,23 @@
 import
-  json,
-  strutils,
-  os,
-  sequtils,
-  tables,
-  critbits,
-  streams,
-  parsecfg,
+  std/json,
+  std/strutils,
+  std/os,
+  std/sequtils,
+  std/tables,
+  std/critbits,
+  std/streams,
+  std/parsecfg,
   checksums/sha1,
-  logging,
-  pegs
+  std/logging,
+  std/pegs
 
 when defined(linux):
   {.passL:"-static".}
 
 import
   min,
-  packages/hastyscribe/src/hastyscribe,
-  packages/moustachu/src/moustachu
+  hastyscribe,
+  mustache
 
 import
   hastysitepkg/config
@@ -420,10 +420,14 @@ proc hastysite_module*(i: In, hs1: HastySite) =
     var vals = i.expect(["dict", "str"])
     let c = vals[0]
     let t = vals[1]
-    let ctx = newContext(i%c)
+    let json = i%c
+    let ctx = newContext()
+    for key, val in json:
+      ctx[key] = val.getStr
+    ctx["searchDirs"] = @[hs.dirs.templates]
     let tplname = t.getString & ".mustache"
     let tpl = readFile(hs.dirs.templates/tplname)
-    i.push tpl.render(ctx, hs.dirs.templates).newval
+    i.push tpl.render(ctx).newval
 
   def.symbol("markdown") do (i: In) {.gcsafe.}:
     var vals = i.expect(["dict", "str"])
