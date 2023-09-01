@@ -327,7 +327,7 @@ proc hastysite_module*(i: In, hs1: HastySite) =
   def.symbol("postprocess") do (i: In):
     hs.postprocess()
 
-  def.symbol("process-rules") do (i: In) {.gcsafe.}:
+  def.symbol("process-rules") do (i: In):
     hs.interpret(hs.files.rules)
 
   def.symbol("clean-output") do (i: In): 
@@ -409,7 +409,7 @@ proc hastysite_module*(i: In, hs1: HastySite) =
       outfile.parentDir.createDir
       copyFileWithPermissions(infile, outfile)
 
-  def.symbol("preprocess-css") do (i: In) {.gcsafe.}:
+  def.symbol("preprocess-css") do (i: In):
     var vals = i.expect("str")
     let css = vals[0]
     var res = css.getString.processCssImportPartials(hs)
@@ -421,15 +421,14 @@ proc hastysite_module*(i: In, hs1: HastySite) =
     let c = vals[0]
     let t = vals[1]
     let json = i%c
-    let ctx = newContext()
+    let ctx = newContext(searchDirs = @[hs.dirs.templates])
     for key, val in json:
-      ctx[key] = val.getStr
-    ctx["searchDirs"] = @[hs.dirs.templates]
+      ctx[key] = val.castValue
     let tplname = t.getString & ".mustache"
     let tpl = readFile(hs.dirs.templates/tplname)
     i.push tpl.render(ctx).newval
 
-  def.symbol("markdown") do (i: In) {.gcsafe.}:
+  def.symbol("markdown") do (i: In):
     var vals = i.expect(["dict", "str"])
     let c = vals[0]
     let t = vals[1]
