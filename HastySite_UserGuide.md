@@ -28,6 +28,10 @@
 
 ## Changelog
 
+### v1.3.9
+
+{@ site/contents/posts/v139-released.md || 1 @}
+
 ### v1.3.8
 
 {@ site/contents/posts/v138-released.md || 1 @}
