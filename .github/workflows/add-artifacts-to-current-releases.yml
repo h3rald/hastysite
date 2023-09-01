@@ -62,9 +62,7 @@ jobs:
         run: |
           curl https://nim-lang.org/choosenim/init.sh -sSf > init.sh
           sh init.sh -y
-          nimble install -y nifty
-          nifty install
-          nifty build discount
+
       # Build for Linux
       - name: Build (Linux)
         run: nimble build -d:release --gcc.exe:musl-gcc --gcc.linkerexe:musl-gcc --mm:refc --opt:size
@@ -74,6 +72,24 @@ jobs:
       - name: Build (macOS, Windows)
         run: nimble build -d:release --opt:size --mm:refc
         if: matrix.os == 'macos-latest' || matrix.os == 'windows-latest'
+
+      # UPX compress (*nix) 
+      - name: UPX
+        uses: svenstaro/upx-action@v2
+        with:
+          files: |
+            hastysite
+          args: --best --force
+        if: matrix.os == 'macos-latest' || matrix.os == 'ubuntu-latest'
+
+      # UPX compress (Windows) 
+      - name: UPX
+        uses: svenstaro/upx-action@v2
+        with:
+          files: |
+            hastysite.exe
+          args: --best --force
+        if: matrix.os == 'windows-latest'
 
       # Retrieve ID and Name of the current (draft) release
       - name: "Get current release"
