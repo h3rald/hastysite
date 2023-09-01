@@ -38,7 +38,7 @@ jobs:
           sh init.sh -y
 
       - name: Build
-        run: nimble build --mm:refc -d:release --opt:size --gcc.exe:musl-gcc --gcc.linkerexe:musl-gcc --cpu:amd64 --os:linux
+        run: nimble build -y --mm:refc -d:release --opt:size --gcc.exe:musl-gcc --gcc.linkerexe:musl-gcc --cpu:amd64 --os:linux
 
       - name: Build Site
         run: |
