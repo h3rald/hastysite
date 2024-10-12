@@ -1,5 +1,5 @@
 const
-  pkgName*        = "HastySite"
-  pkgVersion*     = "1.3.10"
+  pkgName* = "HastySite"
+  pkgVersion* = "1.3.12"
   pkgDescription* = "A small but powerful static site generator"
-  pkgAuthor*      = "Fabio Cevasco"
+  pkgAuthor* = "Fabio Cevasco"
