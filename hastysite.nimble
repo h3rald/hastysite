@@ -9,7 +9,11 @@ bin           = @["hastysite"]
 installDirs   = @["minpkg", "hastysitepkg"]
 
 # Deps
-requires: "nim >= 2.0.0, min >= 0.45.0, checksums, hastyscribe >= 2.1.0, mustache"
+requires "nim >= 2.2.0 & <= 3.0.0"
+requires "min >= 0.45.0"
+requires "checksums >= 0.2.1"
+requires "hastyscribe >= 2.1.0"
+requires "mustache >= 0.4.3"
 
 # Tasks
 const
