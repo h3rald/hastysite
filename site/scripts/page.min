@@ -6,33 +6,27 @@ false   :valid-id
 (
   (str) expect first :ident
   ident "^[a-z0-9-]+$" match? :valid-regexp
-  (. "contents") => "/" join ls :filelist
-  filelist (filename "(.+)\..+$" search 1 get) map ident in? not :valid-file
+  (sys.pwd "contents") => "/" join sys.ls :filelist
+  filelist (fs.filename "(.+)\\..+$" search 1 get) map ident in? not :valid-file
   valid-regexp valid-file and
 ) ^validate
 
 
 (valid-id not) (
-  "ID" ask @ident
+  "ID" io.ask @ident
   ident validate @valid-id
-  (valid-id not) ("ID must not be already used and it must contain only lowercase letters, numbers, or -" warn!) when
+  (valid-id not) ("ID must not be already used and it must contain only lowercase letters, numbers, or -" io.warn!) when
 ) while
 
-"Title" ask @title
+"Title" io.ask @title
 
-"-----
-id: $1
-title: \"$2\"
-content-type: page
------
-
-" (ident title) => % :metadata
+"-----\nid: $1\ntitle: \"$2\"\ncontent-type: page\n-----\n\n" (ident title) => % :metadata
 
 metadata puts!
-("Create page?" confirm) 
+("Create page?" io.confirm) 
 (
   (ident ".md") => "" join :fn 
-  (. "contents") => "/" join :dirpath
+  (sys.pwd "contents") => "/" join :dirpath
   (dirpath fn) => "/" join :path
-  metadata path fwrite
+  metadata path fs.write
 ) when
