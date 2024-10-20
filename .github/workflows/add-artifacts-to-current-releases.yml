@@ -86,7 +86,7 @@ jobs:
 
       # Install min separately on Windows
       - name: Install min (Windows)
-        run: nimble install -y -p:-d:ssl -p:--mm:refc -p:--opt:size -p:--gcc.exe:x86_64-w64-mingw32-gcc -p:--gcc.linkerexe:x86_64-w64-mingw32-gcc min
+        run: nimble install -y --passNim:-d:ssl --passNim:--mm:refc --passNim:--opt:size --passNim:--gcc.exe:x86_64-w64-mingw32-gcc --passNim:--gcc.linkerexe:x86_64-w64-mingw32-gcc min
         if: matrix.os == 'windows-latest'
 
       # Build for Windows
