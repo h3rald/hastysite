@@ -86,7 +86,7 @@ jobs:
 
       # Build for Windows
       - name: Build (Windows)
-        run: nimble build -v -y -d:release --mm:refc --opt:size --gcc.exe:x86_64-w64-mingw32-gcc --gcc.linkerexe:x86_64-w64-mingw32-gcc -d:nossl
+        run: nimble build --verbose -y -d:release --mm:refc --opt:size --gcc.exe:x86_64-w64-mingw32-gcc --gcc.linkerexe:x86_64-w64-mingw32-gcc
         if: matrix.os == 'windows-latest'
 
       # UPX compress (Linux) 
