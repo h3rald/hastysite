@@ -84,6 +84,11 @@ jobs:
         run: nimble build -y -d:release --opt:size --mm:refc
         if: matrix.os == 'macos-13'
 
+      # Install min separately on Windows
+      - name: Install min (Windows)
+        run: nimble install -y -p:-d:ssl -p:--mm:refc -p:--opt:size -p:--gcc.exe:x86_64-w64-mingw32-gcc -p:--gcc.linkerexe:x86_64-w64-mingw32-gcc min
+        if: matrix.os == 'windows-latest'
+
       # Build for Windows
       - name: Build (Windows)
         run: nimble build -v -y -d:release --mm:refc --opt:size --gcc.exe:x86_64-w64-mingw32-gcc --gcc.linkerexe:x86_64-w64-mingw32-gcc
