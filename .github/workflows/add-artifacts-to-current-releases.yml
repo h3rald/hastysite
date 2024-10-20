@@ -98,15 +98,6 @@ jobs:
           args: --best --force
         if: matrix.os == 'ubuntu-latest'
 
-      # UPX compress (Windows) 
-      - name: UPX
-        uses: svenstaro/upx-action@v2
-        with:
-          files: |
-            hastysite.exe
-          args: --best --force
-        if: matrix.os == 'windows-latest'
-
       # Retrieve ID and Name of the current (draft) release
       - name: "Get current release"
         id: current-release
