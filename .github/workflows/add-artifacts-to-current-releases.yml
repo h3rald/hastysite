@@ -76,17 +76,17 @@ jobs:
 
       # Build for Linux
       - name: Build (Linux)
-        run: nimble build -y -d:release --gcc.exe:musl-gcc --gcc.linkerexe:musl-gcc --mm:refc --opt:size -d:ssl
+        run: nimble build -y -d:release --gcc.exe:musl-gcc --gcc.linkerexe:musl-gcc --mm:refc --opt:size
         if: matrix.os == 'ubuntu-latest'
 
       # Build for macOS
       - name: Build (macOs)
-        run: nimble build -y -d:release --opt:size --mm:refc -d:ssl
+        run: nimble build -y -d:release --opt:size --mm:refc
         if: matrix.os == 'macos-13'
 
       # Build for Windows
       - name: Build (Windows)
-        run: nimble build -v -y -d:release --mm:refc --opt:size -d:ssl --gcc.exe:x86_64-w64-mingw32-gcc --gcc.linkerexe:x86_64-w64-mingw32-gcc
+        run: nimble build -v -y -d:release --mm:refc --opt:size --gcc.exe:x86_64-w64-mingw32-gcc --gcc.linkerexe:x86_64-w64-mingw32-gcc
         if: matrix.os == matrix.os == 'windows-latest'
 
       # UPX compress (Linux) 
