@@ -14,7 +14,7 @@ jobs:
         os:
           - ubuntu-latest
           - macos-13
-          - windows-latest
+          - windows-2019
 
     env:
       CHOOSENIM_CHOOSE_VERSION: stable
@@ -30,7 +30,7 @@ jobs:
       # Detects OS and provide Nim-friendly OS identifiers
       - name: Detect current OS
         id: os
-        run: echo "::set-output name=id::${{matrix.os == 'ubuntu-latest' && 'linux' || matrix.os == 'macos-13' && 'macosx' || matrix.os == 'windows-latest' && 'windows'}}"
+        run: echo "::set-output name=id::${{matrix.os == 'ubuntu-latest' && 'linux' || matrix.os == 'macos-13' && 'macosx' || matrix.os == 'windows-2019' && 'windows'}}"
 
       # Checks out the repository
       - uses: actions/checkout@v2
@@ -51,10 +51,10 @@ jobs:
           echo "${HOME}/.nimble/bin" | Out-File -FilePath $env:GITHUB_PATH -Encoding utf8 -Append
           echo "${GITHUB_WORKSPACE}" | Out-File -FilePath $env:GITHUB_PATH -Encoding utf8 -Append
           echo "C:\msys64\mingw64\bin" | Out-File -FilePath $env:GITHUB_PATH -Encoding utf8 -Append
-        if: matrix.os == 'windows-latest'
+        if: matrix.os == 'windows-2019'
 
       - name: Setup Msys2
-        if: matrix.os == 'windows-latest'
+        if: matrix.os == 'windows-2019'
         uses: msys2/setup-msys2@v2
         with:
           msystem: MINGW64
@@ -84,15 +84,10 @@ jobs:
         run: nimble build -y -d:release --opt:size --mm:refc
         if: matrix.os == 'macos-13'
 
-      # Install min separately on Windows
-      - name: Install min (Windows)
-        run: nimble install -y --passNim:-d:ssl --passNim:--mm:refc --passNim:--opt:size --passNim:--gcc.exe:x86_64-w64-mingw32-gcc --passNim:--gcc.linkerexe:x86_64-w64-mingw32-gcc min
-        if: matrix.os == 'windows-latest'
-
       # Build for Windows
       - name: Build (Windows)
         run: nimble build -v -y -d:release --mm:refc --opt:size --gcc.exe:x86_64-w64-mingw32-gcc --gcc.linkerexe:x86_64-w64-mingw32-gcc
-        if: matrix.os == 'windows-latest'
+        if: matrix.os == 'windows-2019'
 
       # UPX compress (Linux) 
       - name: UPX
@@ -110,7 +105,7 @@ jobs:
           files: |
             hastysite.exe
           args: --best --force
-        if: matrix.os == 'windows-latest' 
+        if: matrix.os == 'windows-2019' 
 
       # Retrieve ID and Name of the current (draft) release
       - name: "Get current release"
@@ -129,7 +124,7 @@ jobs:
       # Package the resulting Windows binary
       - name: Create artifact (Windows)
         run: Compress-Archive -Path hastysite.exe -DestinationPath hastysite_${{steps.current-release.outputs.tag_name}}_windows_x64.zip
-        if: matrix.os == 'windows-latest'
+        if: matrix.os == 'windows-2019'
 
       # Upload artifacts to current draft release
       - name: "Upload to current release"
