@@ -1,16 +1,14 @@
-import hastysitepkg/config
-
 # Package
-version       = pkgVersion
-author        = pkgAuthor
-description   = pkgDescription
+version       = "1.4.1"
+author        = "Fabio Cevasco"
+description   = "A small but powerful static site generator"
 license       = "MIT"
 bin           = @["hastysite"]
 installDirs   = @["minpkg", "hastysitepkg"]
 
 # Deps
 requires "nim >= 2.2.0 & <= 3.0.0"
-requires "min >= 0.45.0"
+requires "min >= 0.47.0"
 requires "checksums >= 0.2.1"
 requires "hastyscribe >= 2.1.0"
 requires "mustache >= 0.4.3"
