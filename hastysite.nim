@@ -213,7 +213,6 @@ proc interpret(hs: HastySite, file: string) =
   var i = newMinInterpreter(file, file.parentDir)
   i.hastysite_module(hs)
   i.interpret(newFileStream(file, fmRead))
-  echo "test..."
   ERRORS_HANDLED = true
 
 #### Main Functions
