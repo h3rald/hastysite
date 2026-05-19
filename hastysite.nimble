@@ -10,7 +10,7 @@ installDirs   = @["minpkg", "hastysitepkg"]
 requires "nim >= 2.2.0 & <= 3.0.0"
 requires "min >= 0.47.0"
 requires "checksums >= 0.2.1"
-requires "hastyscribe >= 2.1.0"
+requires "hastyscribe >= 2.1.1"
 requires "mustache >= 0.4.3"
 
 # Tasks

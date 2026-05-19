@@ -209,9 +209,12 @@ proc assetMetadata(f, dir: string): JsonNode =
 proc hastysite_module*(i: In, hs1: HastySite)
 
 proc interpret(hs: HastySite, file: string) =
+  ERRORS_HANDLED = false
   var i = newMinInterpreter(file, file.parentDir)
   i.hastysite_module(hs)
   i.interpret(newFileStream(file, fmRead))
+  echo "test..."
+  ERRORS_HANDLED = true
 
 #### Main Functions
 
@@ -454,7 +457,7 @@ when isMainModule:
 
   proc usage(scripts: bool, hs: HastySite): string = 
     var text = """  $1 v$2 - a tiny static site generator
-  (c) 2016-2021 Fabio Cevasco
+  (c) 2016-2026 Fabio Cevasco
   
   Usage:
     hastysite command
@@ -502,11 +505,14 @@ when isMainModule:
             setLogLevel(v)
           of "help", "h":
             echo usage(scripts, hs)
+            ERRORS_HANDLED = true
             quit(0)
           of "version", "v":
             echo pkgVersion
+            ERRORS_HANDLED = true
             quit(0)
           else:
             discard
       else:
         discard
+  ERRORS_HANDLED = true
