@@ -336,9 +336,8 @@ proc hastysite_module*(i: In, hs1: HastySite) =
   def.symbol("clean-temp") do (i: In): 
     hs.dirs.temp.removeDir
 
-  def.symbol("settings") do (i: In):
-    i.push i.fromJson(hs.settings)
-
+  def.symbol("settings", i.fromJson(hs.settings))
+  
   def.symbol("contents") do (i: In):
     var contents = newSeq[MinValue](0)
     debug("JSON Contents requested")
