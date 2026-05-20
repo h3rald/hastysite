@@ -209,11 +209,9 @@ proc assetMetadata(f, dir: string): JsonNode =
 proc hastysite_module*(i: In, hs1: HastySite)
 
 proc interpret(hs: HastySite, file: string) =
-  ERRORS_HANDLED = false
   var i = newMinInterpreter(file, file.parentDir)
   i.hastysite_module(hs)
   i.interpret(newFileStream(file, fmRead))
-  ERRORS_HANDLED = true
 
 #### Main Functions
 
