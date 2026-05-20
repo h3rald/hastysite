@@ -3,8 +3,8 @@
 ;Routing
 (
   (dict) expect -> :meta
-  meta "id" dict.get :id
-  meta "ext" dict.get :ext
+  meta.id :id
+  meta.ext :ext
   (
     ((id "home" ==) (
       meta (
@@ -26,10 +26,10 @@
   (dict) expect -> :meta
   "" :page
   "" :contents
-  meta "content-type" dict.get :tpl
+  meta.content-type :tpl
   meta (
     (input-fread @contents meta)
-    (settings "title" dict.get "site-title" dict.set)
+    (settings.title "site-title" dict.set)
     (:temp contents temp markdown @contents temp)
     (contents "contents" dict.set)
     (:temp tpl temp mustache @page temp)
@@ -62,7 +62,7 @@ contents (
   (dict) expect -> :content
   content ("id" dict.get "news" ==) (content posts "posts" dict.set @content) when
   (
-    ((content "id" dict.get "/" split last "^[._]" match?) ()) ;;Ignore files starting with a dot or underscore
+    ((content.id "/" split last "^[._]" match?) ()) ;;Ignore files starting with a dot or underscore
     ((true) (content process-content set-destination output-fwrite))
   ) case
 ) foreach
@@ -73,7 +73,7 @@ assets (
   stack.dup
   (
     (("ext" dict.get ".css" match?) (process-css-asset))
-    (("id" dict.get "/" split last "^[._]" match?) ()) ;;Ignore files starting with a dot or underscore
+    (("id" dict.get "/" split last "^[._]" match?) ()) ; Ignore files starting with a dot or underscore
     ((true) (output-cp))
   ) case
 ) foreach
