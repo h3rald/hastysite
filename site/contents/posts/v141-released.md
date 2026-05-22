@@ -2,8 +2,8 @@
 id: v141-released
 title: "v1.4.1 released"
 content-type: post
-date: "20 May 2026"
-timestamp: 1779265303
+date: "22 May 2026"
+timestamp: 1779436535
 -----
 
 * Upgraded min to v0.46.1
