@@ -328,7 +328,8 @@ proc hastysite_module*(i: In, hs1: HastySite) =
     hs.postprocess()
 
   def.symbol("process-rules") do (i: In):
-    hs.interpret(hs.files.rules)
+    {.gcsafe.}:
+      hs.interpret(hs.files.rules)
 
   def.symbol("clean-output") do (i: In): 
     hs.dirs.output.removeDir
